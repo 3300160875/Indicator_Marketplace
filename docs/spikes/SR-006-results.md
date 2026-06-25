@@ -1,31 +1,26 @@
 # SR-006 Spike Results
 
-Status: BLOCKED for EDD runtime validation; MariaDB and MinIO checks completed.
+Status: EDD runtime validation, MariaDB and MinIO checks completed.
 
 ## Environment
 
 - WordPress: Composer locked `roots/wordpress` 7.0.
 - EDD: Composer locked `wp-plugin/easy-digital-downloads` 3.6.9.
 - Runtime: Docker Compose local stack from SR-003/SR-004.
-- Constraint: SR-006 allowed committed paths are only `docs/adr/**` and `docs/spikes/**`.
+- Runtime runner: `docs/spikes/SR-006/runtime-edd-spike.php`.
 
 ## EDD Findings
 
-Static inspection only:
-
 - EDD 3.6.9 is installed by Composer under `web/app/plugins/easy-digital-downloads`.
-- `edd_complete_purchase` is present in `includes/payments/actions.php`.
-- EDD registers `edd_complete_purchase` on `edd_update_payment_status`.
-- Refund-related hooks/functions exist, including `edd_refund_order` and deprecated compatibility hooks.
+- Runtime spike installed disposable WordPress, activated EDD and installed EDD component tables.
+- Public EDD APIs created products, customers, orders, order items, full refunds and item-level partial refunds.
+- First order completion returned true; duplicate completion returned false.
+- Observed completion hooks: `edd_update_payment_status`, `edd_pre_complete_purchase`, `edd_complete_download_purchase`, `edd_complete_purchase`, `edd_after_payment_actions` and `edd_after_order_actions`.
+- Observed refund hook: `edd_refund_order` with full refund args `[1, 2, true]` and partial refund args `[3, 4, false]`.
+- Full refund produced sale status `refunded`, refund order ID 2 and refund item total `-12.340000000`.
+- Partial item refund produced sale status `partially_refunded`, refund order ID 4 and refund item total `-3.000000000`.
 
-Runtime validation is blocked:
-
-- WP-CLI is not available in host, vendor bin, or PHP container.
-- The local MariaDB database has no WordPress tables after SR-003/SR-004 bootstrap.
-- EDD is not activated in a disposable WordPress install.
-- A hook observer/spike runner would need files outside the SR-006 allowed paths.
-
-Conclusion: ADR-002 and ADR-003 remain proposed-blocked. Do not implement EDD adapter or entitlement assumptions until runtime proof exists.
+Conclusion: ADR-002 and ADR-003 are accepted. Future EDD adapter work may proceed against public APIs/hook payloads and must normalize EDD state at a project-owned boundary.
 
 ## MariaDB Findings
 
@@ -51,6 +46,6 @@ Conclusion: private object storage plus short-lived signed URLs is viable. Signe
 
 ## Required Follow-Up
 
-1. Add an approved disposable WP/EDD runtime spike mechanism, such as WP-CLI in dev tooling or a temporary mounted PHP runner.
-2. Install WordPress in local MariaDB, activate EDD, create throwaway order/refund data and observe hooks.
-3. Re-open ADR-002/ADR-003 only after runtime EDD proof exists.
+1. Implement `EddOrderAdapter` in its own task using public EDD APIs and hook payloads only.
+2. Add automated tests around duplicate complete, full refund and partial item refund behavior when the adapter task starts.
+3. Keep EDD email side effects out of adapter tests; the SR-006 CLI spike removed email callbacks only to isolate order/refund semantics.

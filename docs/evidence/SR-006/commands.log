@@ -44,7 +44,17 @@ Static inspection found `edd_complete_purchase`, `edd_update_payment_status`, `e
 Command: WP/EDD runtime feasibility checks
 Exit: 0/1 mixed
 Result:
-EDD and WordPress files exist, but no `wp` CLI is available and MariaDB has no WordPress tables. EDD runtime hook/refund validation is blocked without a disposable WP install and hook observer.
+Initial check before the approved runner: EDD and WordPress files existed, but no `wp` CLI was available and MariaDB had no WordPress tables. This led to the approved disposable PHP runner under `docs/spikes/SR-006/`.
+
+Command: make reset || true && make bootstrap && docker compose exec -T php php docs/spikes/SR-006/runtime-edd-spike.php > /tmp/sr006_runtime.json
+Exit: 0
+Result:
+Disposable WordPress installed, EDD activated and EDD component tables created. EDD runtime output reported WordPress 7.0 and EDD 3.6.9. First order completion returned true; duplicate completion returned false. Full refund created refund order ID 2 and set sale order ID 1 to `refunded`. Item-level partial refund created refund order ID 4 and set sale order ID 3 to `partially_refunded`. Observed completion hooks and `edd_refund_order`; see `docs/evidence/SR-006/runtime-edd-spike-summary.md`.
+
+Command: docker compose exec -T mariadb mariadb -uindicator -p<local-dev-password> indicator_marketplace -e "SHOW TABLES LIKE 'wp_edd_sessions'; SELECT id,status,type,parent,total FROM wp_edd_orders ORDER BY id; SELECT order_id,product_id,quantity,total FROM wp_edd_order_items ORDER BY id;"
+Exit: 0
+Result:
+`wp_edd_sessions` exists. Orders: sale 1 `refunded`, refund 2 `complete` total `-12.340000000`, sale 3 `partially_refunded`, refund 4 `complete` total `-3.000000000`. Order items include refund item totals `-12.340000000` and `-3.000000000`.
 
 Required command: make doctor
 Exit: 0
@@ -81,5 +91,10 @@ Exit: 0
 Result:
 Local Docker containers, network and volumes were removed.
 
+Final verification command: make doctor && make lint && make test && git diff --check && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+doctor: ok; lint: ok; lint: ok; test: ok; docs validation OK with 76 tasks, 0 locks, no cycles, task cards/contracts consistent after SR-006 moved to REVIEW.
+
 Blocker:
-True EDD order completion/refund hook validation is blocked because WordPress is not installed, EDD is not active, WP-CLI is unavailable, and SR-006 allowed paths do not allow committing a disposable spike plugin/runner.
+None after approved `docs/spikes/**` runtime runner.
