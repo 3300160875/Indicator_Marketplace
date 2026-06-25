@@ -79,6 +79,20 @@ Exit: 0
 Result:
 Taxonomy check passed; sr-core Composer validation/test passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
 
+PR check command: gh pr checks 10 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 11s; PHP gate passed in 24s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-013 VERIFIED --evidence docs/evidence/SR-013/review-report.md
+Exit: 0
+Result:
+SR-013 VERIFIED.
+
+Commit / PR:
+- Commit SHA: 66dc0df850dfca8e1b1b0f19d80b62504dbeee89
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/10
+
 Notes:
 - SR-013 does not create custom taxonomy tables and does not implement the public `/taxonomies` endpoint.
-- Commit SHA and PR URL will be added after the branch is committed and the PR is created.
+- SR-013 moved to VERIFIED after local verification, independent subagent review and passing PR checks.

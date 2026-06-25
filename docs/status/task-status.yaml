@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T08:57:32.637134+00:00'
+updated_at: '2026-06-25T08:59:14.190384+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -51,7 +51,7 @@ tasks:
     branch: feat/SR-005-ci-gate
     claimed_at: '2026-06-25T06:17:49.235327+00:00'
     updated_at: '2026-06-25T06:23:47.505385+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/10
     evidence:
     - docs/evidence/SR-005/commands.log
     - docs/evidence/SR-005/completion-report.md
@@ -143,11 +143,11 @@ tasks:
     - docs/evidence/SR-012/review-report.md
     blockers: []
   SR-013:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-013-taxonomy-vocabulary
     claimed_at: '2026-06-25T08:55:22.100697+00:00'
-    updated_at: '2026-06-25T08:57:32.637122+00:00'
+    updated_at: '2026-06-25T08:59:14.190375+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-013/commands.log
