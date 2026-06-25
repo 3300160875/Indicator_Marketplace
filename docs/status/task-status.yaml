@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T05:12:04.296075+00:00'
+updated_at: '2026-06-25T05:22:29.011988+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -13,21 +13,22 @@ tasks:
     - docs/evidence/SR-001/review-report.md
     blockers: []
   SR-002:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-002-bedrock
     claimed_at: '2026-06-25T05:04:36.367300+00:00'
-    updated_at: '2026-06-25T05:12:04.296065+00:00'
+    updated_at: '2026-06-25T05:22:28.903327+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-002/commands.log
+    - docs/evidence/SR-002/review-report.md
     blockers: []
   SR-003:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-06-25T05:22:29.011910+00:00'
     pr: null
     evidence: []
     blockers: []
@@ -41,11 +42,11 @@ tasks:
     evidence: []
     blockers: []
   SR-005:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-06-25T05:22:29.011936+00:00'
     pr: null
     evidence: []
     blockers: []

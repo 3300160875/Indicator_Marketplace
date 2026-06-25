@@ -6,13 +6,13 @@
 
 - Milestone: W1
 - CI: not configured
-- Next safe task: SR-002 independent review
+- Next safe task: SR-003 / SR-005
 - Gate 0: pending
 
 ## 本周完成
 
 - SR-001 文档基线已通过独立评审并标记 VERIFIED。
-- SR-002 Bedrock / WordPress / EDD Composer 基线已提交 REVIEW。
+- SR-002 Bedrock / WordPress / EDD Composer 基线已通过独立评审并标记 VERIFIED。
 
 ## 阻塞
 
@@ -21,6 +21,6 @@
 
 ## 下一步
 
-1. 独立评审 SR-002
-2. SR-002 VERIFIED 后执行 SR-003 或 SR-005
-3. SR-006 需等待 SR-002 与 SR-003
+1. SR-003
+2. SR-005
+3. SR-006 需等待 SR-003
