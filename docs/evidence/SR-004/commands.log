@@ -1,0 +1,87 @@
+SR-004 command evidence
+Generated: 2026-06-25T13:55:00+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-004 --agent codex --branch feat/SR-004-makefile
+Exit: 0
+Result:
+CLAIMED SR-004 by codex until 2026-06-25T09:51:17.772126+00:00
+
+RED command: make help
+Exit: 2
+Result:
+No rule to make target `help`.
+
+RED command: make doctor
+Exit: 2
+Result:
+No rule to make target `doctor`.
+
+RED command: make lint
+Exit: 2
+Result:
+No rule to make target `lint`.
+
+Command: chmod +x bin/dev && make help && make doctor && make lint
+Exit: 0
+Result:
+`make help` listed all developer commands and first-start steps; `make doctor` printed `doctor: ok`; `make lint` printed `lint: ok`.
+
+Command: make bootstrap && make test-smoke && make status && make test && make migrate && make seed && make e2e && make down && make reset
+Exit: 0
+Result:
+`make bootstrap` started the SR-003 Docker stack and ran Composer install; `make test-smoke` verified services; `make status` showed service status; `make test` ran lint; `make migrate`, `make seed`, and `make e2e` reported W1 no-op notices; `make down` and `make reset` cleaned up local services/volumes.
+
+Required command: make help
+Exit: 0
+Result:
+Help output includes `bootstrap`, `up`, `down`, `reset`, `install`, `migrate`, `seed`, `lint`, `test`, `test-smoke`, `e2e`, `status`, `doctor`, and first-start steps.
+
+Required command: make doctor
+Exit: 0
+Result:
+doctor: ok
+
+Required command: make lint
+Exit: 0
+Result:
+lint: ok
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+Failure semantics:
+`bin/dev` uses `set -eu`; missing prerequisites and unknown commands return nonzero. Make targets call `bin/dev`, so command failures propagate to Make.
+
+README:
+First-start steps are documented in `bin/README.md` and mirrored in `make help`. Root README was not edited because SR-004 allowed paths are `Makefile` and `bin/**`.
+
+Implementation commit:
+5e29b6254b13aa54e06b8f7688772d3798da22fe (`chore: add SR-004 developer commands`)
+
+Command: git show --stat --oneline --decorate 5e29b6254b13aa54e06b8f7688772d3798da22fe
+Exit: 0
+Result:
+5e29b62 (HEAD -> feat/SR-004-makefile, origin/feat/SR-004-makefile) chore: add SR-004 developer commands
+ Makefile                                  |  45 +++++++++++++
+ bin/README.md                             |  16 +++++
+ bin/dev                                   | 107 ++++++++++++++++++++++++++++++
+ docs/evidence/SR-004/commands.log         |  71 ++++++++++++++++++++
+ docs/evidence/SR-004/completion-report.md |  14 ++++
+ docs/status/task-status.yaml              |  15 +++--
+ docs/tasks/SR-004.md                      |  50 +++++++-------
+ 7 files changed, 286 insertions(+), 32 deletions(-)
+
+PR URL:
+Not created by this workflow. GitHub offered `https://github.com/3300160875/Indicator_Marketplace/pull/new/feat/SR-004-makefile`.

@@ -1,0 +1,107 @@
+#!/usr/bin/env sh
+set -eu
+
+ROOT_DIR="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+cd "$ROOT_DIR"
+
+need() {
+  command -v "$1" >/dev/null 2>&1 || {
+    printf 'Missing required command: %s\n' "$1" >&2
+    return 1
+  }
+}
+
+php_lint_tracked() {
+  if ! need php; then
+    return 1
+  fi
+
+  git ls-files '*.php' | while IFS= read -r file; do
+    php -l "$file" >/dev/null || exit 1
+  done
+}
+
+case "${1:-help}" in
+  help)
+    cat <<'EOF'
+Development commands:
+  make bootstrap   first local start: copy .env, install Composer deps, start Docker services
+  make up          start local Docker services
+  make down        stop local Docker services
+  make reset       remove local Docker services and disposable volumes
+  make install     run Composer install in the Docker CLI container
+  make migrate     run database migrations when available
+  make seed        run seed data when available
+  make lint        validate compose, shell scripts, Composer metadata and tracked PHP syntax
+  make test        run local smoke-level tests available in W1
+  make test-smoke  verify running Docker services
+  make e2e         run end-to-end tests when available
+  make status      show Docker service status
+  make doctor      check local command prerequisites
+
+First start:
+  make doctor
+  make bootstrap
+  make test-smoke
+EOF
+    ;;
+  doctor)
+    need docker
+    docker compose version >/dev/null
+    need git
+    if command -v composer >/dev/null 2>&1; then
+      composer --version >/dev/null
+    fi
+    printf 'doctor: ok\n'
+    ;;
+  bootstrap)
+    exec infra/docker/bootstrap.sh
+    ;;
+  up)
+    docker compose up -d mariadb redis minio mailpit php nginx minio-init
+    ;;
+  down)
+    docker compose down
+    ;;
+  reset)
+    docker compose down -v
+    ;;
+  install)
+    docker compose run --rm cli composer install --no-interaction --prefer-dist
+    ;;
+  migrate)
+    printf 'migrate: no database migrations are defined in W1\n'
+    ;;
+  seed)
+    printf 'seed: no seed data is defined in W1\n'
+    ;;
+  lint)
+    docker compose config --quiet
+    sh -n bin/dev
+    sh -n infra/docker/bootstrap.sh
+    sh -n infra/docker/smoke.sh
+    if command -v composer >/dev/null 2>&1; then
+      composer validate --strict --no-check-publish >/dev/null
+    fi
+    php_lint_tracked
+    printf 'lint: ok\n'
+    ;;
+  test)
+    bin/dev lint
+    printf 'test: ok\n'
+    ;;
+  smoke|test-smoke)
+    exec infra/docker/smoke.sh
+    ;;
+  e2e)
+    printf 'e2e: no end-to-end suite is defined in W1\n'
+    ;;
+  status)
+    docker compose ps
+    ;;
+  *)
+    printf 'Unknown command: %s\n' "$1" >&2
+    printf 'Run `make help` for available commands.\n' >&2
+    exit 2
+    ;;
+esac
