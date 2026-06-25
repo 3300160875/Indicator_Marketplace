@@ -124,7 +124,7 @@ tasks:
     branch: feat/SR-011-migration-cli
     claimed_at: '2026-06-25T08:38:32.512740+00:00'
     updated_at: '2026-06-25T08:44:22.157187+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/14
     evidence:
     - docs/evidence/SR-011/commands.log
     - docs/evidence/SR-011/completion-report.md
@@ -193,6 +193,7 @@ tasks:
     - docs/evidence/SR-016/completion-report.md
     - docs/evidence/SR-016/resource-versions-check.php
     - docs/evidence/SR-016/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/14
     blockers: []
   SR-017:
     status: BACKLOG
