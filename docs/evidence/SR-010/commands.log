@@ -1,0 +1,94 @@
+SR-010 command evidence
+Generated: 2026-06-25T16:18:37+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-010 --agent codex --branch feat/SR-010-theme-skeleton
+Exit: 0
+Result:
+CLAIMED SR-010 by codex until 2026-06-25T12:17:14.238484+00:00
+
+Red test command: npm --prefix web/app/themes/stock-resource-theme run test
+Exit: 1
+Result:
+Theme verification failed because `style.css` did not exist; expected failure before implementation.
+
+Version command: node --version && npm --version
+Exit: 0
+Result:
+Node v22.23.0; npm 10.9.8.
+
+Required command: npm ci
+Exit: 0
+Result:
+`up to date, audited 1 package`; `found 0 vulnerabilities`.
+
+Required command: npm run lint
+Exit: 0
+Result:
+Root frontend lint placeholder passed: `frontend lint: no frontend assets defined in W1`.
+
+Required command: npm run test
+Exit: 1
+Result:
+Root package has no `test` script.
+
+Alternative for unavailable root test script: npm --prefix web/app/themes/stock-resource-theme run test
+Exit: 0
+Result:
+Theme verification returned `stock-resource-theme verification: ok`.
+
+Required command: npm run build
+Exit: 1
+Result:
+Root package has no `build` script.
+
+Alternative for unavailable root build script: npm --prefix web/app/themes/stock-resource-theme run build
+Exit: 0
+Result:
+Theme build returned `stock-resource-theme build: ok` and generated `assets/js/theme.js`.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`.
+
+Independent review:
+McClintock subagent completed read-only SR-010 review. Key constraints followed: theme writes only under `web/app/themes/stock-resource-theme/**`, remains SSR/PHP template based, includes `theme.json` and base templates, and does not query `sr_*` tables directly.
+
+Final diff stat command: git diff --cached --stat
+Exit: 0
+Result:
+23 files changed, 542 insertions(+), 54 deletions(-).
+
+Final verification command: npm --prefix web/app/themes/stock-resource-theme run test && npm --prefix web/app/themes/stock-resource-theme run build && npm ci && npm run lint && composer validate --strict && make lint && make test && git diff --check --cached && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+Theme verification/build passed; root npm install/lint passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+PR check command: gh pr checks 7 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 10s; PHP gate passed in 19s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-010 VERIFIED --evidence docs/evidence/SR-010/review-report.md
+Exit: 0
+Result:
+SR-010 VERIFIED.
+
+Commit / PR:
+- Commit SHA: d53ba31d19ecadb7e9fb98876cd847829e90068f
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/7
+
+Notes:
+- SR-010 does not modify root npm scripts because its allowed code path is the theme directory.
+- Root `npm run test` and `npm run build` limitations are documented with theme-local alternatives.
+- SR-010 moved to VERIFIED after local verification, independent subagent review and passing PR checks.
