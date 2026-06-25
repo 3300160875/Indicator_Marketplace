@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace StockResource\Core;
 
+use StockResource\Core\Runtime\CoreRuntimeRegistrar;
+use StockResource\Core\Runtime\RuntimeEnvironment;
+use StockResource\Core\Runtime\WordPressRuntimeEnvironment;
+
 final class Plugin
 {
     private const SLUG = 'sr-core';
@@ -61,8 +65,18 @@ final class Plugin
         return $missing;
     }
 
-    public static function boot(): bool
+    public static function boot(
+        ?RuntimeEnvironment $runtime = null,
+        ?callable $pluginActive = null,
+        ?callable $classExists = null,
+    ): bool
     {
-        return self::missingRuntimeDependencies() === [];
+        if (self::missingRuntimeDependencies($pluginActive, $classExists) !== []) {
+            return false;
+        }
+
+        CoreRuntimeRegistrar::defaults()->register($runtime ?? new WordPressRuntimeEnvironment());
+
+        return true;
     }
 }
