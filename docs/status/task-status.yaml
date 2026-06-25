@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T10:05:02.169773+00:00'
+updated_at: '2026-06-25T10:20:58.371554+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -76,7 +76,7 @@ tasks:
     branch: feat/SR-007-contracts
     claimed_at: '2026-06-25T07:02:05.790738+00:00'
     updated_at: '2026-06-25T07:14:28.863424+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/13
     evidence:
     - docs/evidence/SR-007/commands.log
     - docs/evidence/SR-007/completion-report.md
@@ -100,7 +100,7 @@ tasks:
     branch: feat/SR-009-plugin-skeletons
     claimed_at: '2026-06-25T08:10:01.345133+00:00'
     updated_at: '2026-06-25T08:15:12.914169+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/13
     evidence:
     - docs/evidence/SR-009/commands.log
     - docs/evidence/SR-009/completion-report.md
@@ -168,13 +168,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/12
     blockers: []
   SR-015:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-015-resource-editor-gate
+    claimed_at: '2026-06-25T10:09:43.853850+00:00'
+    updated_at: '2026-06-25T10:20:58.371544+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-015/commands.log
+    - docs/evidence/SR-015/completion-report.md
+    - docs/evidence/SR-015/resource-editor-check.php
+    - docs/evidence/SR-015/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/13
     blockers: []
   SR-016:
     status: BACKLOG

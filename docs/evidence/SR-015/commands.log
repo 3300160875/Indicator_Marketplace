@@ -1,0 +1,118 @@
+# SR-015 command log
+
+All commands were run from `/home/devops-ubuntu/Developer/Indicator_Marketplace/project` unless noted.
+
+## Baseline and claim
+
+```text
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ make lint && make test
+exit: 0
+result: lint: ok; test: ok
+
+$ python3 tools/agent/taskctl.py claim SR-015 --agent codex --branch feat/SR-015-resource-editor-gate
+exit: 0
+result: CLAIMED SR-015 by codex until 2026-06-25T14:09:43.853850+00:00
+```
+
+## TDD red
+
+```text
+$ php docs/evidence/SR-015/resource-editor-check.php
+exit: 255
+result: expected failure
+
+Failed opening required '.../packages/sr-core/src/Admin/ResourceEditor/EditorSection.php'
+```
+
+## Green checks during implementation
+
+```text
+$ php docs/evidence/SR-015/resource-editor-check.php
+exit: 0
+result: SR-015 resource editor check: ok
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+```
+
+## Review feedback red/green
+
+```text
+$ php docs/evidence/SR-015/resource-editor-check.php
+exit: 255
+result: expected failure after adding review feedback coverage
+
+technical compatibility, usage scenarios and limitations are required expected=[compatibility_required, limitations_required, usage_scenarios_required] actual=[]
+
+$ php docs/evidence/SR-015/resource-editor-check.php
+exit: 0
+result: SR-015 resource editor check: ok
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ php -l packages/sr-core/src/Admin/ResourceEditor/ResourcePublishGate.php
+exit: 0
+result: No syntax errors detected
+
+$ make lint
+exit: 0
+result: lint: ok
+```
+
+## Required command matrix
+
+```text
+$ composer validate --strict
+exit: 0
+result: ./composer.json is valid
+
+$ composer validate --strict
+cwd: packages/sr-core
+exit: 0
+result: ./composer.json is valid
+
+$ make test-unit MODULE=core
+exit: 2
+result: unavailable; repository Makefile does not define target test-unit
+replacement: composer test in packages/sr-core
+
+$ make test-integration
+exit: 2
+result: unavailable; repository Makefile does not define target test-integration
+replacement: make test
+
+$ git diff --check
+exit: 0
+result: no whitespace errors
+
+$ python3 tools/agent/validate_docs.py
+exit: 0
+result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+$ make test
+exit: 0
+result: lint: ok; test: ok
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ php docs/evidence/SR-015/resource-editor-check.php
+exit: 0
+result: SR-015 resource editor check: ok
+
+$ make lint
+exit: 0
+result: lint: ok
+```
