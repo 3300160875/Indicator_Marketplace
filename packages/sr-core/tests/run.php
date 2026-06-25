@@ -14,6 +14,11 @@ use StockResource\Core\Infrastructure\Migration\MigrationRunner;
 use StockResource\Core\Runtime\CoreRuntimeRegistrar;
 use StockResource\Core\Runtime\RuntimeEnvironment;
 use StockResource\Core\Support\Http\RestRequestIdMiddleware;
+use StockResource\Core\Version\InMemoryResourceVersionRepository;
+use StockResource\Core\Version\ResourceVersion;
+use StockResource\Core\Version\ResourceVersionSchemaMigration;
+use StockResource\Core\Version\ResourceVersionStatus;
+use StockResource\Core\Version\ResourceVersionWorkflow;
 
 require_once dirname(__DIR__) . '/src/Plugin.php';
 
@@ -42,6 +47,14 @@ $sourceFiles = [
     '/src/Support/Http/RequestContext.php',
     '/src/Support/Http/RequestIdFactory.php',
     '/src/Support/Http/RestRequestIdMiddleware.php',
+    '/src/Version/ResourceVersionStatus.php',
+    '/src/Version/ResourceVersionScanStatus.php',
+    '/src/Version/ResourceVersion.php',
+    '/src/Version/ResourceVersionRepository.php',
+    '/src/Version/InMemoryResourceVersionRepository.php',
+    '/src/Version/ResourceVersionWorkflowStage.php',
+    '/src/Version/ResourceVersionWorkflow.php',
+    '/src/Version/ResourceVersionSchemaMigration.php',
 ];
 
 foreach ($sourceFiles as $sourceFile) {
@@ -319,5 +332,76 @@ $paidWithoutRightsRecord = $publishGate->evaluate(ResourceDraft::fromArray([
     ],
 ]));
 assert_same(['rights_record_required'], $paidWithoutRightsRecord->issueCodes(), 'paid resources require rights evidence records');
+
+$versionMigration = ResourceVersionSchemaMigration::create();
+assert_true(str_contains($versionMigration->sql('wp_'), 'CREATE TABLE wp_sr_resource_versions'), 'resource version migration creates prefixed table');
+assert_true(str_contains($versionMigration->sql('wp_'), 'KEY idx_resource_current (resource_id, is_current)'), 'resource version migration has current index');
+assert_true(str_contains($versionMigration->sql('wp_'), "scan_status VARCHAR(24) NOT NULL DEFAULT 'pending'"), 'resource version migration has scan status default');
+
+$versionWorkflow = ResourceVersionWorkflow::defaults();
+assert_true($versionWorkflow->canTransition(ResourceVersionStatus::Review, ResourceVersionStatus::Active), 'resource version workflow allows reviewed versions to activate');
+assert_same(true, $versionWorkflow->stages()['activate']->usesTransactionLock, 'resource version activation requires transaction lock');
+
+$versionRepository = new InMemoryResourceVersionRepository();
+$versionRepository->create(ResourceVersion::fromArray([
+    'id' => 1,
+    'resource_id' => 1001,
+    'version_label' => '1.0.0',
+    'status' => 'review',
+    'scan_status' => 'clean',
+    'created_by' => 501,
+    'created_at' => '2026-06-25 10:00:00',
+    'updated_at' => '2026-06-25 10:00:00',
+]));
+$versionRepository->create(ResourceVersion::fromArray([
+    'id' => 2,
+    'resource_id' => 1001,
+    'version_label' => '1.1.0',
+    'status' => 'review',
+    'scan_status' => 'clean',
+    'created_by' => 501,
+    'created_at' => '2026-06-25 10:01:00',
+    'updated_at' => '2026-06-25 10:01:00',
+]));
+$directCurrentWasRejected = false;
+try {
+    $versionRepository->create(ResourceVersion::fromArray([
+        'id' => 3,
+        'resource_id' => 1001,
+        'version_label' => '2.0.0',
+        'status' => 'draft',
+        'is_current' => true,
+        'scan_status' => 'pending',
+        'created_by' => 501,
+        'created_at' => '2026-06-25 10:02:00',
+        'updated_at' => '2026-06-25 10:02:00',
+    ]));
+} catch (RuntimeException) {
+    $directCurrentWasRejected = true;
+}
+assert_same(true, $directCurrentWasRejected, 'resource versions cannot bypass activation lock on create');
+$versionRepository->activateCurrent(1001, 2, 601, '2026-06-25 10:02:00');
+assert_same(2, $versionRepository->currentForResource(1001)?->id, 'resource version repository exposes one current version');
+$versionRepository->activateCurrent(1001, 1, 602, '2026-06-25 10:03:00');
+assert_same(1, $versionRepository->currentForResource(1001)?->id, 'resource version repository switches current version transactionally');
+assert_same([1001, 1001], $versionRepository->transactionLockLog(), 'resource version activation records transaction locks');
+
+$failedScanWasRejected = false;
+try {
+    $versionRepository->create(ResourceVersion::fromArray([
+        'id' => 4,
+        'resource_id' => 1002,
+        'version_label' => '1.0.0',
+        'status' => 'review',
+        'scan_status' => 'failed',
+        'created_by' => 501,
+        'created_at' => '2026-06-25 10:02:00',
+        'updated_at' => '2026-06-25 10:02:00',
+    ]));
+    $versionRepository->activateCurrent(1002, 4, 601, '2026-06-25 10:03:00');
+} catch (RuntimeException) {
+    $failedScanWasRejected = true;
+}
+assert_same(true, $failedScanWasRejected, 'resource versions require clean scan before activation');
 
 echo "sr-core runtime tests: ok\n";
