@@ -19,6 +19,11 @@ final readonly class OrderRefundedEvent
         if ([] === $refundedOrderItemIds) {
             throw new ValidationException('Refunded order event requires at least one order item id.');
         }
+        foreach ($refundedOrderItemIds as $refundedOrderItemId) {
+            if (! $refundedOrderItemId instanceof PositiveId) {
+                throw new ValidationException('Refunded order item ids must be PositiveId instances.');
+            }
+        }
     }
 
     /** @return array<string,mixed> */

@@ -26,7 +26,12 @@ final readonly class UtcDateTime
             throw new ValidationException('UtcDateTime is invalid.', previous: $exception);
         }
 
-        return new self($date->setTimezone(new DateTimeZone('UTC')));
+        $utc = $date->setTimezone(new DateTimeZone('UTC'));
+        if ($utc->format('Y-m-d\TH:i:s\Z') !== $value) {
+            throw new ValidationException('UtcDateTime contains an impossible calendar date or non-UTC value.');
+        }
+
+        return new self($utc);
     }
 
     public function toString(): string

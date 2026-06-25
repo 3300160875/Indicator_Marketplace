@@ -14,6 +14,7 @@ use StockResource\Contracts\Service\DownloadTokenIssuer;
 use StockResource\Contracts\Service\EddOrderProjector;
 use StockResource\Contracts\Value\Money;
 use StockResource\Contracts\Value\PositiveId;
+use StockResource\Contracts\Value\IdempotencyKey;
 use StockResource\Contracts\Value\RequestId;
 use StockResource\Contracts\Value\UtcDateTime;
 
@@ -21,6 +22,7 @@ $src = dirname(__DIR__) . '/src';
 foreach ([
     '/Value/PositiveId.php',
     '/Value/Money.php',
+    '/Value/IdempotencyKey.php',
     '/Value/RequestId.php',
     '/Value/UtcDateTime.php',
     '/Enum/AccessSource.php',
@@ -81,6 +83,12 @@ assert_throws(fn() => RequestId::fromString('not-a-uuid'), 'request id rejects i
 $time = UtcDateTime::fromString('2026-06-25T06:45:00Z');
 assert_same('2026-06-25T06:45:00Z', $time->toString(), 'UTC date-time serializes as canonical UTC');
 assert_throws(fn() => UtcDateTime::fromString('2026-06-25 06:45:00'), 'UTC date-time rejects non ISO-8601 input');
+assert_throws(fn() => UtcDateTime::fromString('2026-02-31T06:45:00Z'), 'UTC date-time rejects impossible calendar dates');
+
+$idempotencyKey = IdempotencyKey::fromString('download:abc-123');
+assert_same('download:abc-123', $idempotencyKey->toString(), 'idempotency key serializes original key');
+assert_throws(fn() => IdempotencyKey::fromString('short'), 'idempotency key rejects values below OpenAPI minimum length');
+assert_throws(fn() => IdempotencyKey::fromString(str_repeat('a', 129)), 'idempotency key rejects values above OpenAPI maximum length');
 
 $pagination = new Pagination(page: 2, perPage: 20, total: 41, totalPages: 3);
 assert_same(['page' => 2, 'per_page' => 20, 'total' => 41, 'total_pages' => 3], $pagination->toArray(), 'pagination serializes openapi shape');
@@ -140,6 +148,7 @@ $completed = new OrderCompletedEvent(
 );
 assert_same([300], $completed->toArray()['order_item_ids'], 'completed event serializes order item ids');
 assert_throws(fn() => new OrderCompletedEvent(PositiveId::fromInt(100), PositiveId::fromInt(200), $time, []), 'completed event rejects empty item list');
+assert_throws(fn() => new OrderCompletedEvent(PositiveId::fromInt(100), PositiveId::fromInt(200), $time, [300]), 'completed event rejects non-PositiveId item ids');
 
 $refunded = new OrderRefundedEvent(
     orderId: PositiveId::fromInt(100),
@@ -148,18 +157,21 @@ $refunded = new OrderRefundedEvent(
     fullRefund: false,
 );
 assert_same(false, $refunded->toArray()['full_refund'], 'refund event serializes full refund flag');
+assert_throws(fn() => new OrderRefundedEvent(PositiveId::fromInt(100), $time, [300], false), 'refund event rejects non-PositiveId item ids');
 
 assert_true(interface_exists(EddOrderProjector::class), 'EDD projector interface exists');
 assert_true(interface_exists(DownloadTokenIssuer::class), 'download token issuer interface exists');
 
+$forbiddenRuntimePatterns = ['wp_', 'wpdb', 'add_action', 'do_action', 'apply_filters', 'get_option', 'update_option', 'edd_'];
 $sourceFiles = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($src));
 foreach ($sourceFiles as $file) {
     if (! $file->isFile() || $file->getExtension() !== 'php') {
         continue;
     }
     $contents = file_get_contents($file->getPathname());
-    assert_true(! str_contains($contents, 'wp_'), 'contracts package must not call WordPress prefixed functions');
-    assert_true(! str_contains($contents, 'add_action'), 'contracts package must not depend on WordPress hooks');
+    foreach ($forbiddenRuntimePatterns as $pattern) {
+        assert_true(! str_contains($contents, $pattern), 'contracts package must not depend on WordPress or EDD runtime pattern ' . $pattern);
+    }
 }
 
 echo "sr-contracts tests: ok\n";

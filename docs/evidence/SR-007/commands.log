@@ -21,6 +21,16 @@ Exit: 0
 Result:
 `sr-contracts tests: ok`
 
+Review regression command: php packages/sr-contracts/tests/run.php
+Exit before fix: 255
+Result before fix:
+The updated review test failed because `src/Value/IdempotencyKey.php` did not exist. The same test set also covered impossible UTC dates and invalid event item-id arrays.
+
+Review regression command: php packages/sr-contracts/tests/run.php
+Exit after fix: 0
+Result after fix:
+`sr-contracts tests: ok`; impossible UTC dates, invalid event item-id arrays and invalid idempotency keys are rejected.
+
 Required command: composer validate --strict
 Exit: 0
 Result:

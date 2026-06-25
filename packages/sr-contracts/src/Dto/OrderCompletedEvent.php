@@ -19,6 +19,11 @@ final readonly class OrderCompletedEvent
         if ([] === $orderItemIds) {
             throw new ValidationException('Completed order event requires at least one order item id.');
         }
+        foreach ($orderItemIds as $orderItemId) {
+            if (! $orderItemId instanceof PositiveId) {
+                throw new ValidationException('Completed order item ids must be PositiveId instances.');
+            }
+        }
     }
 
     /** @return array<string,mixed> */
