@@ -121,11 +121,28 @@ Exit: 0
 Result:
 Tracked SR-003 files are modified/untracked as expected. Ignored local `.env`, `vendor/`, `web/wp/`, EDD plugin, default theme and generated mu-plugin directories remain untracked and ignored.
 
-git diff --stat before commit:
-.env.example                 | 54 ++++++++++++++++++++++++++++++++------------
-docs/status/agent-locks.yaml | 12 +++++++++-
-docs/status/task-status.yaml | 12 +++++-----
-3 files changed, 56 insertions(+), 22 deletions(-)
+Implementation commit:
+7c83438cdcc45441274d42657bebe4623b161c54 (`chore: add SR-003 docker compose environment`)
+
+Command: git show --stat --oneline --decorate 7c83438cdcc45441274d42657bebe4623b161c54
+Exit: 0
+Result:
+7c83438 (HEAD -> feat/SR-003-docker-compose, origin/feat/SR-003-docker-compose) chore: add SR-003 docker compose environment
+ .env.example                              |  54 +++++++---
+ docker-compose.yml                        | 165 ++++++++++++++++++++++++++++++
+ docs/evidence/SR-003/commands.log         | 131 ++++++++++++++++++++++++
+ docs/evidence/SR-003/completion-report.md |  15 +++
+ docs/status/task-status.yaml              |  15 +--
+ docs/tasks/SR-003.md                      |  50 ++++-----
+ infra/docker/bootstrap.sh                 |  14 +++
+ infra/docker/nginx/default.conf           |  31 ++++++
+ infra/docker/php/Dockerfile               |  19 ++++
+ infra/docker/php/php.ini                  |  10 ++
+ infra/docker/smoke.sh                     |  13 +++
+ 11 files changed, 470 insertions(+), 47 deletions(-)
+
+Branch:
+`feat/SR-003-docker-compose` pushed to `https://github.com/3300160875/Indicator_Marketplace`.
 
 PR URL:
-Not created; branch evidence is local/pushed by task workflow.
+Not created by this workflow. GitHub offered `https://github.com/3300160875/Indicator_Marketplace/pull/new/feat/SR-003-docker-compose`.
