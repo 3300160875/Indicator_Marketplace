@@ -1,0 +1,10 @@
+
+# Replace @tech-lead/@security-reviewer with real accounts before merge protection is enabled.
+/packages/sr-contracts/        @tech-lead
+/packages/sr-platform-bootstrap/ @tech-lead
+/packages/sr-entitlements/     @tech-lead @security-reviewer
+/packages/sr-payment-gateways/ @tech-lead @security-reviewer
+/packages/sr-private-downloads/ @tech-lead @security-reviewer
+/docs/contracts/               @tech-lead
+/docs/adr/                     @tech-lead
+/infra/                        @devops-owner

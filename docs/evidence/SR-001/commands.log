@@ -1,0 +1,77 @@
+SR-001 command evidence
+Generated: 2026-06-25T04:52:59Z
+
+Command: git init && git switch -c docs/SR-001-baseline && git status --short
+Exit: 0
+Result:
+Initialized empty Git repository in agent-pack/.git/
+Switched to a new branch 'docs/SR-001-baseline'
+Untracked execution pack files were present as expected for a newly initialized repository.
+
+Command: python3 tools/agent/taskctl.py claim SR-001 --agent codex --branch docs/SR-001-baseline
+Exit: 0
+Result:
+CLAIMED SR-001 by codex until 2026-06-25T08:52:21.538256+00:00
+
+Command: python3 tools/agent/taskctl.py summary
+Exit: 0
+Result:
+Tasks: {'IN_PROGRESS': 1, 'BACKLOG': 75}
+Points: {'IN_PROGRESS': 2, 'BACKLOG': 586} / 588
+
+Command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+Command: sha256sum docs/EXECUTION_PLAN.md docs/baseline/PRODUCT_TECH_PRD_v1.1.full.md docs/baseline/股票指标资源下载平台_产品与技术开发文档_v1.1.md docs/baseline/股票指标资源下载平台_产品与技术开发文档_v1.0.md AGENTS.md CLAUDE.md docs/templates/*.md docs/risks/risk-register.yaml docs/evidence/README.md
+Exit: 0
+Result:
+See docs/evidence/SR-001/baseline-sha256.txt.
+
+Final validation commands are appended in the SR-001 finalization step.
+
+Command: git add -N . && git diff --check
+Exit: 2
+Result:
+Strict newly-added full-pack diff check reported pre-existing trailing whitespace in imported baseline Markdown files, including `docs/EXECUTION_PLAN.md` and `docs/baseline/*.md`.
+Root cause: this SR initialized Git metadata around an existing execution pack; `git add -N .` made historical baseline files appear as newly-added diff content.
+Decision: do not rewrite controlled PRD/manual baseline prose in SR-001. Establish a local baseline commit, then use `git diff --check` for subsequent changes.
+
+Command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+Command: python3 tools/agent/taskctl.py summary
+Exit: 0
+Result:
+Tasks: {'IN_PROGRESS': 1, 'BACKLOG': 75}
+Points: {'IN_PROGRESS': 2, 'BACKLOG': 586} / 588
+
+Command: python3 tools/agent/taskctl.py set-status SR-001 REVIEW --agent codex --evidence docs/evidence/SR-001/commands.log
+Exit: 0
+Result:
+SR-001 REVIEW
+
+Command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent
+
+Command: python3 tools/agent/taskctl.py summary
+Exit: 0
+Result:
+Tasks: {'REVIEW': 1, 'BACKLOG': 75}
+Points: {'REVIEW': 2, 'BACKLOG': 586} / 588
+
+Command: python3 tools/agent/taskctl.py ready
+Exit: 0
+Result:
+No task IDs printed because SR-001 is awaiting independent review and SR-002 depends on SR-001 VERIFIED/DONE.
+
+Command: python3 tools/agent/progress_report.py
+Exit: 0
+Result:
+Weighted progress: 1.4/588 points (0.2%)
+W1: 1.4/22 (6.4%) {'REVIEW': 1, 'BACKLOG': 5}

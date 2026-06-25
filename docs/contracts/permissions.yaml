@@ -1,0 +1,34 @@
+schema_version: 1
+roles:
+  sr_content_editor:
+    capabilities: [read, edit_sr_resources, upload_sr_resource_draft]
+    denied: [publish_sr_resources, review_sr_rights, review_sr_payments, manage_sr_entitlements]
+  sr_technical_reviewer:
+    capabilities: [read, review_sr_versions, activate_sr_versions, view_sr_scan_results]
+    denied: [review_sr_payments, manage_sr_entitlements]
+  sr_rights_reviewer:
+    capabilities: [read, review_sr_rights, view_sr_rights_evidence, take_down_sr_resources]
+    denied: [review_sr_payments]
+  sr_publisher:
+    capabilities: [read, publish_sr_resources, unpublish_sr_resources]
+    prerequisites: [technical-gate, rights-gate, commercial-gate]
+  sr_finance_reviewer:
+    capabilities: [read, claim_sr_payment_submission, view_sr_payment_proof, approve_sr_payment, reject_sr_payment]
+    restrictions: [2fa-required, no-shared-account, audit-all-actions]
+  sr_support_agent:
+    capabilities: [read, view_assigned_sr_tickets, reply_sr_tickets, view_limited_order_projection]
+    denied: [view_full_payment_proof, approve_sr_payment, manage_sr_entitlements]
+  sr_membership_operator:
+    capabilities: [read, view_sr_entitlements, manually_grant_sr_entitlement, revoke_sr_entitlement]
+    restrictions: [reason-required, second-confirmation, audit-all-actions]
+  sr_operations_analyst:
+    capabilities: [read, view_sr_reports, export_sr_aggregated_reports]
+    denied: [view_sr_payment_proof, modify_orders, modify_entitlements]
+  administrator:
+    capabilities: [manage_options]
+    note: WordPress administrator does not automatically receive high-risk sr capabilities; explicit assignment is required.
+rules:
+  - REST permission_callback checks capability and row-level object ownership.
+  - Nonce protects CSRF only and never substitutes for authorization.
+  - Proof/evidence attachment URLs are private, short-lived and role-checked on every request.
+  - Bulk operations have explicit maximum item counts and per-item audit records.

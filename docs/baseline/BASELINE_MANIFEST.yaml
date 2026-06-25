@@ -1,0 +1,36 @@
+schema_version: 1
+generated_at: '2026-06-25T04:52:59Z'
+precedence:
+- approved Gate 0 and ADR decisions
+- AI Agent execution manual v1.0
+- product and technical PRD v1.1
+- product and technical PRD v1.0
+files:
+- filename: 股票指标资源下载平台_产品与技术开发文档_v1.0.docx
+  sha256: 256b3c0732115377c0d49c6d5b1d3b441bd255bf34dc9c479eb76dc36ce5793e
+  bytes: 863598
+  included_in_pack: false
+- filename: 股票指标资源下载平台_产品与技术开发文档_v1.0.md
+  sha256: 5dadaf6f1318e390b6f47d694b0053f5db5ea845ba82dcfe2bd0d4a23bef6cef
+  bytes: 4131
+  included_in_pack: true
+- filename: 股票指标资源下载平台_产品与技术开发文档_v1.1.docx
+  sha256: 45c8275adf66602341426e0ec2fa367f37b74bea704ab9f85c36a85489ae4ec0
+  bytes: 996658
+  included_in_pack: false
+- filename: 股票指标资源下载平台_产品与技术开发文档_v1.1.md
+  sha256: 12dc1c38a9011186268bb3c1535d882c7b2dc5d18dbb28d41ac3042a006f849a
+  bytes: 6097
+  included_in_pack: true
+- filename: PRODUCT_TECH_PRD_v1.1.full.md
+  sha256: cbcb65bb923de37e7a5a32f5ab59528c871fe0fc0674ea138c2aadc56c67641f
+  bytes: 189629
+  included_in_pack: true
+- filename: 股票指标资源下载平台_AI_Agent执行开发手册_v1.0.md
+  sha256: 8f90c77e4f8572f5b07ca58f688b1bd0b96644b4cb5a373475b281ccfb33c2a3
+  bytes: 80993
+  included_in_pack: true
+- filename: docs/EXECUTION_PLAN.md
+  sha256: 3c8df2845ed2b7aabe27351dd7f4759d082ce4962faee6fe754afe7e9fe81f20
+  bytes: 80929
+  included_in_pack: true

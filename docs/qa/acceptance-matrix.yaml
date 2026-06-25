@@ -1,0 +1,67 @@
+schema_version: 1
+suites:
+  resource:
+  - id: AC-R-001
+    scenario: 发布资源字段完整并可搜索
+    priority: P0
+  - id: AC-R-002
+    scenario: 无有效版权记录时无法发布付费资源
+    priority: P0
+  - id: AC-R-003
+    scenario: 新版本上传不覆盖历史对象
+    priority: P0
+  payment:
+  - id: AC-P-001
+    scenario: pending 订单可提交一次有效付款凭证
+    priority: P0
+  - id: AC-P-002
+    scenario: 重复交易指纹不能批准到两个订单
+    priority: P0
+  - id: AC-P-003
+    scenario: 批准操作重试不重复完成订单
+    priority: P0
+  - id: AC-P-004
+    scenario: 非审核角色无法查看凭证或批准
+    priority: P0
+  entitlement:
+  - id: AC-E-001
+    scenario: 订单完成仅发放一次单品/VIP 权益
+    priority: P0
+  - id: AC-E-002
+    scenario: 有效同套餐续费从原到期日顺延
+    priority: P0
+  - id: AC-E-003
+    scenario: 退款立即撤权并撤销未消费令牌
+    priority: P0
+  - id: AC-E-004
+    scenario: 多 VIP 权益选择结果稳定
+    priority: P0
+  - id: AC-E-005
+    scenario: 第 N 次下载成功，第 N+1 次被拒绝
+    priority: P0
+  download:
+  - id: AC-D-001
+    scenario: 无授权不能创建令牌
+    priority: P0
+  - id: AC-D-002
+    scenario: 令牌只能消费一次且过期不可用
+    priority: P0
+  - id: AC-D-003
+    scenario: 100 并发不超发配额
+    priority: P0
+  - id: AC-D-004
+    scenario: 签名/对象存储失败释放预占
+    priority: P0
+  - id: AC-D-005
+    scenario: 复制签名 URL 超时后不可访问
+    priority: P0
+  upgrade:
+  - id: AC-U-001
+    scenario: 全新安装、从上个 schema 升级均通过
+    priority: P0
+  - id: AC-U-002
+    scenario: EDD/WordPress 锁版本回归通过
+    priority: P0
+  - id: AC-U-003
+    scenario: 数据库和对象存储恢复演练通过
+    priority: P0

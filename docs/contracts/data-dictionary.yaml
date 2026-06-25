@@ -1,0 +1,50 @@
+schema_version: 1
+database:
+  engine: MariaDB 10.11
+  charset: utf8mb4
+  timezone: UTC
+  prefix: $wpdb->prefix
+truth_owners:
+  wordpress_edd:
+  - users
+  - customers
+  - downloads
+  - prices
+  - orders
+  - order_items
+  - discounts
+  sr-core:
+  - resource metadata
+  - taxonomies
+  - resource versions
+  sr-payment-gateways:
+  - payment submissions and review evidence
+  sr-entitlements:
+  - entitlements
+  - quota counters
+  sr-private-downloads:
+  - download tokens
+  - download events
+  sr-admin-ops:
+  - rights records
+  - audit logs
+  - outbox
+  - tickets
+  - favorites
+invariants:
+- Every completed EDD order item grants at most one entitlement segment.
+- Historical entitlement segments are immutable except status/revocation metadata.
+- Only one active current resource version may exist per resource.
+- used_count + reserved_count never exceeds limit_snapshot.
+- A raw download token is never stored; only an HMAC hash is persisted.
+- A payment transaction fingerprint can approve at most one order.
+- Storage keys are never exposed by public DTOs or logs.
+- All DATETIME values are UTC; quota period keys are derived in Asia/Shanghai.
+retention_defaults:
+  payment_proof: 180 days after order closure, subject to approved legal/accounting
+    policy
+  audit_logs: minimum 365 days
+  download_events: 180 days online then archive/aggregate
+  idempotency_keys: 24 hours for download/payment API; longer for approval commands
+    where required
+  expired_tokens: 30 days for incident correlation, without raw token

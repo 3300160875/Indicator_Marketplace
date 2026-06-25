@@ -1,0 +1,665 @@
+openapi: 3.1.0
+info:
+  title: Stock Indicator Resource Platform API
+  version: 1.0.0
+  description: |
+    WordPress REST API namespace for resources, entitlements, manual payment review,
+    private download delivery, favorites, tickets and administration. Browser write
+    requests use WordPress cookie authentication plus X-WP-Nonce. Every response
+    includes X-Request-ID. Money is a decimal string in CNY; timestamps are UTC.
+servers:
+  - url: /wp-json/sr/v1
+tags:
+  - { name: Resources }
+  - { name: Account }
+  - { name: Payment }
+  - { name: Downloads }
+  - { name: Support }
+  - { name: Admin }
+paths:
+  /resources:
+    get:
+      tags: [Resources]
+      operationId: listResources
+      parameters:
+        - { $ref: '#/components/parameters/Page' }
+        - { $ref: '#/components/parameters/PerPage' }
+        - { name: search, in: query, schema: { type: string, maxLength: 100 } }
+        - { name: category, in: query, schema: { type: string } }
+        - { name: platform, in: query, schema: { type: string } }
+        - { name: indicator_type, in: query, schema: { type: string } }
+        - { name: access_mode, in: query, schema: { $ref: '#/components/schemas/AccessMode' } }
+        - { name: orderby, in: query, schema: { type: string, enum: [relevance, published_at, updated_at, popularity, price] } }
+        - { name: order, in: query, schema: { type: string, enum: [asc, desc], default: desc } }
+      responses:
+        '200':
+          description: Published resource list
+          headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ResourceListResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /resources/{idOrSlug}:
+    get:
+      tags: [Resources]
+      operationId: getResource
+      parameters:
+        - name: idOrSlug
+          in: path
+          required: true
+          schema: { type: string, minLength: 1, maxLength: 200 }
+      responses:
+        '200':
+          description: Published public resource view; access_decision is present only for an authenticated user
+          headers: { X-Request-ID: { $ref: '#/components/headers/RequestId' } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ResourceResponse' }
+        '404': { $ref: '#/components/responses/ResourceUnavailable' }
+  /taxonomies:
+    get:
+      tags: [Resources]
+      operationId: listTaxonomies
+      responses:
+        '200':
+          description: Controlled public taxonomies
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, request_id]
+                properties:
+                  data:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items: { $ref: '#/components/schemas/TaxonomyTerm' }
+                  request_id: { $ref: '#/components/schemas/Uuid' }
+  /vip/plans:
+    get:
+      tags: [Resources]
+      operationId: listVipPlans
+      responses:
+        '200':
+          description: Saleable membership plans and transparent scope/quota rules
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, request_id]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/MembershipPlan' } }
+                  request_id: { $ref: '#/components/schemas/Uuid' }
+  /me/entitlements:
+    get:
+      tags: [Account]
+      operationId: listMyEntitlements
+      security: [{ wordpressCookieNonce: [] }]
+      responses:
+        '200':
+          description: Current user's entitlement segments
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, request_id]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Entitlement' } }
+                  request_id: { $ref: '#/components/schemas/Uuid' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+  /me/quota:
+    get:
+      tags: [Account]
+      operationId: getMyQuota
+      security: [{ wordpressCookieNonce: [] }]
+      responses:
+        '200':
+          description: Current user's effective membership quota
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/QuotaResponse' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+  /me/orders:
+    get:
+      tags: [Account]
+      operationId: listMyOrders
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/Page' }
+        - { $ref: '#/components/parameters/PerPage' }
+      responses:
+        '200':
+          description: Current user's EDD order projections
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination, request_id]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/OrderSummary' } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+                  request_id: { $ref: '#/components/schemas/Uuid' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+  /orders/{orderId}/payment-proof:
+    post:
+      tags: [Payment]
+      operationId: submitPaymentProof
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/OrderId' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [channel, reported_amount, reported_paid_at, proof]
+              properties:
+                channel: { type: string, enum: [wechat, alipay, other] }
+                reported_amount: { $ref: '#/components/schemas/MoneyString' }
+                reported_paid_at: { type: string, format: date-time }
+                payer_note: { type: string, maxLength: 255 }
+                proof: { type: string, format: binary, description: JPG, PNG or PDF; maximum 8 MiB }
+      responses:
+        '201':
+          description: Submission accepted; the order remains pending until manual ledger verification
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentSubmissionResponse' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/StateConflict' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /orders/{orderId}/payment-status:
+    get:
+      tags: [Payment]
+      operationId: getPaymentStatus
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/OrderId' }
+      responses:
+        '200':
+          description: Payment review timeline visible to the order owner
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentSubmissionResponse' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/ResourceUnavailable' }
+  /download-tokens:
+    post:
+      tags: [Downloads]
+      operationId: createDownloadToken
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [resource_id, version_id]
+              properties:
+                resource_id: { $ref: '#/components/schemas/PositiveId' }
+                version_id: { $ref: '#/components/schemas/PositiveId' }
+      responses:
+        '201':
+          description: One-time site token issued; raw object storage key is never returned
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DownloadTokenResponse' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '409': { $ref: '#/components/responses/StateConflict' }
+        '422': { $ref: '#/components/responses/AccessDenied' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '503': { $ref: '#/components/responses/StorageUnavailable' }
+  /download/{token}:
+    get:
+      tags: [Downloads]
+      operationId: consumeDownloadToken
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema: { type: string, minLength: 32, maxLength: 128 }
+      responses:
+        '302':
+          description: Redirect to a short-lived private object-storage URL; quota is committed before redirect
+          headers:
+            Location: { schema: { type: string, format: uri } }
+            Cache-Control: { schema: { type: string, example: 'private, no-store' } }
+            X-Request-ID: { $ref: '#/components/headers/RequestId' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '410': { $ref: '#/components/responses/TokenGone' }
+        '503': { $ref: '#/components/responses/StorageUnavailable' }
+  /resources/{resourceId}/favorite:
+    post:
+      tags: [Account]
+      operationId: addFavorite
+      security: [{ wordpressCookieNonce: [] }]
+      parameters: [{ $ref: '#/components/parameters/ResourceId' }]
+      responses:
+        '204': { description: Favorite created or already present }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+    delete:
+      tags: [Account]
+      operationId: removeFavorite
+      security: [{ wordpressCookieNonce: [] }]
+      parameters: [{ $ref: '#/components/parameters/ResourceId' }]
+      responses:
+        '204': { description: Favorite removed or already absent }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+  /tickets:
+    post:
+      tags: [Support]
+      operationId: createTicket
+      security: [{ wordpressCookieNonce: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateTicketRequest' }
+      responses:
+        '201':
+          description: Ticket created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TicketResponse' }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/payment-submissions/{submissionId}/claim:
+    post:
+      tags: [Admin]
+      operationId: claimPaymentSubmission
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/SubmissionId' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [lock_version]
+              properties: { lock_version: { type: integer, minimum: 0 } }
+      responses:
+        '200':
+          description: Submission claimed by current reviewer
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentSubmissionResponse' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/StateConflict' }
+  /admin/payment-submissions/{submissionId}/approve:
+    post:
+      tags: [Admin]
+      operationId: approvePaymentSubmission
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/SubmissionId' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [external_reference, verified_amount, verified_paid_at, lock_version]
+              properties:
+                external_reference: { type: string, minLength: 4, maxLength: 128 }
+                verified_amount: { $ref: '#/components/schemas/MoneyString' }
+                verified_paid_at: { type: string, format: date-time }
+                lock_version: { type: integer, minimum: 0 }
+                internal_note: { type: string, maxLength: 2000 }
+      responses:
+        '200':
+          description: Approved exactly once; the EDD order is completed and entitlement listener executes
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentSubmissionResponse' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/StateConflict' }
+  /admin/payment-submissions/{submissionId}/reject:
+    post:
+      tags: [Admin]
+      operationId: rejectPaymentSubmission
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/SubmissionId' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decision_code, user_message, lock_version]
+              properties:
+                decision_code:
+                  type: string
+                  enum: [AMOUNT_MISMATCH, TRANSACTION_NOT_FOUND, DUPLICATE_TRANSACTION, PROOF_UNREADABLE, ORDER_EXPIRED, WRONG_ACCOUNT, NEEDS_MORE_INFO, RISK_REVIEW]
+                user_message: { type: string, minLength: 1, maxLength: 1000 }
+                internal_note: { type: string, maxLength: 2000 }
+                lock_version: { type: integer, minimum: 0 }
+      responses:
+        '200':
+          description: Submission rejected or moved to needs-more-info according to decision code
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentSubmissionResponse' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/StateConflict' }
+  /admin/resources/{resourceId}/versions:
+    post:
+      tags: [Admin]
+      operationId: createResourceVersion
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/ResourceId' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [version_label, file]
+              properties:
+                version_label: { type: string, minLength: 1, maxLength: 64 }
+                release_notes: { type: string, maxLength: 10000 }
+                file: { type: string, format: binary }
+      responses:
+        '202':
+          description: Version placed in quarantine and scan scheduled
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/VersionResponse' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/resources/{resourceId}/publish:
+    post:
+      tags: [Admin]
+      operationId: publishResource
+      security: [{ wordpressCookieNonce: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/ResourceId' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      responses:
+        '200': { description: Publication gates passed and resource published }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/StateConflict' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+components:
+  securitySchemes:
+    wordpressCookieNonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+      description: WordPress logged-in cookie plus REST nonce; nonce never replaces capability and ownership checks.
+  headers:
+    RequestId:
+      schema: { $ref: '#/components/schemas/Uuid' }
+  parameters:
+    Page: { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+    PerPage: { name: per_page, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+    OrderId: { name: orderId, in: path, required: true, schema: { $ref: '#/components/schemas/PositiveId' } }
+    ResourceId: { name: resourceId, in: path, required: true, schema: { $ref: '#/components/schemas/PositiveId' } }
+    SubmissionId: { name: submissionId, in: path, required: true, schema: { $ref: '#/components/schemas/PositiveId' } }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: { type: string, minLength: 8, maxLength: 128 }
+  schemas:
+    PositiveId: { type: integer, minimum: 1 }
+    Uuid: { type: string, format: uuid }
+    MoneyString: { type: string, pattern: '^(0|[1-9][0-9]*)(\\.[0-9]{1,2})?$', example: '39.00' }
+    AccessMode: { type: string, enum: [free, purchase, vip, purchase_or_vip, unavailable] }
+    AccessSource: { type: string, enum: [FREE, PURCHASE, MANUAL, VIP, NONE] }
+    Pagination:
+      type: object
+      required: [page, per_page, total, total_pages]
+      properties:
+        page: { type: integer, minimum: 1 }
+        per_page: { type: integer, minimum: 1, maximum: 100 }
+        total: { type: integer, minimum: 0 }
+        total_pages: { type: integer, minimum: 0 }
+    TaxonomyTerm:
+      type: object
+      required: [id, taxonomy, slug, name, count]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        taxonomy: { type: string }
+        slug: { type: string }
+        name: { type: string }
+        count: { type: integer, minimum: 0 }
+    VersionSummary:
+      type: object
+      required: [id, version_label, status, file_size, sha256, activated_at]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        version_label: { type: string }
+        status: { type: string, enum: [draft, scanning, review, active, suspended, archived, quarantine] }
+        file_size: { type: integer, minimum: 0 }
+        sha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+        compatibility: { type: object, additionalProperties: true }
+        release_notes: { type: string }
+        activated_at: { type: [string, 'null'], format: date-time }
+    AccessDecision:
+      type: object
+      required: [allowed, source, reason_code, consume_quota, cta, trace_id]
+      properties:
+        allowed: { type: boolean }
+        source: { $ref: '#/components/schemas/AccessSource' }
+        reason_code: { type: string }
+        entitlement_id: { type: [integer, 'null'], minimum: 1 }
+        consume_quota: { type: boolean }
+        remaining_quota: { type: [integer, 'null'], minimum: 0 }
+        reset_at: { type: [string, 'null'], format: date-time }
+        expires_at: { type: [string, 'null'], format: date-time }
+        cta: { type: string, enum: [DOWNLOAD, PURCHASE, LOGIN, JOIN_VIP, WAIT, UNAVAILABLE] }
+        trace_id: { $ref: '#/components/schemas/Uuid' }
+    ResourceSummary:
+      type: object
+      required: [id, slug, title, excerpt, permalink, access_mode, price, taxonomies, updated_at]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        slug: { type: string }
+        title: { type: string }
+        excerpt: { type: string }
+        thumbnail_url: { type: [string, 'null'], format: uri }
+        permalink: { type: string, format: uri-reference }
+        access_mode: { $ref: '#/components/schemas/AccessMode' }
+        price: { $ref: '#/components/schemas/MoneyString' }
+        taxonomies: { type: object, additionalProperties: { type: array, items: { $ref: '#/components/schemas/TaxonomyTerm' } } }
+        updated_at: { type: string, format: date-time }
+    ResourceDetail:
+      allOf:
+        - { $ref: '#/components/schemas/ResourceSummary' }
+        - type: object
+          required: [content_html, compatibility, current_version, risk_notice]
+          properties:
+            content_html: { type: string, description: Sanitized public HTML only }
+            compatibility: { type: object, additionalProperties: true }
+            limitations_html: { type: string }
+            install_steps_html: { type: string }
+            current_version: { $ref: '#/components/schemas/VersionSummary' }
+            risk_notice: { type: string }
+            access_decision: { oneOf: [{ $ref: '#/components/schemas/AccessDecision' }, { type: 'null' }] }
+    ResourceListResponse:
+      type: object
+      required: [data, pagination, request_id]
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/ResourceSummary' } }
+        pagination: { $ref: '#/components/schemas/Pagination' }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+    ResourceResponse:
+      type: object
+      required: [data, request_id]
+      properties:
+        data: { $ref: '#/components/schemas/ResourceDetail' }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+    MembershipPlan:
+      type: object
+      required: [download_id, code, name, price, duration, scope, quota, rules_version]
+      properties:
+        download_id: { $ref: '#/components/schemas/PositiveId' }
+        code: { type: string }
+        name: { type: string }
+        price: { $ref: '#/components/schemas/MoneyString' }
+        duration:
+          type: object
+          required: [value, unit]
+          properties:
+            value: { type: integer, minimum: 1 }
+            unit: { type: string, enum: [day, month, year] }
+        scope: { type: object, additionalProperties: true }
+        excluded_resource_ids: { type: array, items: { $ref: '#/components/schemas/PositiveId' } }
+        quota:
+          type: object
+          required: [period, limit, redownload_policy]
+          properties:
+            period: { type: string, enum: [day, week, month, total] }
+            limit: { type: integer, minimum: 1 }
+            redownload_policy: { type: string, enum: [count_each, same_resource_once_per_period] }
+        rules_version: { type: string }
+    Entitlement:
+      type: object
+      required: [id, grant_type, status, starts_at, scope, rules_version]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        grant_type: { type: string, enum: [resource, membership, manual] }
+        status: { type: string, enum: [pending, active, expired, revoked, suspended] }
+        starts_at: { type: string, format: date-time }
+        expires_at: { type: [string, 'null'], format: date-time }
+        scope: { type: object, additionalProperties: true }
+        quota: { type: [object, 'null'], additionalProperties: true }
+        rules_version: { type: string }
+        source_order_id: { type: [integer, 'null'], minimum: 1 }
+    QuotaResponse:
+      type: object
+      required: [data, request_id]
+      properties:
+        data:
+          type: object
+          required: [period, used, reserved, limit, remaining, reset_at]
+          properties:
+            entitlement_id: { type: [integer, 'null'], minimum: 1 }
+            period: { type: string }
+            used: { type: integer, minimum: 0 }
+            reserved: { type: integer, minimum: 0 }
+            limit: { type: integer, minimum: 0 }
+            remaining: { type: integer, minimum: 0 }
+            reset_at: { type: [string, 'null'], format: date-time }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+    OrderSummary:
+      type: object
+      required: [id, order_number, status, total, currency, created_at, items]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        order_number: { type: string }
+        status: { type: string }
+        total: { $ref: '#/components/schemas/MoneyString' }
+        currency: { type: string, const: CNY }
+        created_at: { type: string, format: date-time }
+        items: { type: array, items: { type: object, additionalProperties: true } }
+    PaymentSubmission:
+      type: object
+      required: [id, order_id, state, channel, expected_amount, reported_amount, submitted_at, lock_version]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        order_id: { $ref: '#/components/schemas/PositiveId' }
+        state: { type: string, enum: [submitted, under_review, approved, needs_more_info, rejected, cancelled] }
+        channel: { type: string }
+        expected_amount: { $ref: '#/components/schemas/MoneyString' }
+        reported_amount: { $ref: '#/components/schemas/MoneyString' }
+        reported_paid_at: { type: string, format: date-time }
+        decision_code: { type: [string, 'null'] }
+        user_message: { type: [string, 'null'] }
+        submitted_at: { type: string, format: date-time }
+        reviewed_at: { type: [string, 'null'], format: date-time }
+        lock_version: { type: integer, minimum: 0 }
+    PaymentSubmissionResponse:
+      type: object
+      required: [data, request_id]
+      properties:
+        data: { $ref: '#/components/schemas/PaymentSubmission' }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+    DownloadTokenResponse:
+      type: object
+      required: [request_id, download_url, expires_at, access_source]
+      properties:
+        request_id: { $ref: '#/components/schemas/Uuid' }
+        download_url: { type: string, format: uri-reference }
+        expires_at: { type: string, format: date-time }
+        access_source: { $ref: '#/components/schemas/AccessSource' }
+        remaining_quota: { type: [integer, 'null'], minimum: 0 }
+    CreateTicketRequest:
+      type: object
+      required: [type, subject, body]
+      properties:
+        type: { type: string, enum: [order, payment, download, resource, account, other] }
+        subject: { type: string, minLength: 1, maxLength: 255 }
+        body: { type: string, minLength: 1, maxLength: 10000 }
+        order_id: { type: [integer, 'null'], minimum: 1 }
+        resource_id: { type: [integer, 'null'], minimum: 1 }
+        download_event_id: { type: [integer, 'null'], minimum: 1 }
+    TicketResponse:
+      type: object
+      required: [data, request_id]
+      properties:
+        data: { type: object, additionalProperties: true }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+    VersionResponse:
+      type: object
+      required: [data, request_id]
+      properties:
+        data: { $ref: '#/components/schemas/VersionSummary' }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+    Error:
+      type: object
+      required: [error_code, message, request_id]
+      properties:
+        error_code: { type: string }
+        message: { type: string }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+        field_errors:
+          type: object
+          additionalProperties: { type: array, items: { type: string } }
+        retry_after: { type: [integer, 'null'], minimum: 0 }
+        meta: { type: object, additionalProperties: true }
+  responses:
+    ValidationError:
+      description: Input validation failed
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    AuthRequired:
+      description: Login required
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Forbidden:
+      description: Capability or object ownership check failed
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    ResourceUnavailable:
+      description: Object does not exist or is not visible in this context
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    StateConflict:
+      description: State, lock version or idempotency conflict
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    AccessDenied:
+      description: Purchase, VIP, scope or quota rule prevents download
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    TokenGone:
+      description: Token expired, consumed or revoked
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    RateLimited:
+      description: Request rate limited
+      headers: { Retry-After: { schema: { type: integer, minimum: 1 } } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    StorageUnavailable:
+      description: Private storage or signing service unavailable; no successful quota use should be recorded before redirect
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }

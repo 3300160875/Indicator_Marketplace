@@ -1,0 +1,67 @@
+schema_version: 1
+updated_at: '2026-06-24T00:00:00Z'
+risks:
+- id: R-001
+  category: compliance
+  title: Gate 0 未完成却开启交易
+  probability: medium
+  impact: critical
+  owner: business
+  mitigation: Feature Flags 默认关闭，发布门禁检查
+  status: open
+- id: R-002
+  category: integration
+  title: EDD 3.6.9 订单/退款 Hook 假设不成立
+  probability: medium
+  impact: high
+  owner: architecture
+  mitigation: SR-006 Spike + 合约测试
+  status: open
+- id: R-003
+  category: security
+  title: 受限资源 URL 泄露或令牌重放
+  probability: medium
+  impact: high
+  owner: downloads
+  mitigation: 私有桶、一次性令牌、120 秒签名、审计
+  status: open
+- id: R-004
+  category: integrity
+  title: 并发配额超发或重复发放权益
+  probability: medium
+  impact: high
+  owner: entitlements
+  mitigation: 数据库唯一键、行锁、幂等测试
+  status: open
+- id: R-005
+  category: operations
+  title: 人工付款错审/重复认领
+  probability: medium
+  impact: high
+  owner: payments
+  mitigation: 双重幂等、指纹、审计、抽检
+  status: open
+- id: R-006
+  category: content
+  title: 资源版权或指标宣传违规
+  probability: medium
+  impact: critical
+  owner: content
+  mitigation: 版权 Gate、敏感词、下架 SLA、声明版本
+  status: open
+- id: R-007
+  category: schedule
+  title: 多 Agent 并行改共享契约导致返工
+  probability: high
+  impact: medium
+  owner: tech-lead
+  mitigation: 路径锁、WIP=1、共享契约 CODEOWNERS
+  status: open
+- id: R-008
+  category: upgrade
+  title: WordPress/EDD 安全升级破坏兼容
+  probability: medium
+  impact: high
+  owner: devops
+  mitigation: 锁版本、staging 升级矩阵、不可变制品回滚
+  status: open

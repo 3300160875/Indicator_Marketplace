@@ -1,0 +1,688 @@
+schema_version: 1
+updated_at: '2026-06-25T04:55:14.372239+00:00'
+tasks:
+  SR-001:
+    status: REVIEW
+    owner: codex
+    branch: docs/SR-001-baseline
+    claimed_at: '2026-06-25T04:52:21.538256+00:00'
+    updated_at: '2026-06-25T04:55:14.372228+00:00'
+    pr: null
+    evidence:
+    - docs/evidence/SR-001/commands.log
+    blockers: []
+  SR-002:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-003:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-004:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-005:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-006:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-007:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-008:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-009:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-010:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-011:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-012:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-013:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-014:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-015:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-016:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-017:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-018:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-019:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-020:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-021:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-022:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-023:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-024:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-025:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-026:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-027:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-028:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-029:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-030:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-031:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-032:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-033:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-034:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-035:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-036:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-037:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-038:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-039:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-040:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-041:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-042:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-043:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-044:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-045:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-046:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-047:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-048:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-049:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-050:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-051:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-052:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-053:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-054:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-055:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-056:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-057:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-058:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-059:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-060:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-061:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-062:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-063:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-064:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-065:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-066:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-067:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-068:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-069:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-070:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-071:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-072:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-073:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-074:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-075:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []
+  SR-076:
+    status: BACKLOG
+    owner: null
+    branch: null
+    claimed_at: null
+    updated_at: '2026-06-24T00:00:00Z'
+    pr: null
+    evidence: []
+    blockers: []

@@ -1,0 +1,64 @@
+schema_version: 1
+envelope:
+  required: [event_id, event_name, occurred_at, aggregate_type, aggregate_id, request_id, schema_version, payload]
+  fields:
+    event_id: uuid
+    event_name: stable_string
+    occurred_at: ISO-8601 UTC
+    aggregate_type: string
+    aggregate_id: string
+    request_id: uuid
+    causation_id: uuid|null
+    correlation_id: uuid|null
+    schema_version: positive_integer
+    payload: object
+rules:
+  - Transactional producers write the event to sr_outbox_events in the same database transaction.
+  - Consumers are idempotent by event_id/event_key and never assume exactly-once transport.
+  - Payloads contain IDs and immutable snapshots, not raw tokens, payment proofs, cookies or secrets.
+  - Event names and existing fields are never reused with different semantics.
+events:
+  - name: order.payment_proof_submitted
+    producer: sr-payment-gateways
+    consumers: [sr-admin-ops]
+    payload_required: [submission_id, order_id, user_id, state]
+  - name: order.payment_reviewed
+    producer: sr-payment-gateways
+    consumers: [sr-admin-ops]
+    payload_required: [submission_id, order_id, decision_code, reviewer_id]
+  - name: order.completed
+    producer: sr-core/EddOrderAdapter
+    consumers: [sr-entitlements, sr-admin-ops]
+    payload_required: [order_id, customer_id, completed_at, order_item_ids]
+  - name: order.refunded
+    producer: sr-core/EddOrderAdapter
+    consumers: [sr-entitlements, sr-private-downloads, sr-admin-ops]
+    payload_required: [order_id, refunded_order_item_ids, refunded_at]
+  - name: entitlement.activated
+    producer: sr-entitlements
+    consumers: [sr-admin-ops]
+    payload_required: [entitlement_id, user_id, grant_type, starts_at, expires_at, rules_version]
+  - name: entitlement.revoked
+    producer: sr-entitlements
+    consumers: [sr-private-downloads, sr-admin-ops]
+    payload_required: [entitlement_id, user_id, reason_code, revoked_at]
+  - name: membership.expiring
+    producer: sr-entitlements
+    consumers: [sr-admin-ops]
+    payload_required: [entitlement_id, user_id, expires_at, days_remaining]
+  - name: resource.version_activated
+    producer: sr-core
+    consumers: [sr-private-downloads, sr-admin-ops]
+    payload_required: [resource_id, version_id, sha256, activated_at]
+  - name: resource.taken_down
+    producer: sr-core/sr-admin-ops
+    consumers: [sr-entitlements, sr-private-downloads, sr-admin-ops]
+    payload_required: [resource_id, reason_code, taken_down_at]
+  - name: download.redirected
+    producer: sr-private-downloads
+    consumers: [sr-admin-ops]
+    payload_required: [download_event_id, request_id, user_id, resource_id, version_id, access_source, counted]
+  - name: download.failed
+    producer: sr-private-downloads
+    consumers: [sr-admin-ops]
+    payload_required: [download_event_id, request_id, failure_code, quota_released]

@@ -1,0 +1,41 @@
+schema_version: 1
+machines:
+  resource_version:
+    initial: draft
+    terminal: [archived]
+    transitions:
+      draft: [scanning]
+      scanning: [review, quarantine, draft]
+      quarantine: [draft, archived]
+      review: [active, draft, archived]
+      active: [suspended, archived]
+      suspended: [active, archived]
+  payment_submission:
+    initial: submitted
+    terminal: [approved, rejected, cancelled]
+    transitions:
+      submitted: [under_review, cancelled]
+      under_review: [approved, needs_more_info, rejected, submitted]
+      needs_more_info: [submitted, cancelled]
+  entitlement:
+    initial: pending
+    terminal: [expired, revoked]
+    transitions:
+      pending: [active, revoked]
+      active: [expired, revoked, suspended]
+      suspended: [active, revoked, expired]
+  download_token:
+    initial: issued
+    terminal: [consumed, expired, revoked, failed]
+    transitions:
+      issued: [consumed, expired, revoked, failed]
+  outbox_event:
+    initial: pending
+    terminal: [processed, dead_letter]
+    transitions:
+      pending: [processing, dead_letter]
+      processing: [processed, pending, dead_letter]
+rules:
+  - Every transition validates the current state under a row lock or optimistic lock_version.
+  - Illegal transitions return a stable state-conflict error and are audited when high risk.
+  - Time-based validity is checked at request time; cron is not the only expiry mechanism.

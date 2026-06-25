@@ -1,0 +1,30 @@
+schema_version: 1
+errors:
+- http: 400
+  code: VALIDATION_ERROR
+- http: 401
+  code: AUTH_REQUIRED
+- http: 403
+  code: FORBIDDEN
+- http: 404
+  code: RESOURCE_UNAVAILABLE
+- http: 409
+  code: ORDER_STATE_CONFLICT
+- http: 409
+  code: DUPLICATE_TRANSACTION
+- http: 409
+  code: IDEMPOTENCY_CONFLICT
+- http: 410
+  code: TOKEN_EXPIRED
+- http: 410
+  code: TOKEN_USED
+- http: 422
+  code: PURCHASE_REQUIRED
+- http: 422
+  code: VIP_REQUIRED
+- http: 422
+  code: QUOTA_EXHAUSTED
+- http: 429
+  code: RATE_LIMITED
+- http: 503
+  code: STORAGE_UNAVAILABLE

@@ -1,0 +1,1471 @@
+schema_version: 1
+project: stock-indicator-platform
+baseline: agent-execution-v1.0
+task_states:
+- BACKLOG
+- READY
+- IN_PROGRESS
+- BLOCKED
+- REVIEW
+- VERIFIED
+- DONE
+tasks:
+- id: SR-001
+  milestone: W1
+  epic: EP00
+  module: governance
+  title: 建立仓库与受控文档基线
+  points: 2
+  deps: []
+  paths:
+  - AGENTS.md
+  - CLAUDE.md
+  - docs/**
+  acceptance:
+  - 根目录 Agent 规则可被 Codex/Claude Code 直接读取
+  - PRD V1.1 与本执行手册在 docs/baseline 中登记 SHA-256
+  - 建立 ADR、任务卡、交接、风险模板
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-002
+  milestone: W1
+  epic: EP01
+  module: foundation
+  title: 从 Roots Bedrock 1.31.0 初始化工程
+  points: 3
+  deps:
+  - SR-001
+  paths:
+  - composer.json
+  - config/**
+  - web/**
+  acceptance:
+  - WordPress 7.0 与 EDD 3.6.9 被 Composer 锁定
+  - composer.lock 提交
+  - 禁止修改 WordPress/EDD 核心文件
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-003
+  milestone: W1
+  epic: EP01
+  module: infra
+  title: 建立 Docker Compose 本地环境
+  points: 5
+  deps:
+  - SR-002
+  paths:
+  - infra/docker/**
+  - docker-compose.yml
+  - .env.example
+  acceptance:
+  - Nginx/PHP-FPM/MariaDB/Redis/MinIO/Mailpit 一键启动
+  - make bootstrap 在空机器完成安装
+  - 环境变量不含真实密钥
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-004
+  milestone: W1
+  epic: EP01
+  module: tooling
+  title: 建立 Makefile 与开发命令
+  points: 2
+  deps:
+  - SR-003
+  paths:
+  - Makefile
+  - bin/**
+  acceptance:
+  - 提供 up/down/reset/install/migrate/seed/lint/test/e2e/status 命令
+  - 命令失败返回非零状态
+  - README 含首次启动步骤
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-005
+  milestone: W1
+  epic: EP01
+  module: ci
+  title: 建立 CI 最小门禁
+  points: 5
+  deps:
+  - SR-002
+  paths:
+  - .github/workflows/**
+  - phpcs.xml
+  - phpstan.neon
+  - package.json
+  acceptance:
+  - PHP lint、PHPCS、PHPStan、单测、前端 lint 在 PR 自动运行
+  - 依赖缓存生效
+  - 失败阻止合并
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-006
+  milestone: W1
+  epic: EP00
+  module: architecture
+  title: 完成技术 Spike 与 ADR-001～006
+  points: 5
+  deps:
+  - SR-002
+  - SR-003
+  paths:
+  - docs/adr/**
+  - docs/spikes/**
+  acceptance:
+  - 验证 EDD 完成订单 Hook
+  - 验证 EDD 订单项 ID 和退款数据
+  - 验证 MariaDB 事务/SELECT FOR UPDATE
+  - 验证 MinIO 签名 URL 与对象私有性
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-007
+  milestone: W2
+  epic: EP02
+  module: contracts
+  title: 创建 sr-contracts 共享契约包
+  points: 5
+  deps:
+  - SR-006
+  paths:
+  - packages/sr-contracts/**
+  acceptance:
+  - 定义 DTO、值对象、服务接口、领域错误
+  - 包不依赖 WordPress 全局函数
+  - 单元测试覆盖值对象非法输入
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-008
+  milestone: W2
+  epic: EP02
+  module: bootstrap
+  title: 创建 sr-platform-bootstrap MU Plugin
+  points: 5
+  deps:
+  - SR-007
+  paths:
+  - packages/sr-platform-bootstrap/**
+  acceptance:
+  - 检查 WP/EDD/PHP/插件版本
+  - 加载 Feature Flags 与服务容器
+  - 依赖缺失时后台明确阻断而非白屏
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-009
+  milestone: W2
+  epic: EP02
+  module: plugins
+  title: 创建五个插件骨架与激活依赖
+  points: 5
+  deps:
+  - SR-008
+  paths:
+  - packages/sr-core/**
+  - packages/sr-entitlements/**
+  - packages/sr-payment-gateways/**
+  - packages/sr-private-downloads/**
+  - packages/sr-admin-ops/**
+  acceptance:
+  - 每个插件可独立激活/停用
+  - Requires Plugins 与运行时检查正确
+  - 各插件命名空间、版本和测试目录统一
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-010
+  milestone: W2
+  epic: EP02
+  module: theme
+  title: 创建 stock-resource-theme 骨架
+  points: 3
+  deps:
+  - SR-008
+  paths:
+  - web/app/themes/stock-resource-theme/**
+  acceptance:
+  - 服务端渲染主题可启用
+  - theme.json 与基础模板存在
+  - 主题不直接查询 sr_* 表
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-011
+  milestone: W2
+  epic: EP02
+  module: migration
+  title: 实现数据库迁移框架与 WP-CLI
+  points: 8
+  deps:
+  - SR-009
+  paths:
+  - packages/sr-core/src/Infrastructure/Migration/**
+  - packages/sr-core/src/Cli/**
+  acceptance:
+  - 迁移有唯一版本号且不可被改写
+  - wp sr migrate/status 支持 dry-run
+  - 全新安装和重复执行均通过
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-012
+  milestone: W2
+  epic: EP02
+  module: observability
+  title: 建立 Request ID、结构化日志与审计接口
+  points: 5
+  deps:
+  - SR-007
+  - SR-008
+  paths:
+  - packages/sr-core/src/Support/**
+  acceptance:
+  - 每个 REST 请求返回 X-Request-ID
+  - 日志默认脱敏
+  - AuditService 接口可被其他插件调用
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-013
+  milestone: W3
+  epic: EP03
+  module: core
+  title: 注册资源分类法与受控词表
+  points: 5
+  deps:
+  - SR-009
+  paths:
+  - packages/sr-core/src/Content/Taxonomy/**
+  acceptance:
+  - 平台/指标类型/策略标签/内容类型可管理
+  - REST schema 返回稳定 slug
+  - 删除被引用词表需阻断或迁移
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-014
+  milestone: W3
+  epic: EP03
+  module: core
+  title: 注册 EDD Download 资源元数据 Schema
+  points: 8
+  deps:
+  - SR-013
+  paths:
+  - packages/sr-core/src/Content/Meta/**
+  acceptance:
+  - 字段具有类型、默认值、sanitize/auth callback
+  - 未核实值不被自动当作 false
+  - REST 只暴露公开字段
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-015
+  milestone: W3
+  epic: EP03
+  module: core
+  title: 实现资源编辑工作台与发布检查
+  points: 8
+  deps:
+  - SR-014
+  paths:
+  - packages/sr-core/src/Admin/ResourceEditor/**
+  acceptance:
+  - 编辑/技术/版权/商业字段分区
+  - P0 必填未满足时不能发布
+  - 每次高风险修改写审计
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-016
+  milestone: W3
+  epic: EP03
+  module: versions
+  title: 创建 sr_resource_versions 表与仓储
+  points: 8
+  deps:
+  - SR-011
+  - SR-014
+  paths:
+  - packages/sr-core/src/Version/**
+  acceptance:
+  - 迁移、Repository、状态枚举完成
+  - 同资源最多一个 current 版本
+  - 激活版本使用事务锁
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-017
+  milestone: W3
+  epic: EP03
+  module: core
+  title: 实现 ResourceService 与公开 DTO
+  points: 8
+  deps:
+  - SR-014
+  - SR-016
+  paths:
+  - packages/sr-core/src/Application/ResourceService.php
+  - packages/sr-core/src/Dto/**
+  acceptance:
+  - 主题和 REST 只消费 DTO
+  - 未发布/下架资源不可通过 ID 绕过
+  - DTO 不包含 storage_key 或内部备注
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-018
+  milestone: W4
+  epic: EP03
+  module: api
+  title: 实现公开资源与词表 REST API
+  points: 8
+  deps:
+  - SR-017
+  paths:
+  - packages/sr-core/src/Rest/Public/**
+  - docs/contracts/openapi.yaml
+  acceptance:
+  - 列表、详情、筛选、分页契约完成
+  - canonical 查询参数稳定
+  - 集成测试覆盖未发布和非法筛选
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-019
+  milestone: W4
+  epic: EP03
+  module: seo
+  title: 实现 SEO 元信息、结构化数据与站点地图扩展
+  points: 5
+  deps:
+  - SR-017
+  paths:
+  - packages/sr-core/src/Seo/**
+  acceptance:
+  - 资源页 canonical/title/description 可控
+  - 下架页面 noindex 或 410 策略明确
+  - 不输出收益保证类结构化内容
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-020
+  milestone: W4
+  epic: EP03
+  module: fixtures
+  title: 建立 20 条代表性资源 Fixture
+  points: 3
+  deps:
+  - SR-014
+  - SR-016
+  paths:
+  - tests/fixtures/resources/**
+  - bin/seed-resources
+  acceptance:
+  - 覆盖免费/单购/VIP/排除/下架/无版本等状态
+  - 可重复导入不生成重复数据
+  - Fixture 不含真实付费资源
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-021
+  milestone: W3
+  epic: EP04
+  module: theme
+  title: 实现设计令牌与基础组件
+  points: 8
+  deps:
+  - SR-010
+  paths:
+  - web/app/themes/stock-resource-theme/assets/**
+  - web/app/themes/stock-resource-theme/components/**
+  acceptance:
+  - 颜色/字号/间距集中定义
+  - 组件有正常/空/错误/禁用状态
+  - 键盘焦点和对比度通过检查
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-022
+  milestone: W4
+  epic: EP04
+  module: theme
+  title: 实现首页、导航、页脚与专题区
+  points: 8
+  deps:
+  - SR-017
+  - SR-021
+  paths:
+  - web/app/themes/stock-resource-theme/templates/front-page.php
+  - web/app/themes/stock-resource-theme/partials/**
+  acceptance:
+  - 首页内容来自服务层
+  - 移动/桌面布局通过
+  - 无硬编码价格和权益
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-023
+  milestone: W4
+  epic: EP04
+  module: theme
+  title: 实现分类、筛选、搜索与分页页面
+  points: 8
+  deps:
+  - SR-018
+  - SR-021
+  paths:
+  - web/app/themes/stock-resource-theme/templates/archive-download.php
+  - web/app/themes/stock-resource-theme/components/filter/**
+  acceptance:
+  - 筛选进入 URL
+  - 无结果状态可恢复
+  - 非法组合不产生可索引重复页
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-024
+  milestone: W4
+  epic: EP04
+  module: theme
+  title: 实现资源详情与版本信息页面
+  points: 8
+  deps:
+  - SR-017
+  - SR-021
+  paths:
+  - web/app/themes/stock-resource-theme/templates/single-download.php
+  acceptance:
+  - 兼容性、限制、版本、风险提示同屏
+  - 购买/下载 CTA 由 AccessDecision Presenter 提供
+  - 页面源代码不泄露隐藏内容
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-025
+  milestone: W4
+  epic: EP04
+  module: theme
+  title: 实现 VIP 营销页与套餐对比壳
+  points: 5
+  deps:
+  - SR-021
+  paths:
+  - web/app/themes/stock-resource-theme/templates/page-vip.php
+  acceptance:
+  - 套餐规则、范围、排除项和配额透明
+  - 价格来自 EDD 服务
+  - 未启用支付时显示不可购买状态
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-026
+  milestone: W5
+  epic: EP04
+  module: theme
+  title: 实现登录、用户中心、订单与下载中心壳
+  points: 8
+  deps:
+  - SR-021
+  paths:
+  - web/app/themes/stock-resource-theme/templates/account/**
+  acceptance:
+  - 所有页面验证登录和对象所有权
+  - 空态/异常态完整
+  - 不直接访问 EDD 内部表
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-027
+  milestone: W5
+  epic: EP05
+  module: accounts
+  title: 配置角色、能力与最小权限
+  points: 8
+  deps:
+  - SR-009
+  paths:
+  - packages/sr-admin-ops/src/Auth/**
+  acceptance:
+  - 编辑/技术/财务/客服/合规/运营角色分离
+  - 高风险能力不能由普通管理员外角色获取
+  - 权限矩阵自动测试
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-028
+  milestone: W5
+  epic: EP05
+  module: storage
+  title: 实现 StorageService 接口与 MinIO 适配器
+  points: 8
+  deps:
+  - SR-007
+  - SR-003
+  paths:
+  - packages/sr-private-downloads/src/Storage/**
+  acceptance:
+  - put/head/sign/delete 支持
+  - 私有对象无法匿名访问
+  - 单测使用 fake adapter，集成测使用 MinIO
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-029
+  milestone: W5
+  epic: EP05
+  module: versions
+  title: 实现版本隔离上传与扫描状态机
+  points: 13
+  deps:
+  - SR-016
+  - SR-028
+  paths:
+  - packages/sr-core/src/Version/Upload/**
+  - packages/sr-private-downloads/src/Scan/**
+  acceptance:
+  - 类型/大小/散列/压缩包限制生效
+  - 扫描失败停留 quarantine
+  - 成功后才可激活版本
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-030
+  milestone: W5
+  epic: EP05
+  module: storage
+  title: 实现 COS/OSS/S3 生产适配器契约
+  points: 8
+  deps:
+  - SR-028
+  paths:
+  - packages/sr-private-downloads/src/Storage/Adapters/**
+  acceptance:
+  - 以 S3 兼容接口为默认契约
+  - COS/OSS 差异封装在适配器
+  - 没有供应商 SDK 泄漏到领域层
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-031
+  milestone: W6
+  epic: EP06
+  module: edd
+  title: 建立 EddOrderAdapter 与兼容测试
+  points: 8
+  deps:
+  - SR-006
+  - SR-007
+  paths:
+  - packages/sr-core/src/Integration/Edd/**
+  acceptance:
+  - 封装订单/订单项/客户/价格读取
+  - 其他插件不得直接散落调用 EDD API
+  - 兼容测试固定 EDD 3.6.9
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-032
+  milestone: W6
+  epic: EP06
+  module: commerce
+  title: 实现资源访问模式与价格校验
+  points: 8
+  deps:
+  - SR-014
+  - SR-031
+  paths:
+  - packages/sr-core/src/Commerce/**
+  acceptance:
+  - free/purchase/vip/purchase_or_vip/unavailable 受控
+  - 服务端重新计算金额
+  - 资源和套餐不可混淆
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-033
+  milestone: W6
+  epic: EP06
+  module: checkout
+  title: 定制 EDD 结算与数字内容条款
+  points: 8
+  deps:
+  - SR-031
+  - SR-032
+  paths:
+  - packages/sr-payment-gateways/src/Checkout/**
+  - web/app/themes/stock-resource-theme/edd_templates/**
+  acceptance:
+  - 订单金额与条款版本入快照
+  - 未登录策略明确
+  - 付款开关关闭时不能创建真实收款订单
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-034
+  milestone: W6
+  epic: EP06
+  module: orders
+  title: 实现订单项业务快照
+  points: 8
+  deps:
+  - SR-031
+  - SR-033
+  paths:
+  - packages/sr-core/src/Commerce/OrderSnapshot/**
+  acceptance:
+  - 商品类型/规则版本/价格/资源/套餐元数据冻结
+  - 后续改商品不改变历史订单含义
+  - 重复创建快照幂等
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-035
+  milestone: W6
+  epic: EP06
+  module: account
+  title: 实现用户订单列表与详情适配
+  points: 5
+  deps:
+  - SR-031
+  - SR-026
+  paths:
+  - packages/sr-core/src/Account/Orders/**
+  acceptance:
+  - 只返回本人订单
+  - 状态映射为用户可读状态
+  - 不暴露内部审核备注
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-036
+  milestone: W7
+  epic: EP07
+  module: payment
+  title: 实现个人码人工支付 Gateway
+  points: 8
+  deps:
+  - SR-033
+  paths:
+  - packages/sr-payment-gateways/src/Gateway/ManualQr/**
+  acceptance:
+  - Gateway 受 SR_MANUAL_PAYMENT_ENABLED 控制
+  - 订单保持 pending
+  - 页面明确人工核验而非自动到账
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-037
+  milestone: W7
+  epic: EP07
+  module: payment
+  title: 创建 sr_payment_submissions 表与仓储
+  points: 8
+  deps:
+  - SR-011
+  - SR-036
+  paths:
+  - packages/sr-payment-gateways/src/Submission/**
+  acceptance:
+  - 状态、指纹、乐观锁和索引完成
+  - 凭证原图不存媒体库公开目录
+  - 重复请求幂等
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-038
+  milestone: W7
+  epic: EP07
+  module: payment
+  title: 实现付款凭证提交 API 与隐私处理
+  points: 8
+  deps:
+  - SR-028
+  - SR-037
+  paths:
+  - packages/sr-payment-gateways/src/Rest/PaymentProofController.php
+  acceptance:
+  - 验证订单所有权和状态
+  - JPG/PNG/PDF ≤8MB，去 EXIF
+  - 服务端读取应付金额，用户金额仅作线索
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-039
+  milestone: W7
+  epic: EP07
+  module: payment
+  title: 实现财务审核队列、领取与并发锁
+  points: 8
+  deps:
+  - SR-027
+  - SR-037
+  paths:
+  - packages/sr-payment-gateways/src/Admin/ReviewQueue/**
+  acceptance:
+  - 财务能力校验
+  - 同一提交不能被两人同时批准
+  - 超时锁可安全释放
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-040
+  milestone: W7
+  epic: EP07
+  module: payment
+  title: 实现批准事务与订单幂等完成
+  points: 13
+  deps:
+  - SR-031
+  - SR-039
+  paths:
+  - packages/sr-payment-gateways/src/Application/PaymentReviewService.php
+  acceptance:
+  - 账单参考/指纹唯一
+  - 批准重复执行不重复完成订单
+  - 失败后可重试且状态可解释
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-041
+  milestone: W7
+  epic: EP07
+  module: payment
+  title: 实现补充材料、驳回与用户时间线
+  points: 5
+  deps:
+  - SR-038
+  - SR-039
+  paths:
+  - packages/sr-payment-gateways/src/Application/Decision/**
+  - web/app/themes/stock-resource-theme/components/payment-timeline/**
+  acceptance:
+  - 标准原因码
+  - 旧凭证不可覆盖
+  - 用户不可见内部备注
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-042
+  milestone: W7
+  epic: EP07
+  module: notification
+  title: 实现付款审核通知 Outbox
+  points: 5
+  deps:
+  - SR-012
+  - SR-040
+  paths:
+  - packages/sr-admin-ops/src/Outbox/**
+  acceptance:
+  - 业务事务内写 outbox
+  - 发送失败可重试和死信
+  - 通知不是订单完成的前置条件
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-043
+  milestone: W8
+  epic: EP08
+  module: entitlements
+  title: 创建权益、计数、下载事件三张核心表
+  points: 13
+  deps:
+  - SR-011
+  paths:
+  - packages/sr-entitlements/src/Infrastructure/Migration/**
+  acceptance:
+  - 唯一键和组合索引符合规范
+  - 空库迁移、重复迁移和大表迁移测试通过
+  - 所有时间 UTC
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-044
+  milestone: W8
+  epic: EP08
+  module: plans
+  title: 实现会员套餐元数据与后台编辑
+  points: 8
+  deps:
+  - SR-014
+  - SR-043
+  paths:
+  - packages/sr-entitlements/src/Plan/**
+  acceptance:
+  - duration/scope/exclude/quota/rules_version 完整
+  - 规则非法时不能销售
+  - 套餐仍是 EDD Download
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-045
+  milestone: W8
+  epic: EP08
+  module: entitlements
+  title: 实现规则快照与 EntitlementRepository
+  points: 8
+  deps:
+  - SR-043
+  - SR-044
+  paths:
+  - packages/sr-entitlements/src/Infrastructure/Repository/**
+  acceptance:
+  - 购买时规则快照不可变
+  - source_order_item_id 唯一
+  - 查询当前有效权益有索引
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-046
+  milestone: W9
+  epic: EP08
+  module: entitlements
+  title: 实现 AccessDecision 与 EntitlementService
+  points: 13
+  deps:
+  - SR-017
+  - SR-045
+  paths:
+  - packages/sr-entitlements/src/Application/EntitlementService.php
+  - packages/sr-contracts/src/Entitlement/**
+  acceptance:
+  - 免费→单购→人工→VIP→拒绝优先级固定
+  - 返回 reason_code/来源/额度/到期时间
+  - 所有入口使用同一服务
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-047
+  milestone: W9
+  epic: EP08
+  module: entitlements
+  title: 实现订单完成授权监听器
+  points: 13
+  deps:
+  - SR-034
+  - SR-040
+  - SR-045
+  paths:
+  - packages/sr-entitlements/src/Integration/EddOrderListener.php
+  acceptance:
+  - mission-critical 授权在订单完成链路完成
+  - 重复完成 10 次只授权一次
+  - 资源商品和套餐商品分别建正确权益
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-048
+  milestone: W9
+  epic: EP08
+  module: entitlements
+  title: 实现续期、过期与多套餐并存择优
+  points: 8
+  deps:
+  - SR-046
+  - SR-047
+  paths:
+  - packages/sr-entitlements/src/Application/MembershipService.php
+  acceptance:
+  - 有效期顺延规则正确
+  - 已过期从当前时间起算
+  - 多套餐结果稳定且可解释
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-049
+  milestone: W9
+  epic: EP08
+  module: entitlements
+  title: 实现退款撤权与人工授予/撤销
+  points: 8
+  deps:
+  - SR-047
+  paths:
+  - packages/sr-entitlements/src/Application/RevocationService.php
+  - packages/sr-entitlements/src/Admin/**
+  acceptance:
+  - 退款后立即清缓存并阻止新令牌
+  - 历史事件不改写
+  - 人工动作要求原因并审计
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-050
+  milestone: W9
+  epic: EP08
+  module: quota
+  title: 实现 QuotaService 原子预占/结算/释放
+  points: 13
+  deps:
+  - SR-043
+  - SR-046
+  paths:
+  - packages/sr-entitlements/src/Application/QuotaService.php
+  acceptance:
+  - 数据库为事实源
+  - SELECT FOR UPDATE + 死锁重试
+  - 剩余 1 次时 100 并发最多一个成功
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-051
+  milestone: W9
+  epic: EP08
+  module: content
+  title: 实现服务端内容限制区块/短代码
+  points: 8
+  deps:
+  - SR-046
+  paths:
+  - packages/sr-entitlements/src/ContentRestriction/**
+  acceptance:
+  - PHP 服务端决定可见内容
+  - 查看源代码不能看到隐藏内容
+  - 编辑器预览有明确占位
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-052
+  milestone: W9
+  epic: EP08
+  module: account
+  title: 实现会员中心、权益与配额 API
+  points: 8
+  deps:
+  - SR-046
+  - SR-050
+  - SR-026
+  paths:
+  - packages/sr-entitlements/src/Rest/Me/**
+  - web/app/themes/stock-resource-theme/templates/account/membership.php
+  acceptance:
+  - 仅返回当前用户
+  - 显示套餐、到期、范围、剩余次数和重置时间
+  - 缓存变更后立即失效
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-053
+  milestone: W10
+  epic: EP09
+  module: downloads
+  title: 创建 sr_download_tokens 表与令牌服务
+  points: 8
+  deps:
+  - SR-011
+  - SR-028
+  paths:
+  - packages/sr-private-downloads/src/Token/**
+  acceptance:
+  - 仅保存 token hash
+  - request_id/token_hash 唯一
+  - 默认 TTL 120 秒和单次使用
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-054
+  milestone: W10
+  epic: EP09
+  module: downloads
+  title: 实现创建下载令牌 API
+  points: 13
+  deps:
+  - SR-046
+  - SR-050
+  - SR-053
+  paths:
+  - packages/sr-private-downloads/src/Rest/CreateDownloadTokenController.php
+  acceptance:
+  - 校验用户/资源/版本/权益/风控
+  - 事务内预占配额并建令牌
+  - 不返回 storage_key 或签名 URL
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-055
+  milestone: W10
+  epic: EP09
+  module: downloads
+  title: 实现令牌消费、签名与 302 交付
+  points: 13
+  deps:
+  - SR-028
+  - SR-053
+  - SR-054
+  paths:
+  - packages/sr-private-downloads/src/Rest/ConsumeDownloadTokenController.php
+  acceptance:
+  - 原子 consumed
+  - 过期/重放返回稳定错误码
+  - 签名失败不结算为成功
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-056
+  milestone: W10
+  epic: EP09
+  module: downloads
+  title: 实现下载事件结算与失败补偿
+  points: 8
+  deps:
+  - SR-050
+  - SR-055
+  paths:
+  - packages/sr-private-downloads/src/Application/DownloadSettlementService.php
+  acceptance:
+  - 成功 used+1/reserved-1
+  - 失败释放预占
+  - 补偿任务幂等且有告警
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-057
+  milestone: W10
+  epic: EP09
+  module: security
+  title: 实现下载限流、防重放与异常规则
+  points: 8
+  deps:
+  - SR-012
+  - SR-055
+  paths:
+  - packages/sr-private-downloads/src/Security/**
+  acceptance:
+  - 用户/IP/资源多维限流
+  - 账号共享仅做风险提示和可逆限制
+  - 所有阻断写安全事件
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-058
+  milestone: W10
+  epic: EP09
+  module: infra
+  title: 配置 Nginx 防直链与动态页面缓存例外
+  points: 5
+  deps:
+  - SR-055
+  paths:
+  - infra/nginx/**
+  acceptance:
+  - EDD 上传目录拒绝公开访问
+  - checkout/account/wp-json/download 不被错误缓存
+  - 私有对象匿名请求 403
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-059
+  milestone: W11
+  epic: EP10
+  module: rights
+  title: 创建版权记录与发布 Gate
+  points: 8
+  deps:
+  - SR-011
+  - SR-015
+  paths:
+  - packages/sr-admin-ops/src/Rights/**
+  acceptance:
+  - 付费资源 rights_status=approved 才能发布
+  - 证据附件私有
+  - 授权到期自动告警/暂停策略可配置
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-060
+  milestone: W11
+  epic: EP10
+  module: audit
+  title: 创建审计日志持久化与查询界面
+  points: 8
+  deps:
+  - SR-012
+  - SR-027
+  paths:
+  - packages/sr-admin-ops/src/Audit/**
+  acceptance:
+  - 付款批准/撤权/发布/配置变更均有记录
+  - 敏感字段脱敏
+  - 普通管理员不能删除审计
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-061
+  milestone: W11
+  epic: EP10
+  module: support
+  title: 实现工单与消息模块
+  points: 8
+  deps:
+  - SR-011
+  - SR-027
+  paths:
+  - packages/sr-admin-ops/src/Support/**
+  acceptance:
+  - 关联订单/资源/下载事件
+  - 附件私有
+  - SLA/状态/权限测试通过
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-062
+  milestone: W11
+  epic: EP10
+  module: favorites
+  title: 实现收藏模块
+  points: 3
+  deps:
+  - SR-011
+  - SR-017
+  paths:
+  - packages/sr-admin-ops/src/Favorite/**
+  acceptance:
+  - user+resource 唯一
+  - 幂等切换
+  - 下架资源不泄露详情
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-063
+  milestone: W11
+  epic: EP10
+  module: admin
+  title: 实现付款/会员/下载/版权任务工作台
+  points: 13
+  deps:
+  - SR-039
+  - SR-049
+  - SR-056
+  - SR-059
+  - SR-060
+  paths:
+  - packages/sr-admin-ops/src/Admin/**
+  acceptance:
+  - 工作台围绕待办而非菜单堆叠
+  - 角色只看必要字段
+  - 高风险动作二次确认
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-064
+  milestone: W11
+  epic: EP10
+  module: reports
+  title: 实现 MVP 业务报表与健康检查
+  points: 8
+  deps:
+  - SR-042
+  - SR-056
+  - SR-060
+  paths:
+  - packages/sr-admin-ops/src/Reports/**
+  acceptance:
+  - 订单完成无权益、下载失败率、审核时长可见
+  - 报表查询不拖慢前台
+  - 数据口径文档化
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-065
+  milestone: W12
+  epic: EP11
+  module: integration
+  title: 完成跨插件契约测试与全链路 Fixture
+  points: 13
+  deps:
+  - SR-052
+  - SR-058
+  - SR-063
+  paths:
+  - tests/integration/**
+  acceptance:
+  - 免费/单购/VIP/退款/下架/配额耗尽全覆盖
+  - 从空库安装执行成功
+  - 禁止测试依赖执行顺序
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-066
+  milestone: W12
+  epic: EP11
+  module: e2e
+  title: 实现 Playwright P0 E2E 套件
+  points: 13
+  deps:
+  - SR-065
+  paths:
+  - tests/e2e/**
+  acceptance:
+  - 游客浏览、下单、提交凭证、审核、下载、退款闭环
+  - 失败自动截图/trace
+  - CI 可重复运行
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-067
+  milestone: W12
+  epic: EP11
+  module: content
+  title: 建立 100 条内容迁移与校验流程
+  points: 8
+  deps:
+  - SR-020
+  - SR-059
+  paths:
+  - tools/content-import/**
+  - docs/content/**
+  acceptance:
+  - dry-run/校验/回滚批次
+  - 版权默认待审
+  - 发布前完整性报告 100%
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-068
+  milestone: W12
+  epic: EP11
+  module: performance
+  title: 性能基线、缓存与慢查询治理
+  points: 8
+  deps:
+  - SR-065
+  paths:
+  - tests/performance/**
+  - infra/monitoring/**
+  acceptance:
+  - LCP p75≤2.5s 目标验证
+  - 权益/令牌 API p95≤500ms 目标验证
+  - N+1 和慢查询有报告
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-069
+  milestone: W13
+  epic: EP12
+  module: security
+  title: 执行安全测试与修复闭环
+  points: 13
+  deps:
+  - SR-066
+  paths:
+  - tests/security/**
+  - docs/security/**
+  acceptance:
+  - IDOR/CSRF/XSS/SQLi/SSRF/路径遍历/压缩炸弹/重放全部覆盖
+  - 无高危未修复
+  - 安全例外需书面批准
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-070
+  milestone: W13
+  epic: EP12
+  module: concurrency
+  title: 执行权益与下载并发专项测试
+  points: 8
+  deps:
+  - SR-050
+  - SR-056
+  paths:
+  - tests/concurrency/**
+  acceptance:
+  - 100 并发不超额
+  - 死锁重试可观测
+  - 失败补偿后计数一致
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-071
+  milestone: W13
+  epic: EP12
+  module: upgrade
+  title: 执行 WordPress/EDD 升级回归演练
+  points: 8
+  deps:
+  - SR-065
+  paths:
+  - tests/compat/**
+  - docs/runbooks/upgrade.md
+  acceptance:
+  - 在克隆环境升级补丁版本
+  - 关键链路全部回归
+  - 发现不兼容可在维护窗口回滚
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-072
+  milestone: W13
+  epic: EP12
+  module: backup
+  title: 完成备份、恢复与灾备演练
+  points: 8
+  deps:
+  - SR-003
+  - SR-067
+  paths:
+  - infra/backup/**
+  - docs/runbooks/disaster-recovery.md
+  acceptance:
+  - RPO≤1h/RTO≤4h 演练证据
+  - 数据库与私有对象均可恢复
+  - 恢复后权益/下载一致性检查通过
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-073
+  milestone: W13
+  epic: EP12
+  module: uat
+  title: 完成 UAT、角色培训与 Gate 2
+  points: 8
+  deps:
+  - SR-066
+  - SR-069
+  - SR-072
+  paths:
+  - docs/uat/**
+  - docs/training/**
+  acceptance:
+  - 产品/财务/内容/客服/技术脚本全部签署
+  - P0 缺陷为 0
+  - Gate 0 结论已确认
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-074
+  milestone: W14
+  epic: EP13
+  module: release
+  title: 建立发布制品、版本号与变更日志
+  points: 5
+  deps:
+  - SR-073
+  paths:
+  - .github/workflows/release.yml
+  - CHANGELOG.md
+  - docs/releases/**
+  acceptance:
+  - 制品可复现且含散列/SBOM
+  - 数据库迁移版本明确
+  - 生产不现场构建
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []
+- id: SR-075
+  milestone: W14
+  epic: EP13
+  module: release
+  title: 执行内部与 5% 灰度发布
+  points: 8
+  deps:
+  - SR-074
+  paths:
+  - docs/releases/**
+  acceptance:
+  - 真实全链路演练
+  - 监控无红色阈值
+  - 可在 15 分钟内回滚应用版本
+  status: BACKLOG
+  owner: null
+  risk: medium
+  evidence: []
+- id: SR-076
+  milestone: W14
+  epic: EP13
+  module: release
+  title: 执行 25% 与 100% 发布及复盘
+  points: 5
+  deps:
+  - SR-075
+  paths:
+  - docs/releases/**
+  - docs/postmortems/**
+  acceptance:
+  - 每阶段达到观察窗口
+  - 业务/技术指标正常
+  - 上线复盘和遗留 Backlog 完成
+  status: BACKLOG
+  owner: null
+  risk: low
+  evidence: []

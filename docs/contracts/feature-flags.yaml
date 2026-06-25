@@ -1,0 +1,47 @@
+schema_version: 1
+flags:
+  SR_PAYMENTS_ENABLED:
+    default: false
+    owner: business+tech-lead
+    description: Master switch for creating paid orders.
+    production_enable_requires: [Gate0-approved, staging-smoke, rollback-ready]
+  SR_MANUAL_PAYMENT_ENABLED:
+    default: false
+    owner: business+payments
+    description: Enables personal-QR instructions and manual proof workflow; never enables automatic monitoring.
+    production_enable_requires: [SR_PAYMENTS_ENABLED, reviewer-roster, approved-copy, runbook-tested]
+  SR_UPLOAD_PROOFS_ENABLED:
+    default: false
+    owner: payments+privacy
+    description: Enables private payment-proof upload.
+    production_enable_requires: [privacy-retention-approved, private-storage-tested]
+  SR_PAID_DOWNLOADS_ENABLED:
+    default: false
+    owner: business+tech-lead
+    description: Enables paid resource checkout and paid delivery.
+    production_enable_requires: [rights-gate-ready, payment-enabled, entitlement-tests-green]
+  SR_PRIVATE_DOWNLOADS_ENABLED:
+    default: true
+    owner: downloads
+    description: Enables site token issue/consume for allowed free/internal resources.
+  SR_DOWNLOAD_TOKEN_ISSUE_ENABLED:
+    default: true
+    owner: downloads+oncall
+    description: Kill switch for new token issuance; disable during storage/quota incidents.
+  SR_STRICT_RIGHTS_GATE:
+    default: true
+    owner: compliance
+    description: Blocks paid publication without an approved rights record.
+  SR_CONTENT_RESTRICTION_ENABLED:
+    default: false
+    owner: entitlements
+    description: Enables server-side restricted blocks after leakage tests pass.
+  SR_OUTBOX_WORKER_ENABLED:
+    default: true
+    owner: platform
+    description: Enables asynchronous non-critical notifications and projections.
+rules:
+  - Defaults are safe when environment variables are absent.
+  - Flags are read through FeatureFlagService, not directly through getenv in business classes.
+  - Every change is audited with actor, previous value, new value, reason and request_id.
+  - Flags do not bypass capability, ownership, entitlement or rights checks.
