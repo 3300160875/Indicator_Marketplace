@@ -1,0 +1,99 @@
+SR-012 command evidence
+Generated: 2026-06-25T16:47:53+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-012 --agent codex --branch feat/SR-012-observability
+Exit: 0
+Result:
+CLAIMED SR-012 by codex until 2026-06-25T12:46:12.548045+00:00
+
+Red test command: php docs/evidence/SR-012/observability-check.php
+Exit: 255
+Result:
+Failed opening required `packages/sr-core/src/Support/Http/RequestContext.php`; expected failure before implementation.
+
+Observability check command: php docs/evidence/SR-012/observability-check.php
+Exit: 0
+Result:
+`SR-012 observability check: ok`.
+
+Package regression command: composer --working-dir=packages/sr-core validate --strict && composer --working-dir=packages/sr-core test
+Exit: 0
+Result:
+`./composer.json is valid`; `sr-core skeleton tests: ok`.
+
+Required command: composer validate --strict
+Exit: 0
+Result:
+Root `composer.json` is valid.
+
+Required command: make lint
+Exit: 0
+Result:
+`lint: ok`.
+
+Required command: make test-unit MODULE=observability
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-unit'. Stop.`
+
+Alternative for unavailable unit target: php docs/evidence/SR-012/observability-check.php
+Exit: 0
+Result:
+Request ID header, redaction, structured logging and audit service checks passed.
+
+Required command: make test-integration
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-integration'. Stop.`
+
+Alternative integration command: php docs/evidence/SR-012/observability-check.php && composer --working-dir=packages/sr-core test && make test
+Exit: 0
+Result:
+Observability check, sr-core package test and root smoke test passed.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`.
+
+Independent review:
+Locke subagent completed read-only SR-012 review. Key limitation followed: only `packages/sr-core/src/Support/**` was modified, so runtime REST hook/container registration is deferred until a task allows startup wiring changes.
+
+Final diff stat command: git diff --cached --stat
+Exit: 0
+Result:
+17 files changed, 526 insertions(+), 55 deletions(-).
+
+Final verification command: php docs/evidence/SR-012/observability-check.php && composer --working-dir=packages/sr-core validate --strict && composer --working-dir=packages/sr-core test && composer validate --strict && make lint && make test && git diff --check --cached && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+Observability check passed; sr-core Composer validation/test passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+PR check command: gh pr checks 9 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 13s; PHP gate passed in 22s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-012 VERIFIED --evidence docs/evidence/SR-012/review-report.md
+Exit: 0
+Result:
+SR-012 VERIFIED.
+
+Commit / PR:
+- Commit SHA: d92e033d5aa86093be79913c77c207048d18c040
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/9
+
+Notes:
+- SR-012 provides support classes and interfaces for request IDs, REST header emission, redaction, structured logging and audit recording.
+- It does not create audit tables or admin audit UI.
+- SR-012 moved to VERIFIED after local verification, independent subagent review and passing PR checks.

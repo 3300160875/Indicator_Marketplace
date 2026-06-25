@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T08:44:22.157197+00:00'
+updated_at: '2026-06-25T08:53:27.974629+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -40,7 +40,7 @@ tasks:
     branch: feat/SR-004-makefile
     claimed_at: '2026-06-25T05:51:17.772126+00:00'
     updated_at: '2026-06-25T05:57:53.996950+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/9
     evidence:
     - docs/evidence/SR-004/commands.log
     - docs/evidence/SR-004/review-report.md
@@ -131,13 +131,16 @@ tasks:
     - docs/evidence/SR-011/review-report.md
     blockers: []
   SR-012:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-012-observability
+    claimed_at: '2026-06-25T08:46:12.548045+00:00'
+    updated_at: '2026-06-25T08:53:27.974616+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-012/commands.log
+    - docs/evidence/SR-012/completion-report.md
+    - docs/evidence/SR-012/review-report.md
     blockers: []
   SR-013:
     status: BACKLOG

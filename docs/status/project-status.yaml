@@ -1,11 +1,11 @@
 project: stock-indicator-platform
 baseline: agent-execution-v1.0
 current_milestone: W2
-updated_at: '2026-06-25T08:46:00Z'
+updated_at: '2026-06-25T08:52:00Z'
 summary:
   total_points: 588
   done_points: 0
-  verified_points: 56
+  verified_points: 61
   blocked_tasks: []
 quality:
   ci: configured_required
@@ -14,7 +14,8 @@ quality:
   coverage: null
   schema_version: null
 next_safe_tasks:
-- SR-012
+- SR-013
+- SR-027
 - SR-028
 - SR-031
 risks:
