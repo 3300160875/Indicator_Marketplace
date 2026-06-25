@@ -89,7 +89,21 @@ Exit: 0
 Result:
 Package Composer validation passed; package tests returned `sr-platform-bootstrap tests: ok`; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
 
+PR check command: gh pr checks 5 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 12s; PHP gate passed in 21s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-008 VERIFIED --evidence docs/evidence/SR-008/review-report.md
+Exit: 0
+Result:
+SR-008 VERIFIED.
+
+Commit / PR:
+- Commit SHA: 01351f62df2384513034f1cc2acf977861a52455
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/5
+
 Notes:
 - SR-008 task paths authorize `packages/sr-platform-bootstrap/**`; root Makefile target additions are intentionally deferred to a tooling task.
 - The MU plugin uses `type: wordpress-muplugin`, matching the root Composer installer path for MU plugins.
-- Commit SHA and PR URL will be added after the branch is committed and the PR is created.
+- SR-008 moved to VERIFIED after local verification, independent subagent review and passing PR checks.
