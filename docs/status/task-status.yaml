@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T05:22:29.011988+00:00'
+updated_at: '2026-06-25T05:42:29.473442+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -24,13 +24,14 @@ tasks:
     - docs/evidence/SR-002/review-report.md
     blockers: []
   SR-003:
-    status: READY
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-25T05:22:29.011910+00:00'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-003-docker-compose
+    claimed_at: '2026-06-25T05:23:40.225260+00:00'
+    updated_at: '2026-06-25T05:42:29.473432+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-003/commands.log
     blockers: []
   SR-004:
     status: BACKLOG
