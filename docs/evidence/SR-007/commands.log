@@ -1,0 +1,86 @@
+SR-007 command evidence
+Generated: 2026-06-25T15:05:00+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-007 --agent codex --branch feat/SR-007-contracts
+Exit: 0
+Result:
+CLAIMED SR-007 by codex until 2026-06-25T11:02:05.790738+00:00
+
+Red test command: php packages/sr-contracts/tests/run.php
+Exit: 255
+Result:
+Failed opening required `packages/sr-contracts/src/Value/PositiveId.php`; expected failure before implementation.
+
+Package validation command: composer --working-dir=packages/sr-contracts validate --strict
+Exit: 0
+Result:
+`./composer.json is valid`
+
+Package unit command: composer --working-dir=packages/sr-contracts test
+Exit: 0
+Result:
+`sr-contracts tests: ok`
+
+Review regression command: php packages/sr-contracts/tests/run.php
+Exit before fix: 255
+Result before fix:
+The updated review test failed because `src/Value/IdempotencyKey.php` did not exist. The same test set also covered impossible UTC dates and invalid event item-id arrays.
+
+Review regression command: php packages/sr-contracts/tests/run.php
+Exit after fix: 0
+Result after fix:
+`sr-contracts tests: ok`; impossible UTC dates, invalid event item-id arrays and invalid idempotency keys are rejected.
+
+Required command: composer validate --strict
+Exit: 0
+Result:
+Root `composer.json` is valid.
+
+Required command: make lint
+Exit: 0
+Result:
+`lint: ok`
+
+Required command: make test-unit MODULE=contracts
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-unit'. Stop.`
+
+Alternative for unavailable required unit target: composer --working-dir=packages/sr-contracts test
+Exit: 0
+Result:
+Pure PHP package unit tests passed without WordPress bootstrap.
+
+Required command: make test-integration
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-integration'. Stop.`
+
+Alternative for unavailable integration target: make lint && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+Root lint passed and docs validation returned `OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`.
+
+Final verification command: composer --working-dir=packages/sr-contracts validate --strict && composer --working-dir=packages/sr-contracts test && composer validate --strict && make lint && make test && git diff --check && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+Package Composer validation passed; package tests returned `sr-contracts tests: ok`; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent` after SR-007 moved to REVIEW.
+
+Notes:
+- SR-007 task paths only authorize `packages/sr-contracts/**`; root Makefile target additions are intentionally deferred to a tooling task.
+- No WordPress or EDD bootstrap is required to run `packages/sr-contracts/tests/run.php`.

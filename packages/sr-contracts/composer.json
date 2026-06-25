@@ -1,0 +1,17 @@
+{
+  "name": "stock-resource/sr-contracts",
+  "description": "Shared DTOs, value objects and service contracts for the Stock Resource platform.",
+  "type": "library",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "StockResource\\Contracts\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "php tests/run.php"
+  }
+}
