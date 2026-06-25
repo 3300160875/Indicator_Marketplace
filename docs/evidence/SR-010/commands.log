@@ -74,7 +74,21 @@ Exit: 0
 Result:
 Theme verification/build passed; root npm install/lint passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
 
+PR check command: gh pr checks 7 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 10s; PHP gate passed in 19s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-010 VERIFIED --evidence docs/evidence/SR-010/review-report.md
+Exit: 0
+Result:
+SR-010 VERIFIED.
+
+Commit / PR:
+- Commit SHA: d53ba31d19ecadb7e9fb98876cd847829e90068f
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/7
+
 Notes:
 - SR-010 does not modify root npm scripts because its allowed code path is the theme directory.
 - Root `npm run test` and `npm run build` limitations are documented with theme-local alternatives.
-- Commit SHA and PR URL will be added after the branch is committed and the PR is created.
+- SR-010 moved to VERIFIED after local verification, independent subagent review and passing PR checks.

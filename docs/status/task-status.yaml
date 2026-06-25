@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T08:19:25.971914+00:00'
+updated_at: '2026-06-25T08:20:37.566433+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -18,7 +18,7 @@ tasks:
     branch: feat/SR-002-bedrock
     claimed_at: '2026-06-25T05:04:36.367300+00:00'
     updated_at: '2026-06-25T05:22:28.903327+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/7
     evidence:
     - docs/evidence/SR-002/commands.log
     - docs/evidence/SR-002/review-report.md
@@ -107,11 +107,11 @@ tasks:
     - docs/evidence/SR-009/review-report.md
     blockers: []
   SR-010:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-010-theme-skeleton
     claimed_at: '2026-06-25T08:17:14.238484+00:00'
-    updated_at: '2026-06-25T08:19:25.971896+00:00'
+    updated_at: '2026-06-25T08:20:37.566413+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-010/commands.log
