@@ -1,0 +1,16 @@
+parameters:
+  level: 0
+  paths:
+    - config
+    - web/index.php
+    - web/wp-config.php
+  excludePaths:
+    analyse:
+      - vendor
+      - web/wp
+      - web/app/plugins
+      - web/app/themes
+      - web/app/mu-plugins/bedrock-disallow-indexing
+  bootstrapFiles:
+    - vendor/autoload.php
+  treatPhpDocTypesAsCertain: false

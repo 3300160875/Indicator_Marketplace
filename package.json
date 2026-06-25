@@ -1,0 +1,12 @@
+{
+  "name": "indicator-marketplace",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Stock indicator resource marketplace development tooling.",
+  "scripts": {
+    "lint": "node -e \"console.log('frontend lint: no frontend assets defined in W1')\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

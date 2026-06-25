@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T05:57:53.996967+00:00'
+updated_at: '2026-06-25T06:02:42.427151+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -46,14 +46,17 @@ tasks:
     - docs/evidence/SR-004/review-report.md
     blockers: []
   SR-005:
-    status: READY
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-25T05:22:29.011936+00:00'
+    status: BLOCKED
+    owner: codex
+    branch: feat/SR-005-ci-gate
+    claimed_at: '2026-06-25T05:59:00.557868+00:00'
+    updated_at: '2026-06-25T06:02:42.427140+00:00'
     pr: null
-    evidence: []
-    blockers: []
+    evidence:
+    - docs/evidence/SR-005/commands.log
+    blockers:
+    - GitHub branch protection unavailable for this private repository plan; npm ci
+      and make ci require paths outside SR-005 allowed scope
   SR-006:
     status: BACKLOG
     owner: null
