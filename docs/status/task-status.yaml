@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T05:57:53.996967+00:00'
+updated_at: '2026-06-25T06:10:14.438844+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -55,14 +55,17 @@ tasks:
     evidence: []
     blockers: []
   SR-006:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: BLOCKED
+    owner: codex
+    branch: feat/SR-006-spike-adr
+    claimed_at: '2026-06-25T06:03:01.028143+00:00'
+    updated_at: '2026-06-25T06:10:14.438834+00:00'
     pr: null
-    evidence: []
-    blockers: []
+    evidence:
+    - docs/evidence/SR-006/commands.log
+    blockers:
+    - EDD runtime hook/refund validation requires disposable WordPress install, active
+      EDD, WP-CLI or spike runner outside SR-006 allowed paths
   SR-007:
     status: BACKLOG
     owner: null

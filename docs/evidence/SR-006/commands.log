@@ -1,0 +1,85 @@
+SR-006 command evidence
+Generated: 2026-06-25T14:10:00+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-006 --agent codex --branch feat/SR-006-spike-adr
+Exit: 0
+Result:
+CLAIMED SR-006 by codex until 2026-06-25T10:03:01.028143+00:00
+
+Command: make bootstrap
+Exit: 0
+Result:
+Started the SR-003/SR-004 local Docker stack and installed Composer dependencies.
+
+Command: MariaDB SELECT FOR UPDATE probe
+Exit: 0
+Result:
+Connection A selected `sr006_lock_probe` row `FOR UPDATE` and slept. Connection B attempted update with `innodb_lock_wait_timeout=1` and exited 1 with `ERROR 1205 (HY000): Lock wait timeout exceeded`; final quota remained 10.
+
+Command: MariaDB unique-key probe
+Exit: 1
+Result:
+Second insert of token `once` returned `ERROR 1062 (23000): Duplicate entry 'once' for key 'token'`.
+
+Command: MariaDB deadlock probe
+Exit: 0 overall
+Result:
+Two conflicting transactions updated rows in opposite order. Connection A exited 0; connection B exited 1 with `ERROR 1213 (40001): Deadlock found when trying to get lock`.
+
+Command: MinIO private object and presigned URL probe
+Exit: 0 overall
+Result:
+Uploaded disposable object `sr006-private/sr006-object.txt`. Direct public GET returned HTTP 403. Presigned GET returned `0123456789abcdef`. Range request returned HTTP 206 Partial Content. A 1-second presigned URL returned HTTP 403 after expiry.
+
+Command: composer show wp-plugin/easy-digital-downloads --locked
+Exit: 0
+Result:
+EDD locked at 3.6.9.
+
+Command: rg -n "edd_complete_purchase|edd_refund_order|function .*refund|do_action\\(" web/app/plugins/easy-digital-downloads/includes
+Exit: 0
+Result:
+Static inspection found `edd_complete_purchase`, `edd_update_payment_status`, `edd_refund_order`, refund compatibility hooks and many EDD actions. This is not runtime proof.
+
+Command: WP/EDD runtime feasibility checks
+Exit: 0/1 mixed
+Result:
+EDD and WordPress files exist, but no `wp` CLI is available and MariaDB has no WordPress tables. EDD runtime hook/refund validation is blocked without a disposable WP install and hook observer.
+
+Required command: make doctor
+Exit: 0
+Result:
+doctor: ok
+
+Required command: make lint
+Exit: 0
+Result:
+lint: ok
+
+Required command: make test
+Exit: 0
+Result:
+lint: ok; test: ok
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+Command: make reset
+Exit: 0
+Result:
+Local Docker containers, network and volumes were removed.
+
+Blocker:
+True EDD order completion/refund hook validation is blocked because WordPress is not installed, EDD is not active, WP-CLI is unavailable, and SR-006 allowed paths do not allow committing a disposable spike plugin/runner.
