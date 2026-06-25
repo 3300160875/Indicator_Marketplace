@@ -1,0 +1,17 @@
+{
+  "name": "stock-resource/sr-private-downloads",
+  "description": "Private downloads plugin skeleton for the Stock Resource platform.",
+  "type": "wordpress-plugin",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "StockResource\\PrivateDownloads\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "php tests/run.php"
+  }
+}

@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T08:01:58.878950+00:00'
+updated_at: '2026-06-25T08:15:12.914179+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -7,7 +7,7 @@ tasks:
     branch: docs/SR-001-baseline
     claimed_at: '2026-06-25T04:52:21.538256+00:00'
     updated_at: '2026-06-25T05:03:41.392722+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/6
     evidence:
     - docs/evidence/SR-001/commands.log
     - docs/evidence/SR-001/review-report.md
@@ -95,13 +95,16 @@ tasks:
     - docs/evidence/SR-008/review-report.md
     blockers: []
   SR-009:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-009-plugin-skeletons
+    claimed_at: '2026-06-25T08:10:01.345133+00:00'
+    updated_at: '2026-06-25T08:15:12.914169+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-009/commands.log
+    - docs/evidence/SR-009/completion-report.md
+    - docs/evidence/SR-009/review-report.md
     blockers: []
   SR-010:
     status: BACKLOG
