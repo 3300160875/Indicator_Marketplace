@@ -27,6 +27,7 @@
 
 ## Refunds
 
+- The CLI spike forced `edd_is_order_refundable_by_override` to `true` to isolate refund data shape and hook payloads. This validates full/partial refund event data, not production refund eligibility policy.
 - Full refund:
   - Sale order ID: 1
   - Refund order ID: 2
@@ -60,4 +61,4 @@ order_id  product_id  quantity  total
 
 ## Conclusion
 
-EDD 3.6.9 provides sufficient runtime hook and refund data for a future adapter to normalize order completion, duplicate completion, full refunds and item-level partial refunds without querying private internals directly.
+EDD 3.6.9 provides sufficient runtime hook and refund data for a future adapter to normalize order completion, duplicate completion, full refunds and item-level partial refunds without querying private internals directly. Production refund eligibility rules still require a separate policy/permission implementation.

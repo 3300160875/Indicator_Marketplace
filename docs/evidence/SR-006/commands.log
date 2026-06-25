@@ -15,6 +15,7 @@ Command: MariaDB SELECT FOR UPDATE probe
 Exit: 0
 Result:
 Connection A selected `sr006_lock_probe` row `FOR UPDATE` and slept. Connection B attempted update with `innodb_lock_wait_timeout=1` and exited 1 with `ERROR 1205 (HY000): Lock wait timeout exceeded`; final quota remained 10.
+Reproducibility note: this historical probe was recorded as a command summary rather than a reusable SQL script; later quota implementation should promote it into repeatable tests.
 
 Command: MariaDB unique-key probe
 Exit: 1
@@ -30,6 +31,7 @@ Command: MinIO private object and presigned URL probe
 Exit: 0 overall
 Result:
 Uploaded disposable object `sr006-private/sr006-object.txt`. Direct public GET returned HTTP 403. Presigned GET returned `0123456789abcdef`. Range request returned HTTP 206 Partial Content. A 1-second presigned URL returned HTTP 403 after expiry.
+Reproducibility note: this historical probe was recorded as a command summary rather than reusable `mc`/`curl` scripts; later download implementation should promote it into repeatable tests.
 
 Command: composer show wp-plugin/easy-digital-downloads --locked
 Exit: 0
@@ -50,6 +52,7 @@ Command: make reset || true && make bootstrap && docker compose exec -T php php 
 Exit: 0
 Result:
 Disposable WordPress installed, EDD activated and EDD component tables created. EDD runtime output reported WordPress 7.0 and EDD 3.6.9. First order completion returned true; duplicate completion returned false. Full refund created refund order ID 2 and set sale order ID 1 to `refunded`. Item-level partial refund created refund order ID 4 and set sale order ID 3 to `partially_refunded`. Observed completion hooks and `edd_refund_order`; see `docs/evidence/SR-006/runtime-edd-spike-summary.md`.
+Refundability override was forced in the CLI spike to isolate refund data shape; production refund eligibility remains a later policy/permission concern.
 
 Command: docker compose exec -T mariadb mariadb -uindicator -p<local-dev-password> indicator_marketplace -e "SHOW TABLES LIKE 'wp_edd_sessions'; SELECT id,status,type,parent,total FROM wp_edd_orders ORDER BY id; SELECT order_id,product_id,quantity,total FROM wp_edd_order_items ORDER BY id;"
 Exit: 0

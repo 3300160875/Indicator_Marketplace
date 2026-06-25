@@ -19,6 +19,7 @@ Status: EDD runtime validation, MariaDB and MinIO checks completed.
 - Observed refund hook: `edd_refund_order` with full refund args `[1, 2, true]` and partial refund args `[3, 4, false]`.
 - Full refund produced sale status `refunded`, refund order ID 2 and refund item total `-12.340000000`.
 - Partial item refund produced sale status `partially_refunded`, refund order ID 4 and refund item total `-3.000000000`.
+- Refundability override was forced in the CLI spike to isolate refund data shape and hook payloads. Production refund eligibility remains a later policy/permission concern.
 
 Conclusion: ADR-002 and ADR-003 are accepted. Future EDD adapter work may proceed against public APIs/hook payloads and must normalize EDD state at a project-owned boundary.
 
@@ -33,6 +34,8 @@ Verified with disposable probe tables:
 
 Conclusion: MariaDB can be authoritative for quota reservation/settlement if services use transactions, unique idempotency keys and bounded retry for 1205/1213.
 
+Reproducibility note: SR-006 preserved these as historical command summaries. Later quota implementation should promote the probes to reusable scripts or automated tests before runtime quota code ships.
+
 ## MinIO Findings
 
 Verified with disposable bucket/object:
@@ -43,6 +46,8 @@ Verified with disposable bucket/object:
 - A 1-second presigned URL returned 403 after expiry.
 
 Conclusion: private object storage plus short-lived signed URLs is viable. Signed URL method/host must match the request; do not rewrite host after signing.
+
+Reproducibility note: SR-006 preserved these as historical command summaries. Later download service work should promote the probes to reusable `mc`/`curl` scripts or automated tests.
 
 ## Required Follow-Up
 
