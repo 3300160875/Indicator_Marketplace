@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T10:31:38.929317+00:00'
+updated_at: '2026-06-25T10:33:30.261949+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -136,7 +136,7 @@ tasks:
     branch: feat/SR-012-observability
     claimed_at: '2026-06-25T08:46:12.548045+00:00'
     updated_at: '2026-06-25T08:53:27.974616+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/14
     evidence:
     - docs/evidence/SR-012/commands.log
     - docs/evidence/SR-012/completion-report.md
@@ -182,11 +182,11 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/13
     blockers: []
   SR-016:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-016-resource-versions
     claimed_at: '2026-06-25T10:22:46.841502+00:00'
-    updated_at: '2026-06-25T10:31:38.929307+00:00'
+    updated_at: '2026-06-25T10:33:30.261939+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-016/commands.log
