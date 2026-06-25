@@ -6,12 +6,12 @@
 
 - Milestone: W1
 - CI: not configured
-- Next safe task: SR-001 independent review
+- Next safe task: SR-002
 - Gate 0: pending
 
 ## 本周完成
 
-- SR-001 文档基线已提交 REVIEW，等待独立评审。
+- SR-001 文档基线已通过独立评审并标记 VERIFIED。
 
 ## 阻塞
 
@@ -20,6 +20,6 @@
 
 ## 下一步
 
-1. 独立评审 SR-001
-2. SR-001 VERIFIED 后执行 SR-002
-3. SR-003 / SR-005 需等待 SR-002
+1. SR-002
+2. SR-003 / SR-005 需等待 SR-002
+3. SR-006 需等待 SR-002 与 SR-003

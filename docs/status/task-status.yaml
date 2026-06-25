@@ -1,22 +1,23 @@
 schema_version: 1
-updated_at: '2026-06-25T04:55:14.372239+00:00'
+updated_at: '2026-06-25T05:03:41.503041+00:00'
 tasks:
   SR-001:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: docs/SR-001-baseline
     claimed_at: '2026-06-25T04:52:21.538256+00:00'
-    updated_at: '2026-06-25T04:55:14.372228+00:00'
+    updated_at: '2026-06-25T05:03:41.392722+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-001/commands.log
+    - docs/evidence/SR-001/review-report.md
     blockers: []
   SR-002:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-06-25T05:03:41.502990+00:00'
     pr: null
     evidence: []
     blockers: []
