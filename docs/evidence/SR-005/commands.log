@@ -85,7 +85,35 @@ Implemented workflow behavior:
 - Frontend job caches npm by `package.json`/lockfile hash, installs with `npm ci` when a lockfile exists or `npm install` fallback otherwise, then runs `npm run lint`.
 - Artifacts upload CI config summary.
 
-Blockers:
-1. GitHub branch protection is unavailable for the current private repository plan, so failing checks cannot be enforced as merge blockers.
-2. `npm ci` cannot pass without adding a lockfile outside SR-005 allowed paths.
-3. `make ci` cannot pass without modifying `Makefile` outside SR-005 allowed paths.
+Unblock authorization:
+On 2026-06-25 the user authorized making the repository public and expanding SR-005 scope to include `package-lock.json`, `Makefile`, and `bin/**`.
+
+Command: gh repo edit 3300160875/Indicator_Marketplace --visibility public
+Exit: 0
+Result:
+Repository visibility changed to PUBLIC.
+
+Command: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+Exit: 0
+Result:
+Created `package-lock.json` without installing new packages or running scripts.
+
+Command: make ci
+Exit: 0
+Result:
+`composer validate --strict`, `npm ci`, `bin/dev lint`, `bin/dev test`, and `npm run lint` all passed; output ended with `ci: ok`.
+
+Command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+Resolved blockers:
+1. Repository is now public, so branch protection can be configured.
+2. `npm ci` passes after adding authorized `package-lock.json`.
+3. `make ci` passes after adding authorized `Makefile`/`bin/dev` CI target.
