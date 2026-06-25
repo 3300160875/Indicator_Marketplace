@@ -6,7 +6,7 @@
 
 - Milestone: W3
 - CI: configured and required on `main`
-- Next safe task: SR-015 实现资源编辑工作台与发布检查
+- Next safe task: SR-016 创建 `sr_resource_versions` 表与仓储
 - Gate 0: complete
 
 ## 本周完成
@@ -25,7 +25,8 @@
 - SR-013 已通过远端 CI 并标记 VERIFIED：资源分类法定义、受控词表、REST term schema 与被引用词表删除保护已完成。
 - runtime-wiring 已补齐：`sr-core` 启动入口现在在依赖满足时接入 taxonomy `init` 注册、REST `X-Request-ID` header filter 与 WP-CLI migration 命令注册。
 - SR-014 已通过远端 CI 并标记 VERIFIED：EDD Download 资源元数据 Schema 定义层、23 个字段、sanitize/auth callback、REST 公开边界与审查修复均已完成。
-- SR-015 正在推进：已建立资源编辑字段分区、发布 Gate 与高风险修改审计支持层，待评审、CI 与合入。
+- SR-015 已通过远端 CI 并标记 VERIFIED：资源编辑字段分区、发布 Gate、高风险修改审计支持层与审查修复均已完成。
+- SR-016 正在推进：已建立版本表迁移定义、版本状态枚举、可重试阶段、仓储契约和 current 激活事务锁支持层，待评审、CI 与合入。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -34,6 +35,6 @@
 
 ## 下一步
 
-1. 完成 SR-015 评审、CI 与合入。
-2. SR-016 创建 `sr_resource_versions` 表与仓储。
+1. 完成 SR-016 评审、CI 与合入。
+2. SR-017 实现 ResourceService 与公开 DTO。
 3. SR-021 实现设计令牌与基础组件。

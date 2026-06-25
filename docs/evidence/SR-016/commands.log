@@ -1,0 +1,141 @@
+# SR-016 command log
+
+All commands were run from `/home/devops-ubuntu/Developer/Indicator_Marketplace/project` unless noted.
+
+## Baseline and claim
+
+```text
+$ make lint
+exit: 0
+result: lint: ok
+
+$ make test
+exit: 0
+result: lint: ok; test: ok
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ python3 tools/agent/validate_docs.py
+exit: 0
+result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+$ python3 tools/agent/taskctl.py claim SR-016 --agent codex --branch feat/SR-016-resource-versions
+exit: 0
+result: CLAIMED SR-016 by codex until 2026-06-25T14:22:46.841502+00:00
+```
+
+## TDD red
+
+```text
+$ php docs/evidence/SR-016/resource-versions-check.php
+exit: 255
+result: expected failure
+
+Failed opening required '.../packages/sr-core/src/Version/ResourceVersionStatus.php'
+```
+
+## Green checks during implementation
+
+```text
+$ php docs/evidence/SR-016/resource-versions-check.php
+exit: 0
+result: SR-016 resource versions check: ok
+
+$ find packages/sr-core/src/Version -name '*.php' -print -exec php -l {} \;
+exit: 0
+result: no syntax errors detected in Version module files
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ make lint
+exit: 0
+result: lint: ok
+```
+
+## Review feedback red/green
+
+```text
+$ php docs/evidence/SR-016/resource-versions-check.php
+exit: 255
+result: expected failure after adding review feedback coverage
+
+new versions cannot bypass activation by setting current directly
+
+$ composer test
+cwd: packages/sr-core
+exit: 255
+result: expected failure after adding module regression coverage
+
+resource versions cannot bypass activation lock on create expected=true actual=false
+
+$ php docs/evidence/SR-016/resource-versions-check.php
+exit: 0
+result: SR-016 resource versions check: ok
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ php -l packages/sr-core/src/Version/InMemoryResourceVersionRepository.php
+exit: 0
+result: No syntax errors detected
+
+$ make lint
+exit: 0
+result: lint: ok
+```
+
+## Required command matrix
+
+```text
+$ composer validate --strict
+exit: 0
+result: ./composer.json is valid
+
+$ composer validate --strict
+cwd: packages/sr-core
+exit: 0
+result: ./composer.json is valid
+
+$ make test-unit MODULE=versions
+exit: 2
+result: unavailable; repository Makefile does not define target test-unit
+replacement: composer test in packages/sr-core and php docs/evidence/SR-016/resource-versions-check.php
+
+$ make test-integration
+exit: 2
+result: unavailable; repository Makefile does not define target test-integration
+replacement: make test
+
+$ git diff --check
+exit: 0
+result: no whitespace errors
+
+$ python3 tools/agent/validate_docs.py
+exit: 0
+result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ php docs/evidence/SR-016/resource-versions-check.php
+exit: 0
+result: SR-016 resource versions check: ok
+
+$ make test
+exit: 0
+result: lint: ok; test: ok
+
+$ make lint
+exit: 0
+result: lint: ok
+```
