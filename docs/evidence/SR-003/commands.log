@@ -1,0 +1,148 @@
+SR-003 command evidence
+Generated: 2026-06-25T13:40:56+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-003 --agent codex --branch feat/SR-003-docker-compose
+Exit: 0
+Result:
+CLAIMED SR-003 by codex until 2026-06-25T09:23:40.225260+00:00
+
+Command: docker --version && docker compose version
+Exit: 0
+Result:
+Docker version 27.5.1, build 27.5.1-0ubuntu3~24.04.2
+Docker Compose version 2.40.3+ds1-0ubuntu1~24.04.1
+
+RED command: docker compose config --quiet
+Exit: 1
+Result:
+no configuration file provided: not found
+
+RED command: test -f infra/docker/bootstrap.sh && sh -n infra/docker/bootstrap.sh
+Exit: 1
+Result:
+Expected failure before SR-003 implementation because bootstrap script did not exist.
+
+Command: docker compose config --quiet
+Exit: 1
+Result:
+Initial implementation referenced required `.env`; empty-machine config failed with "env file .../.env not found".
+
+Fix:
+`docker-compose.yml` now loads `.env.example` first and optional `.env` second for PHP/CLI containers.
+
+Command: docker compose config --quiet
+Exit: 0
+Result:
+Compose file resolved successfully without a local `.env`.
+
+Command: sh -n infra/docker/bootstrap.sh && sh -n infra/docker/smoke.sh
+Exit: 0
+Result:
+Bootstrap and smoke scripts are POSIX shell syntax-clean.
+
+Command: docker compose build php
+Exit: 130
+Result:
+First Dockerfile attempted gd/intl/redis extension build and was interrupted after very slow external apt downloads. No code or data change resulted. Dockerfile was narrowed to SR-003 local-environment essentials.
+
+Command: docker compose build php
+Exit: 0
+Result:
+Built PHP 8.3 FPM image with Composer, mysqli, pdo_mysql, opcache and zip.
+
+Command: docker compose up -d mariadb redis minio mailpit php nginx minio-init
+Exit: 1
+Result:
+MariaDB, Redis, MinIO, Mailpit and PHP reached healthy status; Nginx failed because host port 8080 was already allocated on the workstation.
+
+Diagnostic command: ss -ltnp | rg ':8080\b' || true
+Exit: 0
+Result:
+Confirmed host port 8080 was listening before Nginx bind.
+
+Fix:
+Default `APP_PORT` changed from 8080 to 18080 in `docker-compose.yml` and `.env.example`; user can still override via `.env`.
+
+Command: docker compose up -d nginx minio-init && infra/docker/smoke.sh
+Exit: 0
+Result:
+Nginx, PHP-FPM, MariaDB, Redis, MinIO, MinIO bucket init and Mailpit started; smoke checks passed.
+
+Command: docker compose down -v && infra/docker/bootstrap.sh
+Exit: 0
+Result:
+Cleared containers and volumes, rebuilt from empty local volumes, copied `.env.example` to ignored `.env`, ran Composer install in the CLI container, started all services.
+
+Command: sleep 5 && infra/docker/smoke.sh && docker compose ps && docker compose down -v
+Exit: 0
+Result:
+Smoke passed after clean bootstrap; all six core services reported healthy; local containers, network and volumes were removed.
+
+Required command: docker compose config --quiet
+Exit: 0
+Result:
+Compose config passes.
+
+Required command: make bootstrap
+Exit: 2
+Result:
+No rule to make target `bootstrap`. This is expected in SR-003 because root `Makefile` is owned by SR-004. Alternative command `infra/docker/bootstrap.sh` ran successfully from empty local Docker volumes.
+
+Required command: make test-smoke
+Exit: 2
+Result:
+No rule to make target `test-smoke`. This is expected in SR-003 because root `Makefile` is owned by SR-004. Alternative command `infra/docker/smoke.sh` ran successfully against the bootstrapped Compose stack.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+Post-commit self-review fix:
+`infra/docker/smoke.sh` now reads MariaDB root password from the container's `MYSQL_ROOT_PASSWORD` rather than assuming the host shell default, so `.env` overrides do not break smoke checks.
+
+Command: infra/docker/bootstrap.sh && infra/docker/smoke.sh && docker compose down -v && docker compose config --quiet && sh -n infra/docker/bootstrap.sh && sh -n infra/docker/smoke.sh && git diff --check && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+Clean bootstrap and smoke passed with the updated MariaDB check; containers and volumes were removed; Compose config, shell syntax, whitespace and docs validation passed. Docs validation result: OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent.
+
+Command: git status --short --ignored
+Exit: 0
+Result:
+Tracked SR-003 files are modified/untracked as expected. Ignored local `.env`, `vendor/`, `web/wp/`, EDD plugin, default theme and generated mu-plugin directories remain untracked and ignored.
+
+Implementation commit:
+7c83438cdcc45441274d42657bebe4623b161c54 (`chore: add SR-003 docker compose environment`)
+
+Command: git show --stat --oneline --decorate 7c83438cdcc45441274d42657bebe4623b161c54
+Exit: 0
+Result:
+7c83438 (HEAD -> feat/SR-003-docker-compose, origin/feat/SR-003-docker-compose) chore: add SR-003 docker compose environment
+ .env.example                              |  54 +++++++---
+ docker-compose.yml                        | 165 ++++++++++++++++++++++++++++++
+ docs/evidence/SR-003/commands.log         | 131 ++++++++++++++++++++++++
+ docs/evidence/SR-003/completion-report.md |  15 +++
+ docs/status/task-status.yaml              |  15 +--
+ docs/tasks/SR-003.md                      |  50 ++++-----
+ infra/docker/bootstrap.sh                 |  14 +++
+ infra/docker/nginx/default.conf           |  31 ++++++
+ infra/docker/php/Dockerfile               |  19 ++++
+ infra/docker/php/php.ini                  |  10 ++
+ infra/docker/smoke.sh                     |  13 +++
+ 11 files changed, 470 insertions(+), 47 deletions(-)
+
+Branch:
+`feat/SR-003-docker-compose` pushed to `https://github.com/3300160875/Indicator_Marketplace`.
+
+PR URL:
+Not created by this workflow. GitHub offered `https://github.com/3300160875/Indicator_Marketplace/pull/new/feat/SR-003-docker-compose`.
