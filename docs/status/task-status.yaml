@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T10:18:22.009475+00:00'
+updated_at: '2026-06-25T10:20:58.371554+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -100,7 +100,7 @@ tasks:
     branch: feat/SR-009-plugin-skeletons
     claimed_at: '2026-06-25T08:10:01.345133+00:00'
     updated_at: '2026-06-25T08:15:12.914169+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/13
     evidence:
     - docs/evidence/SR-009/commands.log
     - docs/evidence/SR-009/completion-report.md
@@ -168,11 +168,11 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/12
     blockers: []
   SR-015:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-015-resource-editor-gate
     claimed_at: '2026-06-25T10:09:43.853850+00:00'
-    updated_at: '2026-06-25T10:18:22.009465+00:00'
+    updated_at: '2026-06-25T10:20:58.371544+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-015/commands.log
