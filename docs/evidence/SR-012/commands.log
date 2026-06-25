@@ -79,7 +79,21 @@ Exit: 0
 Result:
 Observability check passed; sr-core Composer validation/test passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
 
+PR check command: gh pr checks 9 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 13s; PHP gate passed in 22s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-012 VERIFIED --evidence docs/evidence/SR-012/review-report.md
+Exit: 0
+Result:
+SR-012 VERIFIED.
+
+Commit / PR:
+- Commit SHA: d92e033d5aa86093be79913c77c207048d18c040
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/9
+
 Notes:
 - SR-012 provides support classes and interfaces for request IDs, REST header emission, redaction, structured logging and audit recording.
 - It does not create audit tables or admin audit UI.
-- Commit SHA and PR URL will be added after the branch is committed and the PR is created.
+- SR-012 moved to VERIFIED after local verification, independent subagent review and passing PR checks.
