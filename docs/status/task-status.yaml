@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T08:15:12.914179+00:00'
+updated_at: '2026-06-25T08:19:25.971914+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -107,13 +107,16 @@ tasks:
     - docs/evidence/SR-009/review-report.md
     blockers: []
   SR-010:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-010-theme-skeleton
+    claimed_at: '2026-06-25T08:17:14.238484+00:00'
+    updated_at: '2026-06-25T08:19:25.971896+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-010/commands.log
+    - docs/evidence/SR-010/completion-report.md
+    - docs/evidence/SR-010/review-report.md
     blockers: []
   SR-011:
     status: BACKLOG

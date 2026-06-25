@@ -1,0 +1,11 @@
+{
+  "name": "stock-resource-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "node scripts/verify-theme.mjs",
+    "test": "node scripts/verify-theme.mjs",
+    "build": "node scripts/build.mjs"
+  }
+}
