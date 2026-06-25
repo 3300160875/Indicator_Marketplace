@@ -76,7 +76,7 @@ tasks:
     branch: feat/SR-007-contracts
     claimed_at: '2026-06-25T07:02:05.790738+00:00'
     updated_at: '2026-06-25T07:14:28.863424+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/13
     evidence:
     - docs/evidence/SR-007/commands.log
     - docs/evidence/SR-007/completion-report.md
@@ -179,6 +179,7 @@ tasks:
     - docs/evidence/SR-015/completion-report.md
     - docs/evidence/SR-015/resource-editor-check.php
     - docs/evidence/SR-015/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/13
     blockers: []
   SR-016:
     status: BACKLOG
