@@ -1,0 +1,98 @@
+SR-013 command evidence
+Generated: 2026-06-25T16:56:44+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-013 --agent codex --branch feat/SR-013-taxonomy-vocabulary
+Exit: 0
+Result:
+CLAIMED SR-013 by codex until 2026-06-25T12:55:22.100697+00:00
+
+Red test command: php docs/evidence/SR-013/taxonomy-check.php
+Exit: 255
+Result:
+Failed opening required `packages/sr-core/src/Content/Taxonomy/TaxonomyDefinition.php`; expected failure before implementation.
+
+Taxonomy check command: php docs/evidence/SR-013/taxonomy-check.php
+Exit: 0
+Result:
+`SR-013 taxonomy check: ok`.
+
+Package regression command: composer --working-dir=packages/sr-core validate --strict && composer --working-dir=packages/sr-core test
+Exit: 0
+Result:
+`./composer.json is valid`; `sr-core skeleton tests: ok`.
+
+Required command: composer validate --strict
+Exit: 0
+Result:
+Root `composer.json` is valid.
+
+Required command: make lint
+Exit: 0
+Result:
+`lint: ok`.
+
+Required command: make test-unit MODULE=core
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-unit'. Stop.`
+
+Alternative for unavailable unit target: php docs/evidence/SR-013/taxonomy-check.php
+Exit: 0
+Result:
+Required taxonomy definitions, controlled vocabulary slugs, REST schema and deletion guard checks passed.
+
+Required command: make test-integration
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-integration'. Stop.`
+
+Alternative integration command: php docs/evidence/SR-013/taxonomy-check.php && composer --working-dir=packages/sr-core test && make test
+Exit: 0
+Result:
+Taxonomy check, sr-core package test and root smoke test passed.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`.
+
+Independent review:
+Gauss subagent completed read-only SR-013 review. Key limitation followed: actual WordPress `init` registration requires editing plugin bootstrap files outside SR-013 allowed paths, so this task provides definitions/guards/schema under the allowed taxonomy path and documents the runtime wiring limitation.
+
+Final diff stat command: git diff --cached --stat
+Exit: 0
+Result:
+13 files changed, 501 insertions(+), 55 deletions(-).
+
+Final verification command: php docs/evidence/SR-013/taxonomy-check.php && composer --working-dir=packages/sr-core validate --strict && composer --working-dir=packages/sr-core test && composer validate --strict && make lint && make test && git diff --check --cached && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+Taxonomy check passed; sr-core Composer validation/test passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+PR check command: gh pr checks 10 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 11s; PHP gate passed in 24s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-013 VERIFIED --evidence docs/evidence/SR-013/review-report.md
+Exit: 0
+Result:
+SR-013 VERIFIED.
+
+Commit / PR:
+- Commit SHA: 66dc0df850dfca8e1b1b0f19d80b62504dbeee89
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/10
+
+Notes:
+- SR-013 does not create custom taxonomy tables and does not implement the public `/taxonomies` endpoint.
+- SR-013 moved to VERIFIED after local verification, independent subagent review and passing PR checks.
