@@ -1,6 +1,6 @@
 # SR-009 Completion Report
 
-- Task / status: SR-009, REVIEW.
+- Task / status: SR-009, VERIFIED.
 - Branch: `feat/SR-009-plugin-skeletons`.
 - Scope completed: created five ordinary WordPress plugin package skeletons for core, entitlements, payment gateways, private downloads and admin operations.
 - Files changed: `packages/sr-core/**`, `packages/sr-entitlements/**`, `packages/sr-payment-gateways/**`, `packages/sr-private-downloads/**`, `packages/sr-admin-ops/**`, SR-009 evidence/status/task documentation.
@@ -11,4 +11,4 @@
 - Known limitations: root `make test-unit MODULE=plugins` and `make test-integration` targets do not exist yet and were not added because SR-009 write scope is the plugin packages; package-level and root smoke alternatives passed.
 - Rollback: revert SR-009 package/evidence commit.
 - Next safe task(s): SR-010 创建 `stock-resource-theme` 骨架； SR-012 建立 Request ID、结构化日志与审计接口。
-- Commit/PR: pending branch commit and PR creation.
+- Commit/PR: commit `66d21f219a9c2b96a7ce09c5d4385ba5b2e37656`; PR https://github.com/3300160875/Indicator_Marketplace/pull/6.
