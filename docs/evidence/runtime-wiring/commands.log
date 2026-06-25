@@ -1,0 +1,93 @@
+# Runtime wiring command log
+
+All commands were run from `/home/devops-ubuntu/Developer/Indicator_Marketplace/project` unless noted.
+
+## TDD red
+
+```text
+$ composer test
+cwd: packages/sr-core
+exit: 255
+result: expected failure
+
+PHP Fatal error:  Uncaught RuntimeException: runtime environment contract exists for WordPress wiring
+```
+
+```text
+$ composer test
+cwd: packages/sr-core
+exit: 255
+result: expected failure after code review test expansion
+
+PHP Fatal error:  Uncaught RuntimeException: WP-CLI migrate wrapper maps assoc args expected=0 actual=1
+```
+
+```text
+$ composer test
+cwd: packages/sr-core
+exit: 255
+result: expected failure after WP-CLI wrapper fix
+
+PHP Fatal error:  Uncaught RuntimeException: sr-core entry did not load Plugin class
+```
+
+## Local checks during implementation
+
+```text
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ python3 tools/agent/validate_docs.py
+exit: 0
+result: OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent
+
+$ git diff --check
+exit: 0
+result: no whitespace errors
+```
+
+## Additional local probes
+
+```text
+$ composer validate --strict
+exit: 0
+result: ./composer.json is valid
+
+$ composer validate --strict
+cwd: packages/sr-core
+exit: 0
+result: ./composer.json is valid
+
+$ make lint
+exit: 0
+result: lint: ok
+
+$ make test
+exit: 0
+result: lint: ok; test: ok
+
+$ npm run lint
+exit: 0
+result: frontend lint: no frontend assets defined in W1
+```
+
+## Local limitations
+
+```text
+$ phpcs --standard=phpcs.xml --runtime-set ignore_warnings_on_exit 1
+exit: 127
+result: local phpcs command is not installed; GitHub Actions installs phpcs on the runner.
+
+$ phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=512M
+exit: 127
+result: local phpstan command is not installed; GitHub Actions installs phpstan on the runner.
+
+$ composer test
+exit: 1
+result: root Pest entry fails because /tests does not exist; this is an existing project script gap outside runtime wiring.
+
+$ composer lint
+result: interrupted after long-running Pint scan with no output; project Make lint remains the effective local gate for this stage.
+```
