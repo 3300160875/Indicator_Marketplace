@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="Indicator Marketplace">
+  <description>Minimal CI coding standard for project-owned PHP files.</description>
+
+  <file>config</file>
+  <file>web/index.php</file>
+  <file>web/wp-config.php</file>
+
+  <exclude-pattern>vendor/*</exclude-pattern>
+  <exclude-pattern>web/wp/*</exclude-pattern>
+  <exclude-pattern>web/app/plugins/*</exclude-pattern>
+  <exclude-pattern>web/app/themes/*</exclude-pattern>
+  <exclude-pattern>web/app/mu-plugins/bedrock-disallow-indexing/*</exclude-pattern>
+
+  <arg name="extensions" value="php"/>
+  <arg name="colors"/>
+
+  <rule ref="Generic.PHP.Syntax"/>
+</ruleset>

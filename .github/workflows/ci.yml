@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  php:
+    name: PHP gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2, phpcs, phpstan
+          extensions: mbstring, mysqli, pdo_mysql, zip
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Validate Composer
+        run: composer validate --strict
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: PHP syntax lint
+        run: |
+          git ls-files '*.php' | xargs -r -n 1 php -l
+
+      - name: PHPCS
+        run: phpcs --standard=phpcs.xml --runtime-set ignore_warnings_on_exit 1
+
+      - name: PHPStan
+        run: phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=512M
+
+      - name: Unit tests
+        run: |
+          if [ ! -d tests ]; then
+            echo "No PHP tests directory exists in W1"
+          elif [ -f vendor/bin/pest ]; then
+            vendor/bin/pest --colors=never
+          elif [ -f vendor/bin/phpunit ]; then
+            vendor/bin/phpunit --colors=never
+          else
+            echo "No PHP test runner installed"
+            exit 1
+          fi
+
+      - name: Upload PHP reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: php-gate-summary
+          path: |
+            phpcs.xml
+            phpstan.neon
+            composer.lock
+          if-no-files-found: ignore
+
+  frontend:
+    name: Frontend gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json', 'npm-shrinkwrap.json') }}
+          restore-keys: npm-${{ runner.os }}-
+
+      - name: Install npm dependencies
+        run: |
+          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then
+            npm ci
+          else
+            npm install --ignore-scripts --no-audit --no-fund
+          fi
+
+      - name: Frontend lint
+        run: npm run lint

@@ -37,6 +37,7 @@ Development commands:
   make test-smoke  verify running Docker services
   make e2e         run end-to-end tests when available
   make status      show Docker service status
+  make ci          run the minimum local CI gate
   make doctor      check local command prerequisites
 
 First start:
@@ -98,6 +99,14 @@ EOF
     ;;
   status)
     docker compose ps
+    ;;
+  ci)
+    composer validate --strict
+    npm ci
+    bin/dev lint
+    bin/dev test
+    npm run lint
+    printf 'ci: ok\n'
     ;;
   *)
     printf 'Unknown command: %s\n' "$1" >&2

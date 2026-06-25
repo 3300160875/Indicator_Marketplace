@@ -1,0 +1,119 @@
+SR-005 command evidence
+Generated: 2026-06-25T14:05:00+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-005 --agent codex --branch feat/SR-005-ci-gate
+Exit: 0
+Result:
+CLAIMED SR-005 by codex until 2026-06-25T09:59:00.557868+00:00
+
+RED command: test -f .github/workflows/ci.yml; test -f phpcs.xml; test -f phpstan.neon; test -f package.json
+Exit: 1
+Result:
+CI workflow, PHPCS config, PHPStan config and package metadata did not exist before SR-005 implementation.
+
+RED command: npm ci
+Exit: 1
+Result:
+`npm ci` failed because no `package-lock.json` or `npm-shrinkwrap.json` exists. SR-005 allowed paths include `package.json` but not `package-lock.json`, so this cannot be fixed inside the declared write scope.
+
+RED command: make ci
+Exit: 2
+Result:
+No rule to make target `ci`. SR-005 allowed paths do not include `Makefile`, so this cannot be fixed inside the declared write scope.
+
+Command: composer validate --strict
+Exit: 0
+Result:
+./composer.json is valid.
+
+Command: npm run lint
+Exit: 0
+Result:
+frontend lint: no frontend assets defined in W1.
+
+Command: python3 workflow text check
+Exit: 0
+Result:
+Workflow contains pull_request trigger, concurrency cancellation, actions/cache usage, composer validate, PHPCS, PHPStan and npm frontend lint commands.
+
+Required command: npm ci
+Exit: 1
+Result:
+Still blocked by missing lockfile outside SR-005 allowed paths.
+
+Required command: make ci
+Exit: 2
+Result:
+Still blocked by missing Makefile target outside SR-005 allowed paths.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+Command: gh auth status
+Exit: 0
+Result:
+GitHub CLI is authenticated as repository owner account `3300160875`.
+
+Command: gh repo view 3300160875/Indicator_Marketplace --json name,owner,visibility,defaultBranchRef
+Exit: 0
+Result:
+Repository `3300160875/Indicator_Marketplace` is PRIVATE and default branch is `main`.
+
+Command: gh api repos/3300160875/Indicator_Marketplace/branches/main/protection --silent
+Exit: 1
+Result:
+GitHub returned HTTP 403: "Upgrade to GitHub Pro or make this repository public to enable this feature." Therefore SR-005 cannot satisfy "failure blocks merge" for the current private repository plan from repository files alone.
+
+Implemented workflow behavior:
+- PR and main push trigger.
+- Concurrency cancels superseded runs.
+- PHP job installs Composer, PHPCS and PHPStan through `shivammathur/setup-php`.
+- Composer dependencies cached by `composer.lock`.
+- PHP syntax lint, PHPCS, PHPStan and PHP tests when a `tests/` directory exists.
+- Frontend job caches npm by `package.json`/lockfile hash, installs with `npm ci` when a lockfile exists or `npm install` fallback otherwise, then runs `npm run lint`.
+- Artifacts upload CI config summary.
+
+Unblock authorization:
+On 2026-06-25 the user authorized making the repository public and expanding SR-005 scope to include `package-lock.json`, `Makefile`, and `bin/**`.
+
+Command: gh repo edit 3300160875/Indicator_Marketplace --visibility public
+Exit: 0
+Result:
+Repository visibility changed to PUBLIC.
+
+Command: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+Exit: 0
+Result:
+Created `package-lock.json` without installing new packages or running scripts.
+
+Command: make ci
+Exit: 0
+Result:
+`composer validate --strict`, `npm ci`, `bin/dev lint`, `bin/dev test`, and `npm run lint` all passed; output ended with `ci: ok`.
+
+Command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+Resolved blockers:
+1. Repository is now public, so branch protection can be configured.
+2. `npm ci` passes after adding authorized `package-lock.json`.
+3. `make ci` passes after adding authorized `Makefile`/`bin/dev` CI target.
