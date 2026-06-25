@@ -2,6 +2,9 @@
 declare(strict_types=1);
 
 use StockResource\Core\Plugin;
+use StockResource\Core\Admin\ResourceEditor\ResourceDraft;
+use StockResource\Core\Admin\ResourceEditor\ResourceEditorSectionCatalog;
+use StockResource\Core\Admin\ResourceEditor\ResourcePublishGate;
 use StockResource\Core\Cli\MigrationCommand;
 use StockResource\Core\Content\Meta\DownloadMetaCatalog;
 use StockResource\Core\Content\Taxonomy\TaxonomyCatalog;
@@ -18,6 +21,13 @@ $sourceFiles = [
     '/src/Runtime/RuntimeEnvironment.php',
     '/src/Runtime/WordPressRuntimeEnvironment.php',
     '/src/Runtime/CoreRuntimeRegistrar.php',
+    '/src/Admin/ResourceEditor/EditorSection.php',
+    '/src/Admin/ResourceEditor/ResourceEditorSectionCatalog.php',
+    '/src/Admin/ResourceEditor/GateIssue.php',
+    '/src/Admin/ResourceEditor/PublishGateResult.php',
+    '/src/Admin/ResourceEditor/ResourceDraft.php',
+    '/src/Admin/ResourceEditor/ResourcePublishGate.php',
+    '/src/Admin/ResourceEditor/ResourceChangeAuditPolicy.php',
     '/src/Content/Meta/DownloadMetaDefinition.php',
     '/src/Content/Meta/DownloadMetaCatalog.php',
     '/src/Content/Taxonomy/TaxonomyDefinition.php',
@@ -255,5 +265,59 @@ assert_same(false, $metaCatalog->get('_sr_rights_record_id')->registrationArgs()
 assert_same(false, $metaCatalog->get('_sr_risk_level')->registrationArgs()['show_in_rest'], 'raw risk level is not exposed in REST');
 assert_true(is_callable($metaCatalog->get('_sr_access_mode')->registrationArgs()['sanitize_callback']), 'meta fields expose sanitize callbacks');
 assert_true(is_callable($metaCatalog->get('_sr_access_mode')->registrationArgs()['auth_callback']), 'meta fields expose auth callbacks');
+
+$editorSections = ResourceEditorSectionCatalog::defaults();
+assert_true(in_array('_sr_access_mode', $editorSections->get('commercial')->fields(), true), 'resource editor has commercial section');
+$publishGate = new ResourcePublishGate();
+$blockedPublish = $publishGate->evaluate(ResourceDraft::fromArray([
+    'post_title' => '稳赚指标',
+    'post_excerpt' => '',
+    'screenshot_count' => 0,
+    'meta' => [
+        '_sr_access_mode' => 'unavailable',
+        '_sr_future_function_status' => 'unknown',
+        '_sr_l2_required' => 'unknown',
+        '_sr_rights_status' => 'pending',
+        '_sr_risk_level' => 'blocked',
+    ],
+]));
+assert_same(false, $blockedPublish->canPublish(), 'resource publish gate blocks incomplete drafts');
+assert_true(in_array('prohibited_claim', $blockedPublish->issueCodes(), true), 'resource publish gate flags prohibited claims');
+assert_true(in_array('usage_scenarios_required', $blockedPublish->issueCodes(), true), 'resource publish gate requires usage scenarios');
+assert_true(in_array('limitations_required', $blockedPublish->issueCodes(), true), 'resource publish gate requires limitations and risk text');
+
+$paidWithoutRightsRecord = $publishGate->evaluate(ResourceDraft::fromArray([
+    'post_title' => '通达信趋势指标',
+    'post_excerpt' => '用于趋势识别的指标资源。',
+    'post_content' => '<p>安装后用于辅助趋势观察，不构成投资建议。</p>',
+    'screenshot_count' => 1,
+    'price_configured' => true,
+    'taxonomies' => [
+        'download_category' => ['vip-formula'],
+        'sr_platform' => ['tongdaxin'],
+        'sr_indicator_type' => ['sub-chart'],
+        'sr_content_type' => ['indicator'],
+    ],
+    'meta' => [
+        '_sr_access_mode' => 'purchase',
+        '_sr_software_versions' => ['通达信 7.60'],
+        '_sr_device' => 'desktop',
+        '_sr_os' => 'windows',
+        '_sr_file_format' => 'tn6',
+        '_sr_charset' => 'gbk',
+        '_sr_source_included' => 'yes',
+        '_sr_future_function_status' => 'none',
+        '_sr_l2_required' => 'no',
+        '_sr_install_steps' => '<p>导入公式管理器。</p>',
+        '_sr_usage_scenarios' => '<p>趋势观察。</p>',
+        '_sr_limitations' => '<p>仅辅助判断。</p>',
+        '_sr_current_version_id' => 88,
+        '_sr_rights_status' => 'approved',
+        '_sr_rights_record_id' => 0,
+        '_sr_risk_level' => 'medium',
+        '_sr_disclaimer_version' => 'risk-v1',
+    ],
+]));
+assert_same(['rights_record_required'], $paidWithoutRightsRecord->issueCodes(), 'paid resources require rights evidence records');
 
 echo "sr-core runtime tests: ok\n";
