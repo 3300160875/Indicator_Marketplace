@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use StockResource\Core\Plugin;
 use StockResource\Core\Cli\MigrationCommand;
+use StockResource\Core\Content\Meta\DownloadMetaCatalog;
 use StockResource\Core\Content\Taxonomy\TaxonomyCatalog;
 use StockResource\Core\Infrastructure\Migration\ArrayMigrationRepository;
 use StockResource\Core\Infrastructure\Migration\Migration;
@@ -17,6 +18,8 @@ $sourceFiles = [
     '/src/Runtime/RuntimeEnvironment.php',
     '/src/Runtime/WordPressRuntimeEnvironment.php',
     '/src/Runtime/CoreRuntimeRegistrar.php',
+    '/src/Content/Meta/DownloadMetaDefinition.php',
+    '/src/Content/Meta/DownloadMetaCatalog.php',
     '/src/Content/Taxonomy/TaxonomyDefinition.php',
     '/src/Content/Taxonomy/TaxonomyCatalog.php',
     '/src/Infrastructure/Migration/Migration.php',
@@ -243,5 +246,14 @@ file_put_contents($entryProbe, $entryProbeScript);
 exec(PHP_BINARY . ' ' . escapeshellarg($entryProbe), $entryProbeOutput, $entryProbeExitCode);
 unlink($entryProbe);
 assert_same(0, $entryProbeExitCode, 'sr-core entry loads local classes and registers runtime hooks');
+
+$metaCatalog = DownloadMetaCatalog::defaults();
+assert_same(23, count($metaCatalog->definitions()), 'download resource meta catalog includes all SR-014 fields');
+assert_same('unavailable', $metaCatalog->get('_sr_access_mode')->sanitize('invalid'), 'invalid access mode falls back to unavailable');
+assert_same('unknown', $metaCatalog->get('_sr_future_function_status')->sanitize(false), 'future function unknown is not coerced to false');
+assert_same(false, $metaCatalog->get('_sr_rights_record_id')->registrationArgs()['show_in_rest'], 'rights record id is not exposed in REST');
+assert_same(false, $metaCatalog->get('_sr_risk_level')->registrationArgs()['show_in_rest'], 'raw risk level is not exposed in REST');
+assert_true(is_callable($metaCatalog->get('_sr_access_mode')->registrationArgs()['sanitize_callback']), 'meta fields expose sanitize callbacks');
+assert_true(is_callable($metaCatalog->get('_sr_access_mode')->registrationArgs()['auth_callback']), 'meta fields expose auth callbacks');
 
 echo "sr-core runtime tests: ok\n";
