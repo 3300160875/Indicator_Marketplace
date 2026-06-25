@@ -1,0 +1,90 @@
+SR-009 command evidence
+Generated: 2026-06-25T16:12:51+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-009 --agent codex --branch feat/SR-009-plugin-skeletons
+Exit: 0
+Result:
+CLAIMED SR-009 by codex until 2026-06-25T12:10:01.345133+00:00
+
+Red test command: for pkg in sr-core sr-entitlements sr-payment-gateways sr-private-downloads sr-admin-ops; do php "packages/$pkg/tests/run.php"; done
+Exit: 255
+Result:
+The first package failed opening required `packages/sr-core/src/Plugin.php`; expected failure before implementation.
+
+Version command: php --version
+Exit: 0
+Result:
+PHP 8.3.6 (cli).
+
+Version command: composer --version
+Exit: 0
+Result:
+Composer version 2.7.1 2024-02-09 15:26:28.
+
+Package validation and unit command: for pkg in sr-core sr-entitlements sr-payment-gateways sr-private-downloads sr-admin-ops; do composer --working-dir="packages/$pkg" validate --strict && composer --working-dir="packages/$pkg" test; done
+Exit: 0
+Result:
+All five package Composer files are valid; all five skeleton tests returned `ok`.
+
+Required command: composer validate --strict
+Exit: 0
+Result:
+Root `composer.json` is valid.
+
+Required command: make lint
+Exit: 0
+Result:
+`lint: ok`.
+
+Required command: make test-unit MODULE=plugins
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-unit'. Stop.`
+
+Alternative for unavailable required unit target: five package-level Composer tests
+Exit: 0
+Result:
+`sr-core`, `sr-entitlements`, `sr-payment-gateways`, `sr-private-downloads` and `sr-admin-ops` skeleton tests passed.
+
+Required command: make test-integration
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-integration'. Stop.`
+
+Alternative for unavailable required integration target: make test
+Exit: 0
+Result:
+Root smoke-level test target passed: `lint: ok`; `test: ok`.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`.
+
+Independent review:
+Confucius subagent completed read-only SR-009 review. The implementation follows the recommended ordinary WordPress plugin package type, `StockResource\\*` namespaces, `Requires Plugins: easy-digital-downloads` header and runtime bootstrap/EDD dependency guard.
+
+Final diff stat command: git diff --cached --stat
+Exit: 0
+Result:
+50 files changed, 990 insertions(+), 54 deletions(-).
+
+Final verification command: for pkg in sr-core sr-entitlements sr-payment-gateways sr-private-downloads sr-admin-ops; do composer --working-dir="packages/$pkg" validate --strict && composer --working-dir="packages/$pkg" test; done && composer validate --strict && make lint && make test && git diff --check --cached && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+All five package validations/tests passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+Notes:
+- SR-009 does not modify root Composer, Makefile, WordPress Core, EDD Core or generated dependencies.
+- The package entries do not implement payment, entitlement, download, EDD projection or admin workflow business rules.
+- Commit SHA and PR URL will be added after the branch is committed and the PR is created.
