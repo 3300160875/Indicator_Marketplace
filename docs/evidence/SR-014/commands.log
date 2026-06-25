@@ -1,0 +1,127 @@
+# SR-014 command log
+
+All commands were run from `/home/devops-ubuntu/Developer/Indicator_Marketplace/project` unless noted.
+
+## Baseline
+
+```text
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+
+$ make lint
+exit: 0
+result: lint: ok
+
+$ make test
+exit: 0
+result: lint: ok; test: ok
+
+$ python3 tools/agent/taskctl.py ready
+exit: 0
+result: SR-014 listed as ready
+```
+
+## Claim
+
+```text
+$ python3 tools/agent/taskctl.py claim SR-014 --agent codex --branch feat/SR-014-download-meta-schema
+exit: 0
+result: CLAIMED SR-014 by codex until 2026-06-25T13:52:57.414715+00:00
+```
+
+## TDD red
+
+```text
+$ php docs/evidence/SR-014/meta-schema-check.php
+exit: 255
+result: expected failure
+
+Failed opening required '.../packages/sr-core/src/Content/Meta/DownloadMetaDefinition.php'
+```
+
+```text
+$ php docs/evidence/SR-014/meta-schema-check.php
+exit: 255
+result: expected failure after nullable REST/schema test was added
+
+nullable BIGINT still registers as WordPress integer meta expected='integer' actual=array (...)
+```
+
+## Green checks during implementation
+
+```text
+$ php docs/evidence/SR-014/meta-schema-check.php
+exit: 0
+result: SR-014 meta schema check: ok
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+```
+
+## Required command coverage
+
+```text
+$ composer validate --strict
+exit: 0
+result: ./composer.json is valid
+
+$ composer validate --strict --working-dir=packages/sr-core
+exit: 0
+result: ./composer.json is valid
+
+$ make lint
+exit: 0
+result: lint: ok
+
+$ make test-unit MODULE=core
+exit: 2
+result: unavailable; Makefile does not define test-unit in the current project stage.
+alternative: composer test from packages/sr-core and php docs/evidence/SR-014/meta-schema-check.php
+
+$ make test-integration
+exit: 2
+result: unavailable; Makefile does not define test-integration in the current project stage.
+alternative: make test plus SR-014 pure PHP schema check
+
+$ git diff --check
+exit: 0
+result: no whitespace errors
+
+$ python tools/agent/validate_docs.py
+exit: 127
+result: local python alias is not installed
+alternative: python3 tools/agent/validate_docs.py
+
+$ python3 tools/agent/validate_docs.py
+exit: 0
+result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+$ make test
+exit: 0
+result: lint: ok; test: ok
+```
+
+## Review follow-up
+
+```text
+$ php docs/evidence/SR-014/meta-schema-check.php
+exit: 255
+result: expected failure after review feedback
+
+access mode default is unavailable until configured expected='unavailable' actual='free'
+```
+
+```text
+$ php docs/evidence/SR-014/meta-schema-check.php
+exit: 0
+result: SR-014 meta schema check: ok
+
+$ composer test
+cwd: packages/sr-core
+exit: 0
+result: sr-core runtime tests: ok
+```
