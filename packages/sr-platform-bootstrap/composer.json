@@ -1,0 +1,17 @@
+{
+  "name": "stock-resource/sr-platform-bootstrap",
+  "description": "MU plugin bootstrap, service container and feature flags for the Stock Resource platform.",
+  "type": "wordpress-muplugin",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "StockResource\\Platform\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "php tests/run.php"
+  }
+}

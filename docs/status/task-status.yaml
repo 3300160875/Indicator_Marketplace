@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T07:14:28.863436+00:00'
+updated_at: '2026-06-25T08:00:27.481761+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -83,13 +83,16 @@ tasks:
     - docs/evidence/SR-007/review-report.md
     blockers: []
   SR-008:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-008-platform-bootstrap
+    claimed_at: '2026-06-25T07:56:16.526136+00:00'
+    updated_at: '2026-06-25T08:00:27.481747+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-008/commands.log
+    - docs/evidence/SR-008/completion-report.md
+    - docs/evidence/SR-008/review-report.md
     blockers: []
   SR-009:
     status: BACKLOG
