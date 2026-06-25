@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T05:50:38.468689+00:00'
+updated_at: '2026-06-25T05:53:54.864042+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -35,13 +35,14 @@ tasks:
     - docs/evidence/SR-003/review-report.md
     blockers: []
   SR-004:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-004-makefile
+    claimed_at: '2026-06-25T05:51:17.772126+00:00'
+    updated_at: '2026-06-25T05:53:54.864032+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-004/commands.log
     blockers: []
   SR-005:
     status: READY
