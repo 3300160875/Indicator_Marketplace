@@ -6,7 +6,7 @@
 
 - Milestone: W3
 - CI: configured and required on `main`
-- Next safe task: SR-014 注册 EDD Download 资源元数据 Schema
+- Next safe task: SR-015 实现资源编辑工作台与发布检查
 - Gate 0: complete
 
 ## 本周完成
@@ -24,7 +24,7 @@
 - SR-012 已通过远端 CI 并标记 VERIFIED：Request ID、REST header middleware、结构化日志、默认脱敏与 AuditService 接口已完成。
 - SR-013 已通过远端 CI 并标记 VERIFIED：资源分类法定义、受控词表、REST term schema 与被引用词表删除保护已完成。
 - runtime-wiring 已补齐：`sr-core` 启动入口现在在依赖满足时接入 taxonomy `init` 注册、REST `X-Request-ID` header filter 与 WP-CLI migration 命令注册。
-- SR-014 正在推进：已建立 EDD Download 资源元数据 Schema 定义层，待评审、CI 与合入。
+- SR-014 已通过远端 CI 并标记 VERIFIED：EDD Download 资源元数据 Schema 定义层、23 个字段、sanitize/auth callback、REST 公开边界与审查修复均已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -33,6 +33,6 @@
 
 ## 下一步
 
-1. 完成 SR-014 评审、CI 与合入。
-2. SR-015 实现资源编辑工作台与发布检查。
-3. SR-016 创建 `sr_resource_versions` 表与仓储。
+1. SR-015 实现资源编辑工作台与发布检查。
+2. SR-016 创建 `sr_resource_versions` 表与仓储。
+3. SR-021 实现设计令牌与基础组件。

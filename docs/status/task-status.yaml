@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T10:02:40.357336+00:00'
+updated_at: '2026-06-25T10:05:02.169773+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -63,7 +63,7 @@ tasks:
     branch: feat/SR-006-spike-adr
     claimed_at: '2026-06-25T06:26:01.554123+00:00'
     updated_at: '2026-06-25T06:44:56.367967+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/12
     evidence:
     - docs/evidence/SR-006/commands.log
     - docs/evidence/SR-006/completion-report.md
@@ -155,16 +155,17 @@ tasks:
     - docs/evidence/SR-013/review-report.md
     blockers: []
   SR-014:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-014-download-meta-schema
     claimed_at: '2026-06-25T09:52:57.414715+00:00'
-    updated_at: '2026-06-25T10:02:40.357325+00:00'
+    updated_at: '2026-06-25T10:05:02.169763+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-014/commands.log
     - docs/evidence/SR-014/completion-report.md
     - docs/evidence/SR-014/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/12
     blockers: []
   SR-015:
     status: BACKLOG
