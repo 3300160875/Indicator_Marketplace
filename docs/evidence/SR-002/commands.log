@@ -1,0 +1,104 @@
+SR-002 command evidence
+Generated: 2026-06-25T05:15:00Z
+
+Command: python3 tools/agent/taskctl.py claim SR-002 --agent codex --branch feat/SR-002-bedrock
+Exit: 0
+Result:
+CLAIMED SR-002 by codex until 2026-06-25T09:04:36.367300+00:00
+
+Command: sudo apt-get update && sudo apt-get install -y php-cli php-xml php-mbstring php-curl php-zip php-mysql unzip composer
+Exit: 0
+Result:
+Installed PHP 8.3 CLI extensions and Composer. One unrelated TradingView apt index timed out during update; apt used remaining indexes and package installation succeeded.
+
+Command: php -v && composer --version
+Exit: 0
+Result:
+PHP 8.3.6; Composer 2.7.1.
+
+Command: composer create-project roots/bedrock:1.31.0 /tmp/sr002-bedrock --no-interaction --no-install
+Exit: 0
+Result:
+Created temporary Bedrock 1.31.0 skeleton for controlled copy into repository.
+
+Command: composer require roots/wordpress:'7.0.*' wp-plugin/easy-digital-downloads:'3.6.*' --no-install --no-interaction
+Exit: 0
+Result:
+Generated lock file with roots/wordpress 7.0 and wp-plugin/easy-digital-downloads 3.6.9.
+
+Command: composer validate --strict
+Exit: 0
+Result:
+./composer.json is valid.
+
+Command: composer install --no-interaction
+Exit: 0
+Result:
+Dependencies installed from composer.lock; nothing modified on repeated install.
+
+Command: make doctor
+Exit: 2
+Result:
+No rule to make target 'doctor'. Expected at SR-002 because Makefile targets are created by SR-004.
+
+Command: make test-smoke
+Exit: 2
+Result:
+No rule to make target 'test-smoke'. Expected at SR-002 because Makefile targets are created by SR-004.
+
+Alternative smoke command: for f in config/application.php config/environments/development.php config/environments/staging.php web/index.php web/wp-config.php web/app/mu-plugins/bedrock-autoloader.php; do php -l "$f" || exit 1; done
+Exit: 0
+Result:
+No syntax errors in tracked Bedrock PHP entry/config files.
+
+Alternative smoke command: test -d web/wp && test -f web/wp/wp-includes/version.php && test -d web/app/plugins/easy-digital-downloads && test -f web/app/plugins/easy-digital-downloads/easy-digital-downloads.php
+Exit: 0
+Result:
+Composer-installed WordPress and EDD dependency directories exist locally.
+
+Alternative smoke command: for p in vendor web/wp web/app/plugins/easy-digital-downloads web/app/themes/twentytwentyfive web/app/mu-plugins/bedrock-disallow-indexing; do git check-ignore -q "$p" || exit 1; done
+Exit: 0
+Result:
+Generated dependency directories are ignored and will not be committed.
+
+Command: composer show roots/wordpress --locked --format=json
+Exit: 0
+Result:
+roots/wordpress locked at 7.0.
+
+Command: composer show wp-plugin/easy-digital-downloads --locked --format=json
+Exit: 0
+Result:
+wp-plugin/easy-digital-downloads locked at 3.6.9.
+
+Command: sha256sum web/app/plugins/easy-digital-downloads/easy-digital-downloads.php web/wp/wp-includes/version.php composer.lock
+Exit: 0
+Result:
+9ba7ce1594f9979d757369cfed7d4655bc3cc0e324f2c9aa9283a71681caf2ad  web/app/plugins/easy-digital-downloads/easy-digital-downloads.php
+77ec8308a6c2055c4582d1392951afd53083be81994934fe760ba589fe8df19c  web/wp/wp-includes/version.php
+6b6ddbc5f7a0d5f452f9cce4bf486bdfc7d04af7f8dbde16b48cb3f8f4441044  composer.lock
+
+Command: git add -N .gitignore .env.example composer.json composer.lock config web docs/tasks/SR-002.md docs/evidence/SR-002 docs/status && git diff --check
+Exit: 0
+Result:
+No whitespace errors in SR-002 diff.
+
+Command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+Command: composer validate --strict && composer install --no-interaction
+Exit: 0
+Result:
+composer.json is valid; install from lock completed with nothing to modify.
+
+Command: scoped PHP/config smoke and locked-version checks
+Exit: 0
+Result:
+Tracked Bedrock PHP entry/config files passed `php -l`; generated dependency directories are ignored; locked versions matched WordPress 7.0 and EDD 3.6.9.
+
+Command: git check-ignore docs/evidence/SR-002/commands.log
+Exit: 1
+Result:
+Evidence command log is intentionally not ignored because `.gitignore` includes `!docs/evidence/**/*.log`.
