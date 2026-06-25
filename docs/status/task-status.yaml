@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T08:20:37.566433+00:00'
+updated_at: '2026-06-25T08:43:02.360268+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -119,13 +119,16 @@ tasks:
     - docs/evidence/SR-010/review-report.md
     blockers: []
   SR-011:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-011-migration-cli
+    claimed_at: '2026-06-25T08:38:32.512740+00:00'
+    updated_at: '2026-06-25T08:43:02.360256+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-011/commands.log
+    - docs/evidence/SR-011/completion-report.md
+    - docs/evidence/SR-011/review-report.md
     blockers: []
   SR-012:
     status: BACKLOG
