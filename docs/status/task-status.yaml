@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T06:19:05.237126+00:00'
+updated_at: '2026-06-25T06:23:47.505396+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -46,15 +46,16 @@ tasks:
     - docs/evidence/SR-004/review-report.md
     blockers: []
   SR-005:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-005-ci-gate
     claimed_at: '2026-06-25T06:17:49.235327+00:00'
-    updated_at: '2026-06-25T06:19:05.237116+00:00'
+    updated_at: '2026-06-25T06:23:47.505385+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-005/commands.log
-    - docs/evidence/SR-005/commands.log
+    - docs/evidence/SR-005/completion-report.md
+    - docs/evidence/SR-005/review-report.md
     blockers: []
   SR-006:
     status: BACKLOG
