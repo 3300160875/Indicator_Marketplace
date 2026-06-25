@@ -67,5 +67,21 @@ Failure semantics:
 README:
 First-start steps are documented in `bin/README.md` and mirrored in `make help`. Root README was not edited because SR-004 allowed paths are `Makefile` and `bin/**`.
 
+Implementation commit:
+5e29b6254b13aa54e06b8f7688772d3798da22fe (`chore: add SR-004 developer commands`)
+
+Command: git show --stat --oneline --decorate 5e29b6254b13aa54e06b8f7688772d3798da22fe
+Exit: 0
+Result:
+5e29b62 (HEAD -> feat/SR-004-makefile, origin/feat/SR-004-makefile) chore: add SR-004 developer commands
+ Makefile                                  |  45 +++++++++++++
+ bin/README.md                             |  16 +++++
+ bin/dev                                   | 107 ++++++++++++++++++++++++++++++
+ docs/evidence/SR-004/commands.log         |  71 ++++++++++++++++++++
+ docs/evidence/SR-004/completion-report.md |  14 ++++
+ docs/status/task-status.yaml              |  15 +++--
+ docs/tasks/SR-004.md                      |  50 +++++++-------
+ 7 files changed, 286 insertions(+), 32 deletions(-)
+
 PR URL:
-Not created by this workflow.
+Not created by this workflow. GitHub offered `https://github.com/3300160875/Indicator_Marketplace/pull/new/feat/SR-004-makefile`.
