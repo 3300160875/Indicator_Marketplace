@@ -1,0 +1,108 @@
+SR-011 command evidence
+Generated: 2026-06-25T16:42:07+08:00
+
+Command: python3 tools/agent/taskctl.py claim SR-011 --agent codex --branch feat/SR-011-migration-cli
+Exit: 0
+Result:
+CLAIMED SR-011 by codex until 2026-06-25T12:38:32.512740+00:00
+
+Red test command: php docs/evidence/SR-011/migration-framework-check.php
+Exit: 255
+Result:
+Failed opening required `packages/sr-core/src/Infrastructure/Migration/Migration.php`; expected failure before implementation.
+
+Framework check command: php docs/evidence/SR-011/migration-framework-check.php
+Exit: 0
+Result:
+`SR-011 migration framework check: ok`.
+
+Package regression command: composer --working-dir=packages/sr-core validate --strict && composer --working-dir=packages/sr-core test
+Exit: 0
+Result:
+`./composer.json is valid`; `sr-core skeleton tests: ok`.
+
+Required command: wp sr migrate --dry-run
+Exit: 127
+Result:
+`wp` executable is not available in this environment.
+
+Alternative dry-run command: php docs/evidence/SR-011/migration-framework-check.php
+Exit: 0
+Result:
+Dry-run sorts migrations, supports `--to` plan truncation, and does not record applied migrations.
+
+Required command: wp sr migrate
+Exit: 127
+Result:
+`wp` executable is not available in this environment.
+
+Alternative migrate command: php docs/evidence/SR-011/migration-framework-check.php
+Exit: 0
+Result:
+Fresh migration records unique versions; repeated execution skips already-applied migrations; checksum mismatch is rejected.
+
+Required command: wp sr schema:verify
+Exit: 127
+Result:
+`wp` executable is not available in this environment.
+
+Alternative schema verify command: php docs/evidence/SR-011/migration-framework-check.php
+Exit: 0
+Result:
+`sr_schema_migrations` table definition is stable, uses the dynamic `{prefix}` token and has a SHA-256 checksum.
+
+Required command: make test-integration
+Exit: 2
+Result:
+`make: *** No rule to make target 'test-integration'. Stop.`
+
+Alternative integration command: php docs/evidence/SR-011/migration-framework-check.php && composer --working-dir=packages/sr-core test && make test
+Exit: 0
+Result:
+Migration framework check, sr-core package test and root smoke test passed.
+
+Required command: git diff --check
+Exit: 0
+Result:
+No whitespace errors.
+
+Required command: python tools/agent/validate_docs.py
+Exit: 127
+Result:
+`python` executable is not available in this environment.
+
+Alternative required command: python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`.
+
+Independent review:
+Boole subagent completed read-only SR-011 review. Key constraints followed: code is limited to migration/CLI allowed paths; true WP-CLI registration is not wired because that would require editing `sr-core` plugin entry points outside the task path.
+
+Final diff stat command: git diff --cached --stat
+Exit: 0
+Result:
+16 files changed, 699 insertions(+), 53 deletions(-).
+
+Final verification command: php docs/evidence/SR-011/migration-framework-check.php && composer --working-dir=packages/sr-core validate --strict && composer --working-dir=packages/sr-core test && composer validate --strict && make lint && make test && git diff --check --cached && python3 tools/agent/validate_docs.py
+Exit: 0
+Result:
+Migration framework check passed; sr-core Composer validation/test passed; root Composer validation passed; root lint/test passed; docs validation returned `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+PR check command: gh pr checks 8 --repo 3300160875/Indicator_Marketplace --watch --interval 10
+Exit: 0
+Result:
+Frontend gate passed in 12s; PHP gate passed in 20s.
+
+Status command: python3 tools/agent/taskctl.py set-status SR-011 VERIFIED --evidence docs/evidence/SR-011/review-report.md
+Exit: 0
+Result:
+SR-011 VERIFIED.
+
+Commit / PR:
+- Commit SHA: ded28a260aad3fe78599bfa5732f36ba52a4b656
+- PR URL: https://github.com/3300160875/Indicator_Marketplace/pull/8
+
+Notes:
+- This task implements reusable migration framework and command class only. Runtime WordPress registration is deferred until a task permits editing the plugin bootstrap.
+- SR-011 moved to VERIFIED after local verification, independent subagent review and passing PR checks.
