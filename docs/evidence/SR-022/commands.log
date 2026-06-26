@@ -1,0 +1,76 @@
+# SR-022 Commands Log
+
+Date: 2026-06-26
+Branch: `feat/SR-022-front-page-sections`
+
+## Red / TDD
+
+```bash
+php docs/evidence/SR-022/front-page-check.php
+```
+
+Exit: 255 before implementation.
+Result: failed on missing `web/app/themes/stock-resource-theme/partials/front-page-data.php`, confirming the test covered the new SR-022 homepage model/section behavior.
+
+## Verification Run
+
+```bash
+npm ci
+```
+
+Working directory: `web/app/themes/stock-resource-theme`
+Exit: 1
+Output: `npm ci` requires an existing `package-lock.json` or shrinkwrap file.
+Reason / replacement: the theme package intentionally has no dependencies and no lockfile yet; replaced by theme-local `npm run lint`, `npm run test`, `npm run build`, executable SR-022 evidence and root `make test`.
+
+```bash
+npm run lint
+```
+
+Working directory: `web/app/themes/stock-resource-theme`
+Exit: 0
+Output: `stock-resource-theme verification: ok`
+
+```bash
+npm run test
+```
+
+Working directory: `web/app/themes/stock-resource-theme`
+Exit: 0
+Output: `stock-resource-theme verification: ok`
+
+```bash
+npm run build
+```
+
+Working directory: `web/app/themes/stock-resource-theme`
+Exit: 0
+Output: `stock-resource-theme build: ok`
+
+```bash
+php docs/evidence/SR-022/front-page-check.php
+```
+
+Exit: 0
+Output: `SR-022 front page check passed.`
+
+```bash
+make test
+```
+
+Exit: 0
+Output: `lint: ok`, `test: ok`
+
+```bash
+git diff --check
+```
+
+Exit: 0
+Output: no whitespace errors.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0
+Output: `OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`

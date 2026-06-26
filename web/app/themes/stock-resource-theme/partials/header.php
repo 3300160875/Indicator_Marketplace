@@ -15,5 +15,11 @@ declare(strict_types=1);
         <a class="sr-site-header__brand" href="<?php echo esc_url(home_url('/')); ?>">
             <?php bloginfo('name'); ?>
         </a>
+        <nav class="sr-primary-nav" aria-label="主导航">
+            <a class="sr-primary-nav__link" href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html__('首页', 'stock-resource-theme'); ?></a>
+            <a class="sr-primary-nav__link" href="<?php echo esc_url(function_exists('sr_theme_resource_archive_url') ? sr_theme_resource_archive_url() : home_url('/resources/')); ?>"><?php echo esc_html__('资源', 'stock-resource-theme'); ?></a>
+            <a class="sr-primary-nav__link" href="<?php echo esc_url(home_url('/resource-topics/')); ?>"><?php echo esc_html__('专题', 'stock-resource-theme'); ?></a>
+            <a class="sr-primary-nav__link" href="<?php echo esc_url(home_url('/account/')); ?>"><?php echo esc_html__('账户', 'stock-resource-theme'); ?></a>
+        </nav>
     </div>
 </header>
