@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:49:15.120138+00:00'
+updated_at: '2026-06-26T02:51:34.686241+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -224,17 +224,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/19
     blockers: []
   SR-019:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-019-seo-support
     claimed_at: '2026-06-26T02:45:56.597970+00:00'
-    updated_at: '2026-06-26T02:49:15.120125+00:00'
-    pr: null
+    updated_at: '2026-06-26T02:51:34.686231+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/24
     evidence:
     - docs/evidence/SR-019/commands.log
     - docs/evidence/SR-019/completion-report.md
     - docs/evidence/SR-019/seo-check.php
     - docs/evidence/SR-019/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/24
     blockers: []
   SR-020:
     status: VERIFIED
