@@ -11,4 +11,4 @@
 - Known limitations: default detail data is placeholder model data until real services inject resource DTOs.
 - Rollback: revert the SR-024 commit/PR; no data mutation is introduced.
 - Next safe task(s): SR-025 or next plan-approved task.
-- Commit/PR: pending.
+- Commit/PR: `3ffd3e7`, https://github.com/3300160875/Indicator_Marketplace/pull/22.

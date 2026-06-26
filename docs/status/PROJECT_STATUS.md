@@ -6,7 +6,7 @@
 
 - Milestone: W4
 - CI: configured and required on `main`
-- Next safe task: SR-024 实现资源详情与版本信息页面
+- Next safe task: SR-025 或 SR-027（按后续计划确认）
 - Gate 0: complete
 
 ## 本周完成
@@ -32,7 +32,7 @@
 - SR-021 已通过远端 CI 并标记 VERIFIED：主题设计令牌、组件 CSS、按钮、通知、资源元信息和资源卡组件均已完成。
 - SR-022 已通过远端 CI 并标记 VERIFIED：首页模型、导航、页脚、专题区、精选资源区和可恢复空状态已完成，页面内容可通过 `sr_theme_front_page_model` 从服务层注入。
 - SR-023 已通过远端 CI 并标记 VERIFIED：资源归档页、URL 筛选、canonical 查询、分页、可恢复空状态和非法筛选 noindex 已完成。
-- SR-024 已进入 REVIEW：资源详情页、兼容性/限制/版本/风险同屏展示、AccessDecision CTA Presenter 和隐藏内容泄露检查已完成。
+- SR-024 已通过远端 CI 并标记 VERIFIED：资源详情页、兼容性/限制/版本/风险同屏展示、AccessDecision CTA Presenter 和隐藏内容泄露检查已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -41,6 +41,6 @@
 
 ## 下一步
 
-1. SR-022 实现首页、导航、页脚与专题区。
-2. SR-023 实现分类、筛选、搜索与分页页面。
-3. SR-024 实现资源详情与版本信息页面。
+1. 根据任务依赖确认 SR-025 或 SR-027 的下一步实现范围。
+2. 将 SR-018 的 REST 契约接入真实 WordPress 路由和数据源。
+3. 将主题默认模型替换为服务层注入的真实资源数据。
