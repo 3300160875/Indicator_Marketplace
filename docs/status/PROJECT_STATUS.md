@@ -6,7 +6,7 @@
 
 - Milestone: W4
 - CI: configured and required on `main`
-- Next safe task: SR-022 实现首页、导航、页脚与专题区
+- Next safe task: SR-023 实现分类、筛选、搜索与分页页面
 - Gate 0: complete
 
 ## 本周完成
@@ -30,7 +30,7 @@
 - SR-017 已通过远端 CI 并标记 VERIFIED：ResourceService、ResourceView 与 VersionView 已完成，公开 DTO 会阻断未发布/下架资源并排除 storage_key/internal notes。
 - SR-018 已通过远端 CI 并标记 VERIFIED：公开资源与词表 REST 契约层、canonical 查询、列表/详情 Presenter、稳定错误码与 OpenAPI Schema 已完成；WordPress route runtime 接线留给后续允许启动入口的任务。
 - SR-021 已通过远端 CI 并标记 VERIFIED：主题设计令牌、组件 CSS、按钮、通知、资源元信息和资源卡组件均已完成。
-- SR-022 已进入 REVIEW：首页模型、导航、页脚、专题区、精选资源区和可恢复空状态已完成，页面内容可通过 `sr_theme_front_page_model` 从服务层注入。
+- SR-022 已通过远端 CI 并标记 VERIFIED：首页模型、导航、页脚、专题区、精选资源区和可恢复空状态已完成，页面内容可通过 `sr_theme_front_page_model` 从服务层注入。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞

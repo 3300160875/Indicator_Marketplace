@@ -12,4 +12,4 @@
 - Known limitations: default homepage data is placeholder model data until repository-backed services are connected.
 - Rollback: revert the SR-022 commit/PR; no data mutation is introduced.
 - Next safe task(s): SR-023 实现分类、筛选、搜索与分页页面；SR-024 实现资源详情与版本信息页面。
-- Commit/PR: pending.
+- Commit/PR: `02a12da`, https://github.com/3300160875/Indicator_Marketplace/pull/20.

@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:13:41.364074+00:00'
+updated_at: '2026-06-26T02:15:58.802397+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -256,17 +256,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/16
     blockers: []
   SR-022:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-022-front-page-sections
     claimed_at: '2026-06-26T02:11:42.982532+00:00'
-    updated_at: '2026-06-26T02:13:41.364063+00:00'
-    pr: null
+    updated_at: '2026-06-26T02:15:58.802384+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/20
     evidence:
     - docs/evidence/SR-022/commands.log
     - docs/evidence/SR-022/completion-report.md
     - docs/evidence/SR-022/front-page-check.php
     - docs/evidence/SR-022/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/20
     blockers: []
   SR-023:
     status: BACKLOG
