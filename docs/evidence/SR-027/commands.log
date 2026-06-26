@@ -94,3 +94,10 @@ git diff --stat --cached
 
 Exit: 0
 Output: 15 files changed, 528 insertions(+), 38 deletions(-).
+
+```bash
+gh pr checks 25 --repo 3300160875/Indicator_Marketplace
+```
+
+Exit: 0
+Output: `Frontend gate` passed; `PHP gate` passed.

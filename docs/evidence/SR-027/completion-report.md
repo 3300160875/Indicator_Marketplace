@@ -1,6 +1,6 @@
 # SR-027 Completion Report
 
-- Task / status: SR-027, REVIEW.
+- Task / status: SR-027, VERIFIED.
 - Branch: `feat/SR-027-auth-capabilities`.
 - Scope completed: Auth support layer with capability definitions, separated role capability matrix, user context, owned resource subject and authorization decision service.
 - Files changed: `packages/sr-admin-ops/src/Auth/**`, `docs/evidence/SR-027/**`, status/task documentation.
@@ -11,4 +11,4 @@
 - Known limitations: runtime WordPress role registration and `current_user_can()` wiring are deferred to a downstream task because SR-027 allowed paths are limited to `packages/sr-admin-ops/src/Auth/**`.
 - Rollback: revert SR-027 commit/PR; no database roles or usermeta are mutated.
 - Next safe task(s): SR-025 实现资源详情页购买/VIP CTA 与 AccessDecision 联动；SR-028 建立后台菜单与运营入口。
-- Commit/PR: pending.
+- Commit/PR: `4abde52`, https://github.com/3300160875/Indicator_Marketplace/pull/25.
