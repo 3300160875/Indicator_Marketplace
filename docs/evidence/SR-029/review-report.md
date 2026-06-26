@@ -7,4 +7,5 @@
 - Failed scan flow: infected/failed scans remain on quarantine storage, persist non-clean scan status and do not replace the current version.
 - Limit checks: MIME, byte size, archive entry count, max depth, expanded bytes and compression ratio are enforced before storage writes.
 - Data boundary: no WordPress media-library helper or public ACL is used in the upload/scan layer.
+- Independent QA: `Averroes` reviewed PR #31 and reported PASS with no blocking findings; verified allowed paths, quarantine-first flow, limit checks, failed-scan quarantine behavior, clean activation, local checks and GitHub CI.
 - Residual risk: real archive inspection and external antivirus engines are deferred to later runtime integration tasks; this task provides the stable state-machine contract.

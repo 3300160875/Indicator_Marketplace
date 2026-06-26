@@ -40,7 +40,7 @@
 - SR-028 已通过远端 CI 并标记 VERIFIED：StorageService 契约、Fake adapter、MinIO/S3 兼容适配器、SigV4 签名、私有 ACL 和稳定错误映射已完成。
 - SR-030 已通过独立 QA 并标记 VERIFIED：新增 S3-compatible 生产适配器契约，S3/COS/OSS 使用 virtual-hosted endpoint，MinIO 保持 path-style endpoint，并通过私有 ACL、签名和供应商 SDK 泄漏检查。
 - SR-026 已通过独立 QA 并标记 VERIFIED：账户中心壳、登录门禁、对象所有权门禁、订单中心壳、下载中心壳和空态/异常态已完成，模板不直接访问 EDD 内部表。
-- SR-029 已进入 REVIEW：版本隔离上传与扫描状态机已完成，文件先进入 quarantine，服务端 MIME/大小/压缩包限制与 SHA-256 生效，扫描失败停留 quarantine，clean 后才移动到正式前缀并激活版本。
+- SR-029 已通过独立 QA 并标记 VERIFIED：版本隔离上传与扫描状态机已完成，文件先进入 quarantine，服务端 MIME/大小/压缩包限制与 SHA-256 生效，扫描失败停留 quarantine，clean 后才移动到正式前缀并激活版本。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -49,6 +49,6 @@
 
 ## 下一步
 
-1. 完成 SR-029 PR / CI / merge / VERIFIED 收口。
+1. 合并 SR-029。
 2. SR-031 建立 EddOrderAdapter 与兼容测试。
 3. SR-032 实现资源访问模式与价格校验。
