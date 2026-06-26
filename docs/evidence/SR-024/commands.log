@@ -1,0 +1,60 @@
+# SR-024 Commands Log
+
+Date: 2026-06-26
+Branch: `feat/SR-024-resource-detail-page`
+
+## Red / TDD
+
+```bash
+php docs/evidence/SR-024/single-download-check.php
+```
+
+Exit: 255 before implementation.
+Result: failed on missing `web/app/themes/stock-resource-theme/templates/single-download.php`.
+
+## Verification Run
+
+```bash
+npm ci
+```
+
+Working directory: `web/app/themes/stock-resource-theme`
+Exit: 1
+Output: `npm ci` requires an existing `package-lock.json` or shrinkwrap file.
+Reason / replacement: theme package has no dependencies and no lockfile; replaced by theme-local `npm run lint`, `npm run test`, `npm run build`, executable SR-024 evidence and root `make test`.
+
+```bash
+npm run lint && npm run test && npm run build
+```
+
+Working directory: `web/app/themes/stock-resource-theme`
+Exit: 0
+Output: theme verification and build OK.
+
+```bash
+php docs/evidence/SR-024/single-download-check.php
+```
+
+Exit: 0
+Output: `SR-024 single download check passed.`
+
+```bash
+make test
+```
+
+Exit: 0
+Output: `lint: ok`, `test: ok`
+
+```bash
+git diff --check
+```
+
+Exit: 0
+Output: no whitespace errors.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0
+Output: `OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
