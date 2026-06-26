@@ -1,0 +1,91 @@
+# SR-028 command log
+
+Branch: `feat/SR-028-storage-minio`
+
+```bash
+php docs/evidence/SR-028/storage-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected failure because `packages/sr-private-downloads/src/Storage/*` classes do not exist yet.
+
+```bash
+php docs/evidence/SR-028/storage-check.php
+```
+
+Exit: 0
+Output: `SR-028 storage checks passed.`
+Coverage: fake adapter put/head/sign/delete; recording MinIO/S3 request signing and error mapping; live local MinIO put/head/sign/delete/anonymous-denied smoke when `http://127.0.0.1:9002` is healthy.
+
+```bash
+find packages/sr-private-downloads/src/Storage docs/evidence/SR-028 -name '*.php' -print -exec php -l {} \;
+```
+
+Exit: 0
+Output: no syntax errors in SR-028 implementation or evidence script.
+
+```bash
+vendor/bin/pint --test packages/sr-private-downloads/src/Storage docs/evidence/SR-028
+```
+
+Exit: 0
+Output: `{"tool":"pint","result":"passed"}`
+
+```bash
+composer --working-dir=packages/sr-private-downloads validate --strict && composer --working-dir=packages/sr-private-downloads test
+```
+
+Exit: 0
+Output: package Composer file is valid; `sr-private-downloads skeleton tests: ok`
+
+```bash
+make test-unit MODULE=sr-private-downloads
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason / replacement: module-specific `test-unit` target is not defined; replaced by `php docs/evidence/SR-028/storage-check.php`, direct `php -l`, targeted Pint test and package-level Composer test.
+
+```bash
+make test-integration TEST=Storage
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason / replacement: integration target is not defined; replaced by `php docs/evidence/SR-028/storage-check.php`, which exercises MinIO/S3-compatible request signing and HTTP status/error mapping through `RecordingHttpTransport`.
+
+```bash
+make test-security TEST=PrivateObject
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-security'. Stop.`
+Reason / replacement: security target is not defined; replaced by evidence assertions for private ACL, anonymous access denial, unsafe key rejection and signed URL TTL.
+
+```bash
+make test
+```
+
+Exit: 0
+Output: `lint: ok`, `test: ok`
+
+```bash
+git diff --check --cached
+```
+
+Exit: 0
+Output: no whitespace errors.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+```bash
+git diff --stat --cached
+```
+
+Exit: 0
+Output: 20 files changed, 854 insertions(+), 34 deletions(-).

@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T07:50:06.456730+00:00'
+updated_at: '2026-06-26T08:33:26.800287+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -345,13 +345,17 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/25
     blockers: []
   SR-028:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-028-storage-minio
+    claimed_at: '2026-06-26T08:27:35.636705+00:00'
+    updated_at: '2026-06-26T08:33:26.800267+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-028/commands.log
+    - docs/evidence/SR-028/completion-report.md
+    - docs/evidence/SR-028/storage-check.php
+    - docs/evidence/SR-028/review-report.md
     blockers: []
   SR-029:
     status: BACKLOG

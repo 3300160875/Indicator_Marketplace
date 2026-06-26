@@ -37,6 +37,7 @@
 - SR-024 已通过远端 CI 并标记 VERIFIED：资源详情页、兼容性/限制/版本/风险同屏展示、AccessDecision CTA Presenter 和隐藏内容泄露检查已完成。
 - SR-025 已通过远端 CI 并标记 VERIFIED：VIP 营销页与套餐对比壳、EDD 价格来源标记、支付禁用 CTA、加载/空/错误/无权状态已完成。
 - SR-027 已通过远端 CI 并标记 VERIFIED：角色能力矩阵、管理员高风险能力限制、对象所有权授权判断和稳定拒绝原因支持层已完成。
+- SR-028 已进入 REVIEW：StorageService 契约、Fake adapter、MinIO/S3 兼容适配器、SigV4 签名、私有 ACL 和稳定错误映射已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -45,6 +46,6 @@
 
 ## 下一步
 
-1. SR-028 实现 StorageService 接口与 MinIO 适配器。
+1. 合并 SR-028 并标记 VERIFIED。
 2. SR-030 实现 COS/OSS/S3 生产适配器契约。
 3. SR-026 实现登录、用户中心、订单与下载中心壳。
