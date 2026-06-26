@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-- Milestone: W4
+- Milestone: W5
 - CI: configured and required on `main`
-- Next safe task: SR-027 配置角色、能力与最小权限
+- Next safe task: SR-028 实现 StorageService 接口与 MinIO 适配器
 - Gate 0: complete
 
 ## 本周完成
@@ -45,6 +45,6 @@
 
 ## 下一步
 
-1. 合并 SR-025。
-2. SR-028 建立后台菜单与运营入口。
-3. SR-030 实现用户账户中心骨架。
+1. SR-028 实现 StorageService 接口与 MinIO 适配器。
+2. SR-030 实现 COS/OSS/S3 生产适配器契约。
+3. SR-026 实现登录、用户中心、订单与下载中心壳。
