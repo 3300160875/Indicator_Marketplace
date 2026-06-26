@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T01:43:32.560842+00:00'
+updated_at: '2026-06-26T01:46:34.451127+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -201,7 +201,7 @@ tasks:
     branch: feat/SR-017-resource-service-dto
     claimed_at: '2026-06-25T10:35:01.937547+00:00'
     updated_at: '2026-06-26T01:37:49.804537+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/16
     evidence:
     - docs/evidence/SR-017/commands.log
     - docs/evidence/SR-017/completion-report.md
@@ -237,11 +237,11 @@ tasks:
     evidence: []
     blockers: []
   SR-021:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-021-theme-tokens-components
     claimed_at: '2026-06-26T01:39:49.774450+00:00'
-    updated_at: '2026-06-26T01:43:32.560831+00:00'
+    updated_at: '2026-06-26T01:46:34.451116+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-021/commands.log
