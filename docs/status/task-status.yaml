@@ -322,11 +322,11 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/26
     blockers: []
   SR-026:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-026-account-shell
     claimed_at: '2026-06-26T08:51:42.085978+00:00'
-    updated_at: '2026-06-26T08:55:39.773742+00:00'
+    updated_at: '2026-06-26T09:00:10Z'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/30
     evidence:
     - docs/evidence/SR-026/commands.log
