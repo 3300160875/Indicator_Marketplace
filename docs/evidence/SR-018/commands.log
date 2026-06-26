@@ -1,0 +1,89 @@
+# SR-018 Commands Log
+
+Date: 2026-06-26
+Branch: `feat/SR-018-public-rest-api`
+
+## Red / TDD
+
+```bash
+php docs/evidence/SR-018/public-rest-check.php
+```
+
+Exit: 255 before implementation.
+Result: failed on missing `packages/sr-core/src/Rest/Public/PublicRestError.php`, confirming the test covered the new SR-018 behavior.
+
+## Verification Run
+
+```bash
+composer validate --strict
+```
+
+Exit: 0
+Output: `./composer.json is valid`
+
+```bash
+composer validate --strict
+```
+
+Working directory: `packages/sr-core`
+Exit: 0
+Output: `./composer.json is valid`
+
+```bash
+make lint
+```
+
+Exit: 0
+Output: `lint: ok`
+
+```bash
+make test-unit MODULE=api
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason / replacement: the project Makefile has not introduced module-specific `test-unit`; replaced by `composer test` in `packages/sr-core`, `php docs/evidence/SR-018/public-rest-check.php` and root `make test`.
+
+```bash
+make test-integration
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason / replacement: the project Makefile has not introduced `test-integration`; replaced by the executable SR-018 evidence script and root `make test`.
+
+```bash
+composer test
+```
+
+Working directory: `packages/sr-core`
+Exit: 0
+Output: `sr-core runtime tests: ok`
+
+```bash
+php docs/evidence/SR-018/public-rest-check.php
+```
+
+Exit: 0
+Output: `SR-018 public REST checks passed.`
+
+```bash
+make test
+```
+
+Exit: 0
+Output: `lint: ok`, `test: ok`
+
+```bash
+git diff --check
+```
+
+Exit: 0
+Output: no whitespace errors.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`

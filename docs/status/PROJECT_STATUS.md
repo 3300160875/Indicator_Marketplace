@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-- Milestone: W3
+- Milestone: W4
 - CI: configured and required on `main`
-- Next safe task: SR-018 实现公开资源与词表 REST API
+- Next safe task: SR-022 实现首页、导航、页脚与专题区
 - Gate 0: complete
 
 ## 本周完成
@@ -28,6 +28,7 @@
 - SR-015 已通过远端 CI 并标记 VERIFIED：资源编辑字段分区、发布 Gate、高风险修改审计支持层与审查修复均已完成。
 - SR-016 已通过远端 CI 并标记 VERIFIED：版本表迁移定义、版本状态枚举、可重试阶段、仓储契约和 current 激活事务锁支持层均已完成。
 - SR-017 已通过远端 CI 并标记 VERIFIED：ResourceService、ResourceView 与 VersionView 已完成，公开 DTO 会阻断未发布/下架资源并排除 storage_key/internal notes。
+- SR-018 已通过远端 CI 并标记 VERIFIED：公开资源与词表 REST 契约层、canonical 查询、列表/详情 Presenter、稳定错误码与 OpenAPI Schema 已完成；WordPress route runtime 接线留给后续允许启动入口的任务。
 - SR-021 已通过远端 CI 并标记 VERIFIED：主题设计令牌、组件 CSS、按钮、通知、资源元信息和资源卡组件均已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
@@ -37,6 +38,6 @@
 
 ## 下一步
 
-1. SR-018 实现公开资源与词表 REST API。
-2. SR-022 实现首页、导航、页脚与专题区。
-3. SR-023 实现分类、筛选、搜索与分页页面。
+1. SR-022 实现首页、导航、页脚与专题区。
+2. SR-023 实现分类、筛选、搜索与分页页面。
+3. SR-024 实现资源详情与版本信息页面。
