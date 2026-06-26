@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:51:34.686241+00:00'
+updated_at: '2026-06-26T02:56:21.887666+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -326,13 +326,17 @@ tasks:
     evidence: []
     blockers: []
   SR-027:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-027-auth-capabilities
+    claimed_at: '2026-06-26T02:53:46.474436+00:00'
+    updated_at: '2026-06-26T02:56:21.887655+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-027/commands.log
+    - docs/evidence/SR-027/completion-report.md
+    - docs/evidence/SR-027/auth-check.php
+    - docs/evidence/SR-027/review-report.md
     blockers: []
   SR-028:
     status: BACKLOG
