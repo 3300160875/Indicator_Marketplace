@@ -1,0 +1,87 @@
+# SR-021 command log
+
+All commands were run from `/home/devops-ubuntu/Developer/Indicator_Marketplace/project` unless noted.
+
+## Baseline and claim
+
+```text
+$ npm --prefix web/app/themes/stock-resource-theme run test
+exit: 0
+result: stock-resource-theme verification: ok
+
+$ npm --prefix web/app/themes/stock-resource-theme run build
+exit: 0
+result: stock-resource-theme build: ok
+
+$ npm run lint
+exit: 0
+result: frontend lint: no frontend assets defined in W1
+
+$ python3 tools/agent/validate_docs.py
+exit: 0
+result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+
+$ python3 tools/agent/taskctl.py claim SR-021 --agent codex --branch feat/SR-021-theme-tokens-components
+exit: 0
+result: CLAIMED SR-021 by codex until 2026-06-26T05:39:49.774450+00:00
+```
+
+## TDD red
+
+```text
+$ php docs/evidence/SR-021/theme-components-check.php
+exit: 255
+result: expected failure
+
+/assets/css/tokens.css must exist
+```
+
+## Green checks during implementation
+
+```text
+$ php docs/evidence/SR-021/theme-components-check.php
+exit: 0
+result: SR-021 theme components check: ok
+
+$ npm --prefix web/app/themes/stock-resource-theme run test
+exit: 0
+result: stock-resource-theme verification: ok
+
+$ npm --prefix web/app/themes/stock-resource-theme run build
+exit: 0
+result: stock-resource-theme build: ok
+
+$ npm run lint
+exit: 0
+result: frontend lint: no frontend assets defined in W1
+```
+
+## Required command matrix
+
+```text
+$ npm ci
+exit: 0
+result: up to date, audited 1 package; found 0 vulnerabilities
+
+$ npm run lint
+exit: 0
+result: frontend lint: no frontend assets defined in W1
+
+$ npm run test
+exit: 1
+result: unavailable; root package has no test script
+replacement: npm --prefix web/app/themes/stock-resource-theme run test
+
+$ npm run build
+exit: 1
+result: unavailable; root package has no build script
+replacement: npm --prefix web/app/themes/stock-resource-theme run build
+
+$ git diff --check
+exit: 0
+result: no whitespace errors
+
+$ python3 tools/agent/validate_docs.py
+exit: 0
+result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+```
