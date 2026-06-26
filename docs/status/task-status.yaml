@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:38:59.050685+00:00'
+updated_at: '2026-06-26T02:43:17.953200+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -233,17 +233,18 @@ tasks:
     evidence: []
     blockers: []
   SR-020:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-020-resource-fixtures
     claimed_at: '2026-06-26T02:35:51.000397+00:00'
-    updated_at: '2026-06-26T02:38:59.050674+00:00'
-    pr: null
+    updated_at: '2026-06-26T02:43:17.953190+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/23
     evidence:
     - docs/evidence/SR-020/commands.log
     - docs/evidence/SR-020/completion-report.md
     - docs/evidence/SR-020/fixture-check.php
     - docs/evidence/SR-020/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/23
     blockers: []
   SR-021:
     status: VERIFIED

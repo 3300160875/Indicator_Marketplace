@@ -93,3 +93,10 @@ python3 tools/agent/validate_docs.py
 
 Exit: 0
 Output: `OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+
+```bash
+gh pr checks 23 --repo 3300160875/Indicator_Marketplace
+```
+
+Exit: 0
+Output: `Frontend gate` passed; `PHP gate` passed.
