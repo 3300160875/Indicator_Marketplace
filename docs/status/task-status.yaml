@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T07:50:06.456730+00:00'
+updated_at: '2026-06-26T08:35:46.397867+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -327,7 +327,7 @@ tasks:
     branch: null
     claimed_at: null
     updated_at: '2026-06-24T00:00:00Z'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/28
     evidence: []
     blockers: []
   SR-027:
@@ -345,13 +345,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/25
     blockers: []
   SR-028:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-028-storage-minio
+    claimed_at: '2026-06-26T08:27:35.636705+00:00'
+    updated_at: '2026-06-26T08:35:46.397856+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-028/commands.log
+    - docs/evidence/SR-028/completion-report.md
+    - docs/evidence/SR-028/storage-check.php
+    - docs/evidence/SR-028/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/28
     blockers: []
   SR-029:
     status: BACKLOG
