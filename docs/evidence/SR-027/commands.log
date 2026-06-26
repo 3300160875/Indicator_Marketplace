@@ -1,0 +1,103 @@
+# SR-027 command log
+
+Branch: `feat/SR-027-auth-capabilities`
+
+```bash
+php docs/evidence/SR-027/auth-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected failure because `packages/sr-admin-ops/src/Auth/*` classes do not exist yet.
+
+```bash
+php docs/evidence/SR-027/auth-check.php
+```
+
+Exit: 0
+Output: `SR-027 auth checks passed.`
+
+```bash
+find packages/sr-admin-ops/src/Auth docs/evidence/SR-027 -name '*.php' -print -exec php -l {} \;
+```
+
+Exit: 0
+Output: no syntax errors in SR-027 implementation or evidence script.
+
+```bash
+vendor/bin/pint --test packages/sr-admin-ops/src/Auth docs/evidence/SR-027
+```
+
+Exit: 0
+Output: `{"tool":"pint","result":"passed"}`
+
+```bash
+composer --working-dir=packages/sr-admin-ops validate --strict && composer --working-dir=packages/sr-admin-ops test
+```
+
+Exit: 0
+Output: package Composer file is valid; `sr-admin-ops skeleton tests: ok`
+
+```bash
+composer validate --strict
+```
+
+Exit: 0
+Output: `./composer.json is valid`
+
+```bash
+make lint
+```
+
+Exit: 0
+Output: `lint: ok`
+
+```bash
+make test-unit MODULE=accounts
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason / replacement: module-specific `test-unit` target is not defined; replaced by `php docs/evidence/SR-027/auth-check.php`, direct `php -l`, targeted Pint test and `composer --working-dir=packages/sr-admin-ops test`.
+
+```bash
+make test-integration
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason / replacement: `test-integration` target is not defined; replaced by `php docs/evidence/SR-027/auth-check.php`, which validates capability, role separation, high-risk denial and object ownership decisions.
+
+```bash
+make test
+```
+
+Exit: 0
+Output: `lint: ok`, `test: ok`
+
+```bash
+git diff --check --cached
+```
+
+Exit: 0
+Output: no whitespace errors.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+```bash
+git diff --stat --cached
+```
+
+Exit: 0
+Output: 15 files changed, 528 insertions(+), 38 deletions(-).
+
+```bash
+gh pr checks 25 --repo 3300160875/Indicator_Marketplace
+```
+
+Exit: 0
+Output: `Frontend gate` passed; `PHP gate` passed.
