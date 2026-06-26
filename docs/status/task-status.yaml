@@ -392,11 +392,11 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/29
     blockers: []
   SR-031:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-031-edd-order-adapter
     claimed_at: '2026-06-26T09:43:05.998026+00:00'
-    updated_at: '2026-06-26T09:46:14.839541+00:00'
+    updated_at: '2026-06-26T09:50:25Z'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/32
     evidence:
     - docs/evidence/SR-031/commands.log
