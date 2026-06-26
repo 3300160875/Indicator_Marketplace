@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T09:18:05.169403+00:00'
+updated_at: '2026-06-26T09:46:14.839551+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -392,13 +392,17 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/29
     blockers: []
   SR-031:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-031-edd-order-adapter
+    claimed_at: '2026-06-26T09:43:05.998026+00:00'
+    updated_at: '2026-06-26T09:46:14.839541+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-031/commands.log
+    - docs/evidence/SR-031/edd-order-adapter-check.php
+    - docs/evidence/SR-031/completion-report.md
+    - docs/evidence/SR-031/review-report.md
     blockers: []
   SR-032:
     status: BACKLOG
