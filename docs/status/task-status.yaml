@@ -327,12 +327,13 @@ tasks:
     branch: feat/SR-026-account-shell
     claimed_at: '2026-06-26T08:51:42.085978+00:00'
     updated_at: '2026-06-26T08:55:39.773742+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/30
     evidence:
     - docs/evidence/SR-026/commands.log
     - docs/evidence/SR-026/account-shell-check.php
     - docs/evidence/SR-026/completion-report.md
     - docs/evidence/SR-026/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/30
     blockers: []
   SR-027:
     status: VERIFIED

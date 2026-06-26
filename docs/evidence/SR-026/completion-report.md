@@ -11,4 +11,4 @@
 - Known limitations: root `npm run test` and `npm run build` scripts do not exist yet; SR-026 records theme package replacement commands.
 - Rollback: revert SR-026 commit/PR; no database or EDD data is mutated.
 - Next safe task(s): SR-029 建立对象存储运行配置入口；SR-031 支付 Gate 与运行配置。
-- Commit/PR: pending.
+- Commit/PR: `c22cf64`, https://github.com/3300160875/Indicator_Marketplace/pull/30.
