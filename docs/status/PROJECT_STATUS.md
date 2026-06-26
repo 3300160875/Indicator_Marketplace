@@ -6,7 +6,7 @@
 
 - Milestone: W5
 - CI: configured and required on `main`
-- Next safe task: SR-030 实现 COS/OSS/S3 生产适配器契约
+- Next safe task: SR-026 实现登录、用户中心、订单与下载中心壳
 - Gate 0: complete
 
 ## 本周完成
@@ -38,6 +38,7 @@
 - SR-025 已通过远端 CI 并标记 VERIFIED：VIP 营销页与套餐对比壳、EDD 价格来源标记、支付禁用 CTA、加载/空/错误/无权状态已完成。
 - SR-027 已通过远端 CI 并标记 VERIFIED：角色能力矩阵、管理员高风险能力限制、对象所有权授权判断和稳定拒绝原因支持层已完成。
 - SR-028 已通过远端 CI 并标记 VERIFIED：StorageService 契约、Fake adapter、MinIO/S3 兼容适配器、SigV4 签名、私有 ACL 和稳定错误映射已完成。
+- SR-030 已通过独立 QA 并标记 VERIFIED：新增 S3-compatible 生产适配器契约，S3/COS/OSS 使用 virtual-hosted endpoint，MinIO 保持 path-style endpoint，并通过私有 ACL、签名和供应商 SDK 泄漏检查。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -46,6 +47,6 @@
 
 ## 下一步
 
-1. 合并 SR-028。
-2. SR-030 实现 COS/OSS/S3 生产适配器契约。
-3. SR-026 实现登录、用户中心、订单与下载中心壳。
+1. 合并 SR-030。
+2. SR-026 实现登录、用户中心、订单与下载中心壳。
+3. SR-029 建立对象存储运行配置入口。
