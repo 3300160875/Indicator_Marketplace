@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-- Milestone: W5
+- Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: SR-031 建立 EddOrderAdapter 与兼容测试
+- Next safe task: SR-032 实现资源访问模式与价格校验
 - Gate 0: complete
 
 ## 本周完成
@@ -41,6 +41,7 @@
 - SR-030 已通过独立 QA 并标记 VERIFIED：新增 S3-compatible 生产适配器契约，S3/COS/OSS 使用 virtual-hosted endpoint，MinIO 保持 path-style endpoint，并通过私有 ACL、签名和供应商 SDK 泄漏检查。
 - SR-026 已通过独立 QA 并标记 VERIFIED：账户中心壳、登录门禁、对象所有权门禁、订单中心壳、下载中心壳和空态/异常态已完成，模板不直接访问 EDD 内部表。
 - SR-029 已通过独立 QA 并标记 VERIFIED：版本隔离上传与扫描状态机已完成，文件先进入 quarantine，服务端 MIME/大小/压缩包限制与 SHA-256 生效，扫描失败停留 quarantine，clean 后才移动到正式前缀并激活版本。
+- SR-031 已通过独立 QA 并标记 VERIFIED：EDD 3.6.9 订单、订单项、客户与退款 fixture 已封装为 `Integration/Edd` Adapter，完成/退款事件投影到 SR-007 合约 DTO，EDD API 触点未散落到领域层。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -49,6 +50,6 @@
 
 ## 下一步
 
-1. 合并 SR-029。
-2. SR-031 建立 EddOrderAdapter 与兼容测试。
-3. SR-032 实现资源访问模式与价格校验。
+1. 合并 SR-031。
+2. SR-032 实现资源访问模式与价格校验。
+3. SR-033 定制 EDD 结算与数字内容条款。
