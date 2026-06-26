@@ -11,4 +11,4 @@
 - Known limitations: repository-level `make test-unit` and `make test-integration` targets do not exist yet; SR-029 records direct replacement commands.
 - Rollback: revert SR-029 commit/PR; no live storage or database mutation is introduced by this support layer.
 - Next safe task(s): SR-031 建立 EddOrderAdapter 与兼容测试；SR-032 实现资源访问模式与价格校验。
-- Commit/PR: pending.
+- Commit/PR: `ba3c309`, https://github.com/3300160875/Indicator_Marketplace/pull/31.

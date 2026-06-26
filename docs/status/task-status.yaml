@@ -369,12 +369,13 @@ tasks:
     branch: feat/SR-029-version-upload-scan
     claimed_at: '2026-06-26T09:13:00.314252+00:00'
     updated_at: '2026-06-26T09:18:05.169392+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/31
     evidence:
     - docs/evidence/SR-029/commands.log
     - docs/evidence/SR-029/version-upload-scan-check.php
     - docs/evidence/SR-029/completion-report.md
     - docs/evidence/SR-029/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/31
     blockers: []
   SR-030:
     status: VERIFIED
