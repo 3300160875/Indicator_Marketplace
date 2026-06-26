@@ -1,0 +1,102 @@
+# SR-020 Commands Log
+
+Date: 2026-06-26
+Branch: `feat/SR-020-resource-fixtures`
+
+## Red / TDD
+
+```bash
+php docs/evidence/SR-020/fixture-check.php
+```
+
+Exit: 255 before implementation.
+Result: failed on missing `tests/fixtures/resources/catalog.json`.
+
+## Verification Run
+
+```bash
+composer validate --strict
+```
+
+Exit: 0
+Output: `./composer.json is valid`
+
+```bash
+make lint
+```
+
+Exit: 0
+Output: `lint: ok`
+
+```bash
+php -l bin/seed-resources && bin/seed-resources --dry-run
+```
+
+Exit: 0
+Output: seed script has no syntax errors and dry-run reports 20 resources / 18 versions.
+
+```bash
+make test-unit MODULE=fixtures
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason / replacement: module-specific `test-unit` target is not defined; replaced by `php docs/evidence/SR-020/fixture-check.php`, `php -l bin/seed-resources`, `bin/seed-resources --dry-run`, and root `make test`.
+
+```bash
+make test-integration
+```
+
+Exit: 2
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason / replacement: `test-integration` target is not defined; replaced by repeated seed execution in `docs/evidence/SR-020/fixture-check.php`.
+
+```bash
+php docs/evidence/SR-020/fixture-check.php
+```
+
+Exit: 0
+Output: `SR-020 fixture check passed.`
+
+```bash
+vendor/bin/pest --colors=never
+```
+
+Exit: 2 before CI fix.
+Output: `Could not read XML from file "--cache-directory".`
+Root cause: adding the root `tests/` tree caused the PHP gate to run Pest, but the Bedrock root project had no PHPUnit/Pest configuration. Fix: add minimal `phpunit.xml.dist` and `tests/fixtures/resources/FixtureCatalogTest.php`.
+
+```bash
+vendor/bin/pest --colors=never
+```
+
+Exit: 0 after CI fix.
+Output: `Tests: 1 passed (3 assertions)`
+
+```bash
+make test
+```
+
+Exit: 0
+Output: `lint: ok`, `test: ok`
+
+```bash
+git diff --check
+```
+
+Exit: 0
+Output: no whitespace errors.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0
+Output: `OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+
+```bash
+gh pr checks 23 --repo 3300160875/Indicator_Marketplace
+```
+
+Exit: 0
+Output: `Frontend gate` passed; `PHP gate` passed.
