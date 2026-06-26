@@ -29,6 +29,7 @@
 - SR-016 已通过远端 CI 并标记 VERIFIED：版本表迁移定义、版本状态枚举、可重试阶段、仓储契约和 current 激活事务锁支持层均已完成。
 - SR-017 已通过远端 CI 并标记 VERIFIED：ResourceService、ResourceView 与 VersionView 已完成，公开 DTO 会阻断未发布/下架资源并排除 storage_key/internal notes。
 - SR-018 已通过远端 CI 并标记 VERIFIED：公开资源与词表 REST 契约层、canonical 查询、列表/详情 Presenter、稳定错误码与 OpenAPI Schema 已完成；WordPress route runtime 接线留给后续允许启动入口的任务。
+- SR-019 已进入 REVIEW：资源 SEO 文档模型、canonical/meta Presenter、下架 noindex、永久移除 410、安全 JSON-LD 与 sitemap entry/XML 渲染支持层已完成。
 - SR-020 已通过远端 CI 并标记 VERIFIED：20 条合成资源 Fixture、边界版本状态、幂等 seed 脚本和根级 Pest 配置已完成。
 - SR-021 已通过远端 CI 并标记 VERIFIED：主题设计令牌、组件 CSS、按钮、通知、资源元信息和资源卡组件均已完成。
 - SR-022 已通过远端 CI 并标记 VERIFIED：首页模型、导航、页脚、专题区、精选资源区和可恢复空状态已完成，页面内容可通过 `sr_theme_front_page_model` 从服务层注入。
@@ -42,6 +43,6 @@
 
 ## 下一步
 
-1. SR-019 实现 SEO 元信息、结构化数据与站点地图扩展。
+1. 合并 SR-019 并标记 VERIFIED。
 2. SR-027 配置角色、能力与最小权限。
 3. SR-025 实现资源详情页购买/VIP CTA 与 AccessDecision 联动。
