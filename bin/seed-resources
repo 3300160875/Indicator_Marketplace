@@ -1,0 +1,166 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+/**
+ * Idempotent local fixture seeder for SR-020.
+ *
+ * This script intentionally writes to a JSON state file instead of a live
+ * WordPress database so fixture behavior can be tested without mutating runtime
+ * services. Later integration tasks can adapt the same natural-key upsert
+ * contract to WordPress/EDD repositories.
+ */
+
+$root = dirname(__DIR__);
+$fixturesDir = $root . '/tests/fixtures/resources';
+$stateFile = $root . '/tests/fixtures/resources/.seed-state.json';
+$dryRun = false;
+
+for ($i = 1; $i < $argc; $i++) {
+    $arg = $argv[$i];
+    if ($arg === '--fixtures' && isset($argv[$i + 1])) {
+        $fixturesDir = $argv[++$i];
+        continue;
+    }
+    if ($arg === '--state' && isset($argv[$i + 1])) {
+        $stateFile = $argv[++$i];
+        continue;
+    }
+    if ($arg === '--dry-run') {
+        $dryRun = true;
+        continue;
+    }
+    fwrite(STDERR, "Unknown argument: {$arg}\n");
+    exit(2);
+}
+
+$catalogPath = rtrim($fixturesDir, '/') . '/catalog.json';
+$catalog = sr_seed_read_json($catalogPath);
+$resources = $catalog['resources'] ?? null;
+if (! is_array($resources)) {
+    fwrite(STDERR, "Fixture catalog must contain resources.\n");
+    exit(1);
+}
+
+$state = is_file($stateFile) ? sr_seed_read_json($stateFile) : ['schema_version' => 1, 'resources' => [], 'versions' => []];
+$state['resources'] = is_array($state['resources'] ?? null) ? $state['resources'] : [];
+$state['versions'] = is_array($state['versions'] ?? null) ? $state['versions'] : [];
+
+$summary = [
+    'resources_seen' => 0,
+    'resources_created' => 0,
+    'resources_updated' => 0,
+    'versions_seen' => 0,
+    'versions_created' => 0,
+    'versions_updated' => 0,
+    'dry_run' => $dryRun,
+    'access_modes' => [],
+    'fixture_states' => [],
+];
+
+foreach ($resources as $resource) {
+    if (! is_array($resource)) {
+        fwrite(STDERR, "Fixture resource must be an object.\n");
+        exit(1);
+    }
+
+    $key = trim((string) ($resource['natural_key'] ?? ''));
+    if ($key === '') {
+        fwrite(STDERR, "Fixture resource natural_key is required.\n");
+        exit(1);
+    }
+
+    $summary['resources_seen']++;
+    $exists = array_key_exists($key, $state['resources']);
+    $exists ? $summary['resources_updated']++ : $summary['resources_created']++;
+    $summary['access_modes'][(string) ($resource['meta']['_sr_access_mode'] ?? 'unknown')] = true;
+    $summary['fixture_states'][(string) ($resource['fixture_state'] ?? 'unknown')] = true;
+
+    if (! $dryRun) {
+        $state['resources'][$key] = sr_seed_public_resource_payload($resource);
+    }
+
+    $versions = is_array($resource['versions'] ?? null) ? $resource['versions'] : [];
+    foreach ($versions as $version) {
+        if (! is_array($version)) {
+            fwrite(STDERR, "Fixture version must be an object.\n");
+            exit(1);
+        }
+
+        $versionKey = $key . ':' . trim((string) ($version['version_label'] ?? ''));
+        $summary['versions_seen']++;
+        $versionExists = array_key_exists($versionKey, $state['versions']);
+        $versionExists ? $summary['versions_updated']++ : $summary['versions_created']++;
+        if (! $dryRun) {
+            $state['versions'][$versionKey] = $version + ['resource_natural_key' => $key];
+        }
+    }
+}
+
+ksort($summary['access_modes']);
+ksort($summary['fixture_states']);
+$summary['access_modes'] = array_keys($summary['access_modes']);
+$summary['fixture_states'] = array_keys($summary['fixture_states']);
+
+if (! $dryRun) {
+    ksort($state['resources']);
+    ksort($state['versions']);
+    sr_seed_write_json($stateFile, $state);
+}
+
+echo json_encode($summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+
+/**
+ * @return array<string, mixed>
+ */
+function sr_seed_read_json(string $path): array
+{
+    $json = file_get_contents($path);
+    if (! is_string($json)) {
+        fwrite(STDERR, "Unable to read JSON file: {$path}\n");
+        exit(1);
+    }
+
+    $decoded = json_decode($json, true);
+    if (! is_array($decoded)) {
+        fwrite(STDERR, "Invalid JSON file: {$path}\n");
+        exit(1);
+    }
+
+    return $decoded;
+}
+
+/**
+ * @param array<string, mixed> $payload
+ */
+function sr_seed_write_json(string $path, array $payload): void
+{
+    $dir = dirname($path);
+    if (! is_dir($dir) && ! mkdir($dir, 0775, true) && ! is_dir($dir)) {
+        fwrite(STDERR, "Unable to create state directory: {$dir}\n");
+        exit(1);
+    }
+
+    $json = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if (! is_string($json) || file_put_contents($path, $json . "\n") === false) {
+        fwrite(STDERR, "Unable to write state file: {$path}\n");
+        exit(1);
+    }
+}
+
+/**
+ * @param array<string, mixed> $resource
+ * @return array<string, mixed>
+ */
+function sr_seed_public_resource_payload(array $resource): array
+{
+    return [
+        'natural_key' => $resource['natural_key'] ?? '',
+        'slug' => $resource['slug'] ?? '',
+        'title' => $resource['title'] ?? '',
+        'post_status' => $resource['post_status'] ?? 'draft',
+        'fixture_state' => $resource['fixture_state'] ?? 'unknown',
+        'taxonomies' => $resource['taxonomies'] ?? [],
+        'meta' => $resource['meta'] ?? [],
+    ];
+}

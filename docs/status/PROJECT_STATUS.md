@@ -6,7 +6,7 @@
 
 - Milestone: W4
 - CI: configured and required on `main`
-- Next safe task: SR-025 或 SR-027（按后续计划确认）
+- Next safe task: SR-019 实现 SEO 元信息、结构化数据与站点地图扩展
 - Gate 0: complete
 
 ## 本周完成
@@ -29,6 +29,7 @@
 - SR-016 已通过远端 CI 并标记 VERIFIED：版本表迁移定义、版本状态枚举、可重试阶段、仓储契约和 current 激活事务锁支持层均已完成。
 - SR-017 已通过远端 CI 并标记 VERIFIED：ResourceService、ResourceView 与 VersionView 已完成，公开 DTO 会阻断未发布/下架资源并排除 storage_key/internal notes。
 - SR-018 已通过远端 CI 并标记 VERIFIED：公开资源与词表 REST 契约层、canonical 查询、列表/详情 Presenter、稳定错误码与 OpenAPI Schema 已完成；WordPress route runtime 接线留给后续允许启动入口的任务。
+- SR-020 已进入 REVIEW：20 条合成资源 Fixture、边界版本状态和幂等 seed 脚本已完成。
 - SR-021 已通过远端 CI 并标记 VERIFIED：主题设计令牌、组件 CSS、按钮、通知、资源元信息和资源卡组件均已完成。
 - SR-022 已通过远端 CI 并标记 VERIFIED：首页模型、导航、页脚、专题区、精选资源区和可恢复空状态已完成，页面内容可通过 `sr_theme_front_page_model` 从服务层注入。
 - SR-023 已通过远端 CI 并标记 VERIFIED：资源归档页、URL 筛选、canonical 查询、分页、可恢复空状态和非法筛选 noindex 已完成。
@@ -41,6 +42,6 @@
 
 ## 下一步
 
-1. 根据任务依赖确认 SR-025 或 SR-027 的下一步实现范围。
-2. 将 SR-018 的 REST 契约接入真实 WordPress 路由和数据源。
-3. 将主题默认模型替换为服务层注入的真实资源数据。
+1. 合并 SR-020 并标记 VERIFIED。
+2. SR-019 实现 SEO 元信息、结构化数据与站点地图扩展。
+3. SR-027 配置角色、能力与最小权限。

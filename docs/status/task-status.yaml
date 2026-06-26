@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:28:23.058617+00:00'
+updated_at: '2026-06-26T02:38:59.050685+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -233,13 +233,17 @@ tasks:
     evidence: []
     blockers: []
   SR-020:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-020-resource-fixtures
+    claimed_at: '2026-06-26T02:35:51.000397+00:00'
+    updated_at: '2026-06-26T02:38:59.050674+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-020/commands.log
+    - docs/evidence/SR-020/completion-report.md
+    - docs/evidence/SR-020/fixture-check.php
+    - docs/evidence/SR-020/review-report.md
     blockers: []
   SR-021:
     status: VERIFIED
