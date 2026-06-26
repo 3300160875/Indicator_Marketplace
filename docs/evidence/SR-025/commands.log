@@ -1,0 +1,117 @@
+# SR-025 command log
+
+Branch: `feat/SR-025-vip-page`
+
+```bash
+php docs/evidence/SR-025/vip-page-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected failure because `web/app/themes/stock-resource-theme/templates/page-vip.php` does not exist yet.
+
+```bash
+php docs/evidence/SR-025/vip-page-check.php
+```
+
+Exit: 0
+Output: `SR-025 VIP page check passed.`
+
+```bash
+find web/app/themes/stock-resource-theme/templates/page-vip.php docs/evidence/SR-025 -name '*.php' -print -exec php -l {} \;
+```
+
+Exit: 0
+Output: no syntax errors in the VIP template or evidence script.
+
+```bash
+vendor/bin/pint --test web/app/themes/stock-resource-theme/templates/page-vip.php docs/evidence/SR-025
+```
+
+Exit: 0
+Output: `{"tool":"pint","result":"passed"}`
+
+```bash
+npm ci
+```
+
+Exit: 0
+Output: dependencies are up to date; 0 vulnerabilities.
+
+```bash
+npm run lint
+```
+
+Exit: 0
+Output: `frontend lint: no frontend assets defined in W1`
+
+```bash
+npm run test
+```
+
+Exit: 1
+Output: `Missing script: "test"`
+Reason / replacement: the root package has no `test` script yet; replaced by `npm --prefix web/app/themes/stock-resource-theme run test`, `php docs/evidence/SR-025/vip-page-check.php`, and `make test`.
+
+```bash
+npm run build
+```
+
+Exit: 1
+Output: `Missing script: "build"`
+Reason / replacement: the root package has no `build` script yet; replaced by `npm --prefix web/app/themes/stock-resource-theme run build`.
+
+```bash
+npm --prefix web/app/themes/stock-resource-theme run lint
+```
+
+Exit: 0
+Output: `stock-resource-theme verification: ok`
+
+```bash
+npm --prefix web/app/themes/stock-resource-theme run test
+```
+
+Exit: 0
+Output: `stock-resource-theme verification: ok`
+
+```bash
+npm --prefix web/app/themes/stock-resource-theme run build
+```
+
+Exit: 0
+Output: `stock-resource-theme build: ok`
+
+```bash
+make test
+```
+
+Exit: 0
+Output: `lint: ok`, `test: ok`
+
+```bash
+git diff --check --cached
+```
+
+Exit: 0
+Output: no whitespace errors.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+```bash
+git diff --stat --cached
+```
+
+Exit: 0
+Output: 9 files changed, 477 insertions(+), 38 deletions(-).
+
+```bash
+gh pr checks 26 --repo 3300160875/Indicator_Marketplace
+```
+
+Exit: 0
+Output: `Frontend gate` passed; `PHP gate` passed.
