@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-25T10:33:30.261949+00:00'
+updated_at: '2026-06-26T01:35:45.118963+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -196,13 +196,17 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/14
     blockers: []
   SR-017:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-017-resource-service-dto
+    claimed_at: '2026-06-25T10:35:01.937547+00:00'
+    updated_at: '2026-06-26T01:35:45.118951+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-017/commands.log
+    - docs/evidence/SR-017/completion-report.md
+    - docs/evidence/SR-017/resource-service-check.php
+    - docs/evidence/SR-017/review-report.md
     blockers: []
   SR-018:
     status: BACKLOG
