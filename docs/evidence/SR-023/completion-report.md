@@ -11,4 +11,4 @@
 - Known limitations: default archive resources are placeholder model data until real services inject resources through `sr_theme_archive_download_model`.
 - Rollback: revert the SR-023 commit/PR; no data mutation is introduced.
 - Next safe task(s): SR-024 实现资源详情与版本信息页面。
-- Commit/PR: pending.
+- Commit/PR: `b83a2f3`, https://github.com/3300160875/Indicator_Marketplace/pull/21.
