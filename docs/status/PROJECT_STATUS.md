@@ -35,7 +35,7 @@
 - SR-022 已通过远端 CI 并标记 VERIFIED：首页模型、导航、页脚、专题区、精选资源区和可恢复空状态已完成，页面内容可通过 `sr_theme_front_page_model` 从服务层注入。
 - SR-023 已通过远端 CI 并标记 VERIFIED：资源归档页、URL 筛选、canonical 查询、分页、可恢复空状态和非法筛选 noindex 已完成。
 - SR-024 已通过远端 CI 并标记 VERIFIED：资源详情页、兼容性/限制/版本/风险同屏展示、AccessDecision CTA Presenter 和隐藏内容泄露检查已完成。
-- SR-025 已进入 REVIEW：VIP 营销页与套餐对比壳、EDD 价格来源标记、支付禁用 CTA、加载/空/错误/无权状态已完成。
+- SR-025 已通过远端 CI 并标记 VERIFIED：VIP 营销页与套餐对比壳、EDD 价格来源标记、支付禁用 CTA、加载/空/错误/无权状态已完成。
 - SR-027 已通过远端 CI 并标记 VERIFIED：角色能力矩阵、管理员高风险能力限制、对象所有权授权判断和稳定拒绝原因支持层已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
@@ -45,6 +45,6 @@
 
 ## 下一步
 
-1. 合并 SR-025 并标记 VERIFIED。
+1. 合并 SR-025。
 2. SR-028 建立后台菜单与运营入口。
 3. SR-030 实现用户账户中心骨架。
