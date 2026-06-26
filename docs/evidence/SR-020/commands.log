@@ -59,6 +59,21 @@ Exit: 0
 Output: `SR-020 fixture check passed.`
 
 ```bash
+vendor/bin/pest --colors=never
+```
+
+Exit: 2 before CI fix.
+Output: `Could not read XML from file "--cache-directory".`
+Root cause: adding the root `tests/` tree caused the PHP gate to run Pest, but the Bedrock root project had no PHPUnit/Pest configuration. Fix: add minimal `phpunit.xml.dist` and `tests/fixtures/resources/FixtureCatalogTest.php`.
+
+```bash
+vendor/bin/pest --colors=never
+```
+
+Exit: 0 after CI fix.
+Output: `Tests: 1 passed (3 assertions)`
+
+```bash
 make test
 ```
 
