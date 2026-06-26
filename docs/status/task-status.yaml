@@ -242,7 +242,7 @@ tasks:
     branch: feat/SR-021-theme-tokens-components
     claimed_at: '2026-06-26T01:39:49.774450+00:00'
     updated_at: '2026-06-26T01:46:34.451116+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/16
     evidence:
     - docs/evidence/SR-021/commands.log
     - docs/evidence/SR-021/completion-report.md
