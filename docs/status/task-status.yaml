@@ -187,7 +187,7 @@ tasks:
     branch: feat/SR-016-resource-versions
     claimed_at: '2026-06-25T10:22:46.841502+00:00'
     updated_at: '2026-06-25T10:33:30.261939+00:00'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/16
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/15
     evidence:
     - docs/evidence/SR-016/commands.log
     - docs/evidence/SR-016/completion-report.md
