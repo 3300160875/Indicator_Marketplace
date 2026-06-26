@@ -25,12 +25,12 @@ paths:
         - { $ref: '#/components/parameters/Page' }
         - { $ref: '#/components/parameters/PerPage' }
         - { name: search, in: query, schema: { type: string, maxLength: 100 } }
-        - { name: category, in: query, schema: { type: string } }
-        - { name: platform, in: query, schema: { type: string } }
-        - { name: indicator_type, in: query, schema: { type: string } }
-        - { name: access_mode, in: query, schema: { $ref: '#/components/schemas/AccessMode' } }
-        - { name: orderby, in: query, schema: { type: string, enum: [relevance, published_at, updated_at, popularity, price] } }
-        - { name: order, in: query, schema: { type: string, enum: [asc, desc], default: desc } }
+        - { name: category, in: query, schema: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' } }
+        - { name: platform, in: query, schema: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' } }
+        - { name: indicator_type, in: query, schema: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' } }
+        - { name: strategy_tag, in: query, schema: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' } }
+        - { name: content_type, in: query, schema: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' } }
+        - { name: sort, in: query, schema: { type: string, enum: [updated_desc, title_asc, popular_desc], default: updated_desc } }
       responses:
         '200':
           description: Published resource list
@@ -38,6 +38,13 @@ paths:
           content:
             application/json:
               schema: { $ref: '#/components/schemas/ResourceListResponse' }
+              examples:
+                canonical:
+                  value:
+                    data: []
+                    pagination: { page: 1, per_page: 12, total: 0, total_pages: 0 }
+                    canonical_query: "content_type=indicator&page=1&per_page=12&platform=tongdaxin&sort=updated_desc"
+                    request_id: "123e4567-e89b-42d3-a456-426614174000"
         '400': { $ref: '#/components/responses/ValidationError' }
         '429': { $ref: '#/components/responses/RateLimited' }
   /resources/{idOrSlug}:
@@ -68,14 +75,7 @@ paths:
             application/json:
               schema:
                 type: object
-                required: [data, request_id]
-                properties:
-                  data:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items: { $ref: '#/components/schemas/TaxonomyTerm' }
-                  request_id: { $ref: '#/components/schemas/Uuid' }
+                $ref: '#/components/schemas/PublicTaxonomyVocabulary'
   /vip/plans:
     get:
       tags: [Resources]
@@ -492,18 +492,75 @@ components:
             current_version: { $ref: '#/components/schemas/VersionSummary' }
             risk_notice: { type: string }
             access_decision: { oneOf: [{ $ref: '#/components/schemas/AccessDecision' }, { type: 'null' }] }
+    VersionView:
+      type: object
+      description: Public current version DTO. Storage provider, bucket, object key, file hash and scan internals are never exposed.
+      required: [id, resource_id, version_label, status, scan_status, file_size, compatibility, release_notes, activated_at]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        resource_id: { $ref: '#/components/schemas/PositiveId' }
+        version_label: { type: string }
+        status: { type: string, enum: [active] }
+        scan_status: { type: string, enum: [clean] }
+        file_size: { type: [integer, 'null'], minimum: 0 }
+        compatibility: { type: object, additionalProperties: true }
+        release_notes: { type: [string, 'null'] }
+        activated_at: { type: [string, 'null'], format: date-time }
+    ResourceView:
+      type: object
+      description: Public resource DTO produced by ResourceService for REST and theme consumers.
+      required: [id, slug, title, excerpt, content, access_mode, taxonomies, meta, current_version]
+      properties:
+        id: { $ref: '#/components/schemas/PositiveId' }
+        slug: { type: string }
+        title: { type: string }
+        excerpt: { type: string }
+        content: { type: string, description: Sanitized public content only }
+        access_mode: { $ref: '#/components/schemas/AccessMode' }
+        taxonomies:
+          type: object
+          additionalProperties:
+            type: array
+            items: { type: string }
+        meta: { type: object, additionalProperties: true }
+        current_version: { $ref: '#/components/schemas/VersionView' }
     ResourceListResponse:
       type: object
-      required: [data, pagination, request_id]
+      required: [data, pagination, canonical_query, request_id]
       properties:
-        data: { type: array, items: { $ref: '#/components/schemas/ResourceSummary' } }
+        data: { type: array, items: { $ref: '#/components/schemas/ResourceView' } }
         pagination: { $ref: '#/components/schemas/Pagination' }
+        canonical_query:
+          type: string
+          description: Deterministic query string built from sanitized public filters; invalid filters return sr_invalid_filter.
         request_id: { $ref: '#/components/schemas/Uuid' }
     ResourceResponse:
       type: object
       required: [data, request_id]
       properties:
-        data: { $ref: '#/components/schemas/ResourceDetail' }
+        data: { $ref: '#/components/schemas/ResourceView' }
+        request_id: { $ref: '#/components/schemas/Uuid' }
+    PublicTaxonomyVocabulary:
+      type: object
+      required: [data, request_id]
+      properties:
+        data:
+          type: object
+          additionalProperties:
+            type: object
+            required: [taxonomy, rest_key, hierarchical, terms]
+            properties:
+              taxonomy: { type: string }
+              rest_key: { type: string }
+              hierarchical: { type: boolean }
+              terms:
+                type: array
+                items:
+                  type: object
+                  required: [slug, name]
+                  properties:
+                    slug: { type: string }
+                    name: { type: string }
         request_id: { $ref: '#/components/schemas/Uuid' }
     MembershipPlan:
       type: object
@@ -625,6 +682,7 @@ components:
     Error:
       type: object
       required: [error_code, message, request_id]
+      description: Stable public error codes include sr_invalid_filter and sr_resource_unavailable.
       properties:
         error_code: { type: string }
         message: { type: string }

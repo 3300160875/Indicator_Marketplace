@@ -8,12 +8,18 @@ use StockResource\Core\Admin\ResourceEditor\ResourcePublishGate;
 use StockResource\Core\Application\ResourceService;
 use StockResource\Core\Cli\MigrationCommand;
 use StockResource\Core\Content\Meta\DownloadMetaCatalog;
+use StockResource\Core\Content\Taxonomy\ControlledVocabulary;
 use StockResource\Core\Content\Taxonomy\TaxonomyCatalog;
 use StockResource\Core\Infrastructure\Migration\ArrayMigrationRepository;
 use StockResource\Core\Infrastructure\Migration\Migration;
 use StockResource\Core\Infrastructure\Migration\MigrationRunner;
 use StockResource\Core\Runtime\CoreRuntimeRegistrar;
 use StockResource\Core\Runtime\RuntimeEnvironment;
+use StockResource\Core\Rest\Public\PublicResourceCollection;
+use StockResource\Core\Rest\Public\PublicResourceQuery;
+use StockResource\Core\Rest\Public\PublicRestError;
+use StockResource\Core\Rest\Public\PublicRestRouteCatalog;
+use StockResource\Core\Rest\Public\PublicTaxonomyVocabulary;
 use StockResource\Core\Support\Http\RestRequestIdMiddleware;
 use StockResource\Core\Version\InMemoryResourceVersionRepository;
 use StockResource\Core\Version\ResourceVersion;
@@ -37,10 +43,17 @@ $sourceFiles = [
     '/src/Dto/VersionView.php',
     '/src/Dto/ResourceView.php',
     '/src/Application/ResourceService.php',
+    '/src/Rest/Public/PublicRestError.php',
+    '/src/Rest/Public/PublicRestRoute.php',
+    '/src/Rest/Public/PublicRestRouteCatalog.php',
+    '/src/Rest/Public/PublicResourceQuery.php',
+    '/src/Rest/Public/PublicResourceCollection.php',
+    '/src/Rest/Public/PublicTaxonomyVocabulary.php',
     '/src/Content/Meta/DownloadMetaDefinition.php',
     '/src/Content/Meta/DownloadMetaCatalog.php',
     '/src/Content/Taxonomy/TaxonomyDefinition.php',
     '/src/Content/Taxonomy/TaxonomyCatalog.php',
+    '/src/Content/Taxonomy/ControlledVocabulary.php',
     '/src/Infrastructure/Migration/Migration.php',
     '/src/Infrastructure/Migration/MigrationRecord.php',
     '/src/Infrastructure/Migration/MigrationRepository.php',
@@ -460,5 +473,53 @@ $draftView = $resourceService->publicView([
     'meta' => ['_sr_access_mode' => 'free'],
 ], $publicVersion);
 assert_same(null, $draftView, 'resource service blocks unpublished resources');
+
+$publicRoutes = PublicRestRouteCatalog::defaults()->routes();
+assert_same(['GET /resources', 'GET /resources/{idOrSlug}', 'GET /taxonomies'], array_map(
+    static fn($route): string => $route->method() . ' ' . $route->path(),
+    $publicRoutes,
+), 'public REST route catalog exposes approved routes');
+assert_same(true, $publicRoutes[0]->permissionCallback()(), 'public REST routes expose explicit public permission callback');
+
+$publicQuery = PublicResourceQuery::fromArray([
+    'search' => ' 通达信  趋势 ',
+    'platform' => 'tongdaxin',
+    'indicator_type' => 'sub-chart',
+    'page' => '2',
+    'per_page' => '24',
+    'sort' => 'title_asc',
+]);
+assert_same([
+    'indicator_type' => 'sub-chart',
+    'page' => 2,
+    'per_page' => 24,
+    'platform' => 'tongdaxin',
+    'search' => '通达信 趋势',
+    'sort' => 'title_asc',
+], $publicQuery->canonicalParams(), 'public REST query canonicalizes filters deterministically');
+
+$invalidFilterWasRejected = false;
+try {
+    PublicResourceQuery::fromArray(['unknown' => 'bad']);
+} catch (PublicRestError $error) {
+    $invalidFilterWasRejected = $error->code() === 'sr_invalid_filter' && $error->status() === 400;
+}
+assert_same(true, $invalidFilterWasRejected, 'public REST query rejects unknown filters with stable error code');
+
+$publicCollection = PublicResourceCollection::fromViews([$resourceView, $draftView]);
+$publicList = $publicCollection->list(PublicResourceQuery::fromArray(['platform' => 'tongdaxin']));
+assert_same(1, $publicList['pagination']['total'], 'public REST list excludes unpublished resources');
+assert_same('tdx-trend', $publicCollection->detail('tdx-trend')['data']['slug'], 'public REST detail resolves by slug');
+
+$missingDetailWasRejected = false;
+try {
+    $publicCollection->detail('missing-resource');
+} catch (PublicRestError $error) {
+    $missingDetailWasRejected = $error->code() === 'sr_resource_unavailable' && $error->status() === 404;
+}
+assert_same(true, $missingDetailWasRejected, 'public REST detail hides missing resources behind unavailable error');
+
+$publicVocabulary = PublicTaxonomyVocabulary::fromCatalog(TaxonomyCatalog::defaults(), ControlledVocabulary::defaults())->toArray();
+assert_same('platform', $publicVocabulary['data']['sr_platform']['rest_key'], 'public taxonomy vocabulary exposes stable REST keys');
 
 echo "sr-core runtime tests: ok\n";
