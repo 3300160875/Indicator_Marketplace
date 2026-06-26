@@ -148,7 +148,7 @@ tasks:
     branch: feat/SR-013-taxonomy-vocabulary
     claimed_at: '2026-06-25T08:55:22.100697+00:00'
     updated_at: '2026-06-25T08:59:14.190375+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/15
     evidence:
     - docs/evidence/SR-013/commands.log
     - docs/evidence/SR-013/completion-report.md
@@ -207,6 +207,7 @@ tasks:
     - docs/evidence/SR-017/completion-report.md
     - docs/evidence/SR-017/resource-service-check.php
     - docs/evidence/SR-017/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/15
     blockers: []
   SR-018:
     status: BACKLOG
