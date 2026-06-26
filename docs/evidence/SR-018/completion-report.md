@@ -11,4 +11,4 @@
 - Known limitations: WordPress REST registration is deferred because startup/runtime files are outside SR-018 allowed paths.
 - Rollback: revert the SR-018 commit/PR; no database state is changed.
 - Next safe task(s): SR-022 实现首页、导航、页脚与专题区；SR-023 实现分类、筛选、搜索与分页页面。
-- Commit/PR: pending.
+- Commit/PR: `d55c8a4`, https://github.com/3300160875/Indicator_Marketplace/pull/19.

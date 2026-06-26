@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:07:04.599851+00:00'
+updated_at: '2026-06-26T02:09:35.774365+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -210,17 +210,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/15
     blockers: []
   SR-018:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-018-public-rest-api
     claimed_at: '2026-06-26T02:02:45.603297+00:00'
-    updated_at: '2026-06-26T02:07:04.599841+00:00'
-    pr: null
+    updated_at: '2026-06-26T02:09:35.774355+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/19
     evidence:
     - docs/evidence/SR-018/commands.log
     - docs/evidence/SR-018/completion-report.md
     - docs/evidence/SR-018/public-rest-check.php
     - docs/evidence/SR-018/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/19
     blockers: []
   SR-019:
     status: BACKLOG
