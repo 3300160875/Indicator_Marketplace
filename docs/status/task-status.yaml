@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T08:35:46.397867+00:00'
+updated_at: '2026-06-26T08:41:50.752954+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -327,7 +327,7 @@ tasks:
     branch: null
     claimed_at: null
     updated_at: '2026-06-24T00:00:00Z'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/28
+    pr: null
     evidence: []
     blockers: []
   SR-027:
@@ -350,7 +350,7 @@ tasks:
     branch: feat/SR-028-storage-minio
     claimed_at: '2026-06-26T08:27:35.636705+00:00'
     updated_at: '2026-06-26T08:35:46.397856+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/28
     evidence:
     - docs/evidence/SR-028/commands.log
     - docs/evidence/SR-028/completion-report.md
@@ -368,13 +368,17 @@ tasks:
     evidence: []
     blockers: []
   SR-030:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-030-production-storage-adapters
+    claimed_at: '2026-06-26T08:38:20.906610+00:00'
+    updated_at: '2026-06-26T08:41:50.752944+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-030/commands.log
+    - docs/evidence/SR-030/adapter-contract-check.php
+    - docs/evidence/SR-030/completion-report.md
+    - docs/evidence/SR-030/review-report.md
     blockers: []
   SR-031:
     status: BACKLOG
