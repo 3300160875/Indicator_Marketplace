@@ -373,12 +373,13 @@ tasks:
     branch: feat/SR-030-production-storage-adapters
     claimed_at: '2026-06-26T08:38:20.906610+00:00'
     updated_at: '2026-06-26T08:41:50.752944+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/29
     evidence:
     - docs/evidence/SR-030/commands.log
     - docs/evidence/SR-030/adapter-contract-check.php
     - docs/evidence/SR-030/completion-report.md
     - docs/evidence/SR-030/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/29
     blockers: []
   SR-031:
     status: BACKLOG

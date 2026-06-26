@@ -11,4 +11,4 @@
 - Known limitations: repository-level `make test-unit`, `make test-integration` and `make test-security` targets do not exist yet; SR-030 records direct replacement commands.
 - Rollback: revert SR-030 commit/PR; no database or object storage data is mutated by the implementation itself.
 - Next safe task(s): SR-026 实现登录、用户中心、订单与下载中心壳；SR-029 建立对象存储运行配置入口。
-- Commit/PR: pending.
+- Commit/PR: `88fb8cd`, https://github.com/3300160875/Indicator_Marketplace/pull/29.
