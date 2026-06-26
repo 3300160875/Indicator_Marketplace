@@ -32,6 +32,7 @@
 - SR-021 已通过远端 CI 并标记 VERIFIED：主题设计令牌、组件 CSS、按钮、通知、资源元信息和资源卡组件均已完成。
 - SR-022 已通过远端 CI 并标记 VERIFIED：首页模型、导航、页脚、专题区、精选资源区和可恢复空状态已完成，页面内容可通过 `sr_theme_front_page_model` 从服务层注入。
 - SR-023 已通过远端 CI 并标记 VERIFIED：资源归档页、URL 筛选、canonical 查询、分页、可恢复空状态和非法筛选 noindex 已完成。
+- SR-024 已进入 REVIEW：资源详情页、兼容性/限制/版本/风险同屏展示、AccessDecision CTA Presenter 和隐藏内容泄露检查已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞

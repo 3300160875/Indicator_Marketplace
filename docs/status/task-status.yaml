@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:22:46.040547+00:00'
+updated_at: '2026-06-26T02:25:57.253527+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -284,13 +284,17 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/21
     blockers: []
   SR-024:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-024-resource-detail-page
+    claimed_at: '2026-06-26T02:24:24.226706+00:00'
+    updated_at: '2026-06-26T02:25:57.253515+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-024/commands.log
+    - docs/evidence/SR-024/completion-report.md
+    - docs/evidence/SR-024/review-report.md
+    - docs/evidence/SR-024/single-download-check.php
     blockers: []
   SR-025:
     status: BACKLOG
