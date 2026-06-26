@@ -1,0 +1,117 @@
+# SR-029 command log
+
+Branch: `feat/SR-029-version-upload-scan`
+
+```bash
+php docs/evidence/SR-029/version-upload-scan-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected RED failure because `packages/sr-core/src/Version/Upload/UploadedVersionFile.php` does not exist yet.
+
+```bash
+php docs/evidence/SR-029/version-upload-scan-check.php
+```
+
+Exit: 255 during implementation.
+Output: test error because the evidence script attempted to cast existing `StorageObjectKey` objects to string; fixed test to use `->value`.
+
+```bash
+vendor/bin/pint packages/sr-core/src/Version/Upload packages/sr-private-downloads/src/Scan docs/evidence/SR-029
+```
+
+Exit: 0.
+Output: Pint fixed formatting in new SR-029 files.
+
+```bash
+php docs/evidence/SR-029/version-upload-scan-check.php
+```
+
+Exit: 0 after implementation.
+Output: `SR-029 version upload and scan checks passed.`
+
+```bash
+composer validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+composer --working-dir=packages/sr-core validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+composer --working-dir=packages/sr-private-downloads validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+composer --working-dir=packages/sr-core test
+```
+
+Exit: 0.
+Output: `sr-core runtime tests: ok`
+
+```bash
+composer --working-dir=packages/sr-private-downloads test
+```
+
+Exit: 0.
+Output: `sr-private-downloads skeleton tests: ok`
+
+```bash
+make lint
+```
+
+Exit: 0.
+Output: `lint: ok`
+
+```bash
+make test-unit MODULE=versions
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason: repository-level target is not defined yet; replacement commands are `composer --working-dir=packages/sr-core test` and `php docs/evidence/SR-029/version-upload-scan-check.php`.
+
+```bash
+make test-integration
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason: repository-level target is not defined yet; replacement command is `php docs/evidence/SR-029/version-upload-scan-check.php`.
+
+```bash
+make test
+```
+
+Exit: 0.
+Output: `lint: ok`; `test: ok`.
+
+```bash
+vendor/bin/pint --test packages/sr-core/src/Version/Upload packages/sr-private-downloads/src/Scan docs/evidence/SR-029
+```
+
+Exit: 0.
+Output: `{"tool":"pint","result":"passed"}`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: no output.
