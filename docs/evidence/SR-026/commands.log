@@ -1,0 +1,110 @@
+# SR-026 command log
+
+Branch: `feat/SR-026-account-shell`
+
+```bash
+php docs/evidence/SR-026/account-shell-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected RED failure because `web/app/themes/stock-resource-theme/templates/account/page-account.php` does not exist yet.
+
+```bash
+php docs/evidence/SR-026/account-shell-check.php
+```
+
+Exit: 0 after implementation.
+Output: `SR-026 account shell check passed.`
+
+```bash
+vendor/bin/pint --test web/app/themes/stock-resource-theme/templates/account docs/evidence/SR-026
+```
+
+Exit: 1 before formatting.
+Output: Pint reported formatting fixes for `web/app/themes/stock-resource-theme/templates/account/page-account.php`.
+
+```bash
+vendor/bin/pint web/app/themes/stock-resource-theme/templates/account docs/evidence/SR-026
+```
+
+Exit: 0.
+Output: Pint fixed account template formatting.
+
+```bash
+vendor/bin/pint --test web/app/themes/stock-resource-theme/templates/account docs/evidence/SR-026
+```
+
+Exit: 0.
+Output: `{"tool":"pint","result":"passed"}`
+
+```bash
+npm ci
+```
+
+Exit: 0.
+Output: `up to date, audited 1 package`; `found 0 vulnerabilities`.
+
+```bash
+npm run lint
+```
+
+Exit: 0.
+Output: `frontend lint: no frontend assets defined in W1`
+
+```bash
+npm run test
+```
+
+Exit: 1.
+Output: `Missing script: "test"`.
+Reason: the root package does not define a `test` script yet; replacement command is `npm run test --prefix web/app/themes/stock-resource-theme`.
+
+```bash
+npm run build
+```
+
+Exit: 1.
+Output: `Missing script: "build"`.
+Reason: the root package does not define a `build` script yet; replacement command is `npm run build --prefix web/app/themes/stock-resource-theme`.
+
+```bash
+npm run lint --prefix web/app/themes/stock-resource-theme
+```
+
+Exit: 0.
+Output: `stock-resource-theme verification: ok`
+
+```bash
+npm run test --prefix web/app/themes/stock-resource-theme
+```
+
+Exit: 0.
+Output: `stock-resource-theme verification: ok`
+
+```bash
+npm run build --prefix web/app/themes/stock-resource-theme
+```
+
+Exit: 0.
+Output: `stock-resource-theme build: ok`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output: `lint: ok`; `test: ok`.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: no output.
