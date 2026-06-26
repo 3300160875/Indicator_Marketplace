@@ -11,4 +11,4 @@
 - Known limitations: repository-level `make test-unit` and `make test-integration` targets do not exist yet; SR-031 records direct replacement commands. Runtime WordPress/EDD API wiring remains deferred.
 - Rollback: revert SR-031 commit/PR; no live EDD order data is mutated.
 - Next safe task(s): SR-032 实现资源访问模式与价格校验；SR-033 定制 EDD 结算与数字内容条款。
-- Commit/PR: pending.
+- Commit/PR: `a4e852d`, https://github.com/3300160875/Indicator_Marketplace/pull/32.
