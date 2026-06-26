@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T01:35:45.118963+00:00'
+updated_at: '2026-06-26T01:37:49.804547+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -160,7 +160,7 @@ tasks:
     branch: feat/SR-014-download-meta-schema
     claimed_at: '2026-06-25T09:52:57.414715+00:00'
     updated_at: '2026-06-25T10:05:02.169763+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/15
     evidence:
     - docs/evidence/SR-014/commands.log
     - docs/evidence/SR-014/completion-report.md
@@ -196,11 +196,11 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/14
     blockers: []
   SR-017:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-017-resource-service-dto
     claimed_at: '2026-06-25T10:35:01.937547+00:00'
-    updated_at: '2026-06-26T01:35:45.118951+00:00'
+    updated_at: '2026-06-26T01:37:49.804537+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-017/commands.log
