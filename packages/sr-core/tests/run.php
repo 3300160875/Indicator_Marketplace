@@ -5,6 +5,7 @@ use StockResource\Core\Plugin;
 use StockResource\Core\Admin\ResourceEditor\ResourceDraft;
 use StockResource\Core\Admin\ResourceEditor\ResourceEditorSectionCatalog;
 use StockResource\Core\Admin\ResourceEditor\ResourcePublishGate;
+use StockResource\Core\Application\ResourceService;
 use StockResource\Core\Cli\MigrationCommand;
 use StockResource\Core\Content\Meta\DownloadMetaCatalog;
 use StockResource\Core\Content\Taxonomy\TaxonomyCatalog;
@@ -33,6 +34,9 @@ $sourceFiles = [
     '/src/Admin/ResourceEditor/ResourceDraft.php',
     '/src/Admin/ResourceEditor/ResourcePublishGate.php',
     '/src/Admin/ResourceEditor/ResourceChangeAuditPolicy.php',
+    '/src/Dto/VersionView.php',
+    '/src/Dto/ResourceView.php',
+    '/src/Application/ResourceService.php',
     '/src/Content/Meta/DownloadMetaDefinition.php',
     '/src/Content/Meta/DownloadMetaCatalog.php',
     '/src/Content/Taxonomy/TaxonomyDefinition.php',
@@ -403,5 +407,58 @@ try {
     $failedScanWasRejected = true;
 }
 assert_same(true, $failedScanWasRejected, 'resource versions require clean scan before activation');
+
+$resourceService = new ResourceService();
+$publicVersion = ResourceVersion::fromArray([
+    'id' => 88,
+    'resource_id' => 1001,
+    'version_label' => '1.2.0',
+    'status' => 'active',
+    'is_current' => true,
+    'storage_key' => 'resource/1001/private.zip',
+    'file_size' => 4096,
+    'sha256' => str_repeat('c', 64),
+    'compatibility' => ['platform' => 'tongdaxin'],
+    'scan_status' => 'clean',
+    'scan_result' => ['internal_notes' => 'hidden'],
+    'release_notes' => '公开版本说明。',
+    'created_by' => 501,
+    'approved_by' => 601,
+    'activated_at' => '2026-06-25 10:00:00',
+    'created_at' => '2026-06-25 09:00:00',
+    'updated_at' => '2026-06-25 10:00:00',
+]);
+$resourceView = $resourceService->publicView([
+    'id' => 1001,
+    'post_status' => 'publish',
+    'slug' => 'tdx-trend',
+    'title' => '通达信趋势指标',
+    'excerpt' => '用于趋势识别的指标资源。',
+    'content' => '<p>公开说明。</p>',
+    'taxonomies' => ['sr_platform' => ['tongdaxin'], 'sr_internal_review' => ['hidden']],
+    'meta' => [
+        '_sr_access_mode' => 'purchase',
+        '_sr_software_versions' => ['通达信 7.60'],
+        '_sr_risk_level' => 'medium',
+        '_sr_internal_notes' => 'hidden',
+        'storage_key' => 'resource/1001/leak.zip',
+    ],
+], $publicVersion);
+assert_true($resourceView !== null, 'resource service returns DTO for published resources');
+$resourcePayload = $resourceView->toArray();
+assert_same(88, $resourcePayload['current_version']['id'], 'resource service exposes current version DTO');
+assert_true(! isset($resourcePayload['taxonomies']['sr_internal_review']), 'resource service excludes unknown taxonomies');
+assert_same(['通达信 7.60'], $resourcePayload['meta']['software_versions'], 'resource service maps public meta keys');
+assert_true(! str_contains(json_encode($resourcePayload, JSON_THROW_ON_ERROR), '"_sr_'), 'resource DTO excludes raw post meta keys');
+assert_true(! str_contains(json_encode($resourcePayload, JSON_THROW_ON_ERROR), 'storage_key'), 'resource DTO excludes storage keys');
+assert_true(! str_contains(json_encode($resourcePayload, JSON_THROW_ON_ERROR), 'sha256'), 'resource DTO excludes file hashes');
+assert_true(! str_contains(json_encode($resourcePayload, JSON_THROW_ON_ERROR), 'internal_notes'), 'resource DTO excludes internal notes');
+
+$draftView = $resourceService->publicView([
+    'id' => 1002,
+    'post_status' => 'draft',
+    'meta' => ['_sr_access_mode' => 'free'],
+], $publicVersion);
+assert_same(null, $draftView, 'resource service blocks unpublished resources');
 
 echo "sr-core runtime tests: ok\n";
