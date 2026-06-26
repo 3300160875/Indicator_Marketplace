@@ -1,11 +1,11 @@
 project: stock-indicator-platform
 baseline: agent-execution-v1.0
 current_milestone: W5
-updated_at: '2026-06-26T08:47:30Z'
+updated_at: '2026-06-26T09:00:10Z'
 summary:
   total_points: 588
   done_points: 0
-  verified_points: 175
+  verified_points: 183
   blocked_tasks: []
 quality:
   ci: configured_required
@@ -14,9 +14,9 @@ quality:
   coverage: null
   schema_version: null
 next_safe_tasks:
-- SR-026
 - SR-029
 - SR-031
+- SR-032
 risks:
 - id: R-001
   title: Gate 0 未完成时支付必须关闭
