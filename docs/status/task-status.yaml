@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-26T02:15:58.802397+00:00'
+updated_at: '2026-06-26T02:20:30.183712+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -270,13 +270,17 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/20
     blockers: []
   SR-023:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-023-archive-filters
+    claimed_at: '2026-06-26T02:17:27.915333+00:00'
+    updated_at: '2026-06-26T02:20:30.183695+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-023/archive-filter-check.php
+    - docs/evidence/SR-023/commands.log
+    - docs/evidence/SR-023/completion-report.md
+    - docs/evidence/SR-023/review-report.md
     blockers: []
   SR-024:
     status: BACKLOG
