@@ -1,0 +1,47 @@
+# SR-042 Completion Report
+
+- Task / status: SR-042, REVIEW.
+- Branch: `feat/SR-042-payment-review-outbox`.
+- Scope completed:
+  - 在 `packages/sr-admin-ops/src/Outbox/` 中补齐 Outbox 运行时骨架（事件值对象、状态枚举、存储接口、内存仓储、发送器接口、执行结果、Worker）。
+  - 完成 `PaymentReviewOutbox` 事件构造器，固定事件名 `order.payment_reviewed`、聚合类型 `payment_submission`，并提供稳定事件键。
+  - `OutboxWorker` 支持批量处理、发送成功确认、失败重试（指数退避）与死信。
+  - 通过 `docs/evidence/SR-042/outbox-framework-check.php` 覆盖核心行为：
+    - 新建事件与 payload 合法性
+    - 仓储幂等写入
+    - 成功发送入库 `sent`
+    - 失败重试与退避时间计算
+    - 达到最大重试后进入 `dead`
+    - 单批处理中局部失败不影响其余消息处理
+- Files changed:
+  - `packages/sr-admin-ops/src/Outbox/OutboxDeliveryStatus.php`
+  - `packages/sr-admin-ops/src/Outbox/OutboxEvent.php`
+  - `packages/sr-admin-ops/src/Outbox/OutboxEventException.php`
+  - `packages/sr-admin-ops/src/Outbox/OutboxEventRepositoryInterface.php`
+  - `packages/sr-admin-ops/src/Outbox/InMemoryOutboxEventStore.php`
+  - `packages/sr-admin-ops/src/Outbox/OutboxEventSender.php`
+  - `packages/sr-admin-ops/src/Outbox/OutboxDeliveryResult.php`
+  - `packages/sr-admin-ops/src/Outbox/OutboxWorker.php`
+  - `packages/sr-admin-ops/src/Outbox/PaymentReviewOutbox.php`
+  - `docs/evidence/SR-042/outbox-framework-check.php`
+- Contract changes:
+  - 形成 `sr-admin-ops` 内部 outbox 运行契约：事件仓储、发送器、处理结果、重试状态机。
+  - 事件与表字段保持 `wp_sr_outbox_events` 约束（`event_key` 全局唯一、`status/attempts/available_at` 可被工作器更新）。
+- Migrations:
+  - 无新增迁移。
+- Commands and results:
+  - 见 `docs/evidence/SR-042/commands.log`。
+- Security/permission/concurrency checks:
+  - 工作器 catch 发送异常，不会抛出影响整个批次。
+  - 重试与死信由事件状态控制，避免发送异常阻塞其余事件。
+  - 通过仓储层 `event_key` 去重防止重复入队。
+- Known limitations:
+  - 当前仅实现 InMemory 仓储和内存可测试层，未集成 WP 的数据库仓储与 cron 调度。
+  - 与 `PaymentReviewService` 的事务钩子尚未在运行时层面打通（受 SR-042 允许路径限制）。
+- Rollback:
+  - 回滚本任务提交即可恢复到任务前状态（删除新增 Outbox 文件并还原 status/lock）。
+- Next safe task(s):
+  - SR-043/SR-044 的数据库与后台接线（需在 outbox 框架具备稳定基础后）。
+- Commit/PR:
+  - 暂无。
+

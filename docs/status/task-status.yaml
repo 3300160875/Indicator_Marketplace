@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T04:45:01+00:00'
+updated_at: '2026-06-29T04:58:38.820025+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -541,13 +541,17 @@ tasks:
     - docs/evidence/SR-041/completion-report.md
     blockers: []
   SR-042:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-042-payment-notification-outbox
+    claimed_at: '2026-06-29T04:54:12.473406+00:00'
+    updated_at: '2026-06-29T09:12:58.820016+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-042/commands.log
+    - docs/evidence/SR-042/review-report.md
+    - docs/evidence/SR-042/completion-report.md
+    - docs/evidence/SR-042/outbox-framework-check.php
     blockers: []
   SR-043:
     status: BACKLOG

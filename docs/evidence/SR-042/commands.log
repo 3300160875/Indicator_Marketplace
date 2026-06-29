@@ -1,0 +1,125 @@
+# SR-042 commands log
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+composer validate --strict
+```
+
+Exit: 0.
+Output:
+`./composer.json is valid`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make lint
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+php -l packages/sr-admin-ops/src/Outbox/OutboxDeliveryStatus.php
+php -l packages/sr-admin-ops/src/Outbox/OutboxEventException.php
+php -l packages/sr-admin-ops/src/Outbox/OutboxEvent.php
+php -l packages/sr-admin-ops/src/Outbox/OutboxEventRepositoryInterface.php
+php -l packages/sr-admin-ops/src/Outbox/InMemoryOutboxEventStore.php
+php -l packages/sr-admin-ops/src/Outbox/OutboxEventSender.php
+php -l packages/sr-admin-ops/src/Outbox/OutboxDeliveryResult.php
+php -l packages/sr-admin-ops/src/Outbox/OutboxWorker.php
+php -l packages/sr-admin-ops/src/Outbox/PaymentReviewOutbox.php
+php -l docs/evidence/SR-042/outbox-framework-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected` (all listed files)
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+php docs/evidence/SR-042/outbox-framework-check.php
+```
+
+Exit: 0.
+Output:
+`SR-042 outbox framework checks passed.`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-unit MODULE=notification
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+`原因：仓库 Makefile 当前未提供 test-unit 入口，已用 composer --working-dir=packages/sr-admin-ops test 进行替代。`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-integration
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+`原因：仓库 Makefile 当前未提供 test-integration 入口。`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+composer --working-dir=packages/sr-admin-ops test
+```
+
+Exit: 0.
+Output:
+`sr-admin-ops skeleton tests: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-smoke
+```
+
+Exit: 1.
+Output:
+`mysqld is alive`
+`service "nginx" is not running`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git diff --check
+```
+
+Exit: 0.
+Output:
+`No whitespace errors`.
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git diff --stat
+```
+
+Exit: 0.
+Output:
+` docs/status/task-status.yaml | 6 +++++-
+  docs/status/agent-locks.yaml | 10 +++++++---
+  ... (new file additions: 9 files under packages/sr-admin-ops/src/Outbox and 1 evidence file)`
+
