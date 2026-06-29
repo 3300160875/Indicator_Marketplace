@@ -1,0 +1,128 @@
+# SR-034 command log
+
+Branch: `feat/SR-034-order-item-snapshots`
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+```
+
+Exit: 255 during test authoring.
+Output: evidence script initially referenced a non-existing contract file; script dependency was corrected before the intended RED check.
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected RED failure because `packages/sr-core/src/Commerce/OrderSnapshot/OrderSnapshotException.php` did not exist yet.
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+```
+
+Exit: 0 after implementation.
+Output: `SR-034 order item snapshot checks passed.`
+
+```bash
+vendor/bin/pint --test packages/sr-core/src/Commerce/OrderSnapshot docs/evidence/SR-034
+```
+
+Exit: 1 before formatting.
+Output: Pint reported formatting fixes for the SR-034 evidence script.
+
+```bash
+composer --working-dir=packages/sr-core test
+```
+
+Exit: 0.
+Output: `sr-core runtime tests: ok`
+
+```bash
+composer validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+vendor/bin/pint packages/sr-core/src/Commerce/OrderSnapshot docs/evidence/SR-034
+vendor/bin/pint --test packages/sr-core/src/Commerce/OrderSnapshot docs/evidence/SR-034
+```
+
+Exit: 0.
+Output: Pint fixed formatting, then `{"tool":"pint","result":"passed"}`.
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+```
+
+Exit: 0.
+Output: `SR-034 order item snapshot checks passed.`
+
+```bash
+composer --working-dir=packages/sr-core validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+make lint
+```
+
+Exit: 0.
+Output: `lint: ok`
+
+```bash
+make test-unit MODULE=orders
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason: repository-level target is not defined yet; replacement commands are `composer --working-dir=packages/sr-core test` and `php docs/evidence/SR-034/order-item-snapshot-check.php`.
+
+```bash
+make test-integration
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason: repository-level target is not defined yet; replacement command is `php docs/evidence/SR-034/order-item-snapshot-check.php`.
+
+```bash
+make test
+```
+
+Exit: 0.
+Output: `lint: ok`; `test: ok`.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: no output.
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+```
+
+Exit: 255 during independent QA fix.
+Output: expected RED failure because the snapshot did not yet freeze `unit_amount`/`discount_amount` and did not reject incomplete business metadata.
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+vendor/bin/pint --test packages/sr-core/src/Commerce/OrderSnapshot docs/evidence/SR-034
+composer --working-dir=packages/sr-core test
+make test
+```
+
+Exit: 0 after independent QA fix.
+Output: `SR-034 order item snapshot checks passed.`; `{"tool":"pint","result":"passed"}`; `sr-core runtime tests: ok`; `lint: ok`; `test: ok`.
