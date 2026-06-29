@@ -1,0 +1,24 @@
+# SR-039 Completion Report
+
+- Task / status: SR-039, VERIFIED.
+- Branch: `feat/SR-039-review-queue-concurrency`.
+- Scope completed:
+  - 实现审核队列服务 `ReviewQueueService` 的认领与超时释放逻辑。
+  - 支持 `submitted -> under_review` 认领、同一 reviewer 可重入、过期接管。
+  - 支持 `lock_version`、权限、状态约束与释放超时判定。
+  - 增加审计友好的异常码映射与错误场景覆盖。
+- Files changed:
+  - `packages/sr-payment-gateways/src/Admin/ReviewQueue/ReviewQueueService.php`
+  - `docs/evidence/SR-039/review-queue-check.php`
+  - `docs/evidence/SR-039/commands.log`
+  - `docs/evidence/SR-039/review-report.md`
+- Security / concurrency / correctness:
+  - 仅允许 under_review 流程认领。
+  - 锁版本一致性保护重入与并发冲突。
+  - 未到超时阈值禁止释放。
+- Commands and results:
+  - 见 `docs/evidence/SR-039/commands.log`。
+- Known limitations:
+  - 仅实现服务层并发与状态逻辑，审计记录落库、管理员入口/权限 UI 及事件审计接入待运行时任务。
+- Next safe task:
+  - 与 SR-038、SR-040 对齐后推进 SR-041。

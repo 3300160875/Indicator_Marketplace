@@ -1,0 +1,43 @@
+# SR-039 commands log
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+php -l packages/sr-payment-gateways/src/Admin/ReviewQueue/ReviewQueueService.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-payment-gateways/src/Admin/ReviewQueue/ReviewQueueService.php`
+
+```bash
+php -l docs/evidence/SR-039/review-queue-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in docs/evidence/SR-039/review-queue-check.php`
+
+```bash
+php docs/evidence/SR-039/review-queue-check.php
+```
+
+Exit: 0.
+Output:
+`SR-039 review queue checks passed.`
+
+```bash
+composer --working-dir=packages/sr-payment-gateways test
+```
+
+Exit: 0.
+Output:
+`sr-payment-gateways skeleton tests: ok`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
