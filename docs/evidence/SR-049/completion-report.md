@@ -1,6 +1,6 @@
 # SR-049 Completion Report
 
-- Task / status: SR-049, REVIEW.
+- Task / status: SR-049, VERIFIED.
 - Branch: `feat/SR-049-revocation-service`.
 - Scope completed:
   - 新增 `RevocationService::handleRefundedOrder()`，按退款事件中的订单项撤销对应权益。
@@ -13,6 +13,8 @@
   - `docs/evidence/SR-049/revocation-service-check.php`
   - `docs/evidence/SR-049/commands.log`
   - `docs/evidence/SR-049/completion-report.md`
+  - `docs/evidence/SR-049/review-report.md`
+  - `docs/evidence/SR-049/qa-report.md`
   - `docs/status/task-status.yaml`
   - `docs/status/PROJECT_STATUS.md`
 - Contract changes:
@@ -46,7 +48,7 @@
 - Rollback:
   - Revert this task commit and remove `RevocationService.php` plus SR-049 evidence/status changes.
 - Next safe task(s):
-  - Independent review/QA for SR-049.
+  - Merge SR-049 PR #50.
   - SR-051 service-side content restriction block/shortcode.
 - Commit/PR:
   - Commit: `3a77774`
