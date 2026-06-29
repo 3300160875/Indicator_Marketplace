@@ -19,7 +19,19 @@ final readonly class PaymentApprovalService
         ?string $billFingerprint,
         ?string $billAmount,
     ): array {
+        if ($submission->lockVersion !== $expectedLockVersion) {
+            throw ManualQrException::lockVersionMismatch($expectedLockVersion, $submission->lockVersion);
+        }
+
+        if ($billFingerprint === null || $billFingerprint === '' || $billAmount === null || $proofHash === '') {
+            throw ManualQrException::realBillRequired();
+        }
+
         if ($submission->approvalIdempotencyKey === $idempotencyKey && $submission->state === 'approved') {
+            if ($submission->billFingerprint !== $billFingerprint || $submission->billAmount !== trim($billAmount)) {
+                throw ManualQrException::realBillRequired();
+            }
+
             return [
                 'submission' => $submission,
                 'complete_edd_order' => false,
@@ -28,16 +40,8 @@ final readonly class PaymentApprovalService
             ];
         }
 
-        if ($submission->lockVersion !== $expectedLockVersion) {
-            throw ManualQrException::lockVersionMismatch($expectedLockVersion, $submission->lockVersion);
-        }
-
         if ($submission->state !== 'under_review') {
             throw ManualQrException::invalidTransition($submission->state, 'approve');
-        }
-
-        if ($billFingerprint === null || $billFingerprint === '' || $billAmount === null || $proofHash === '') {
-            throw ManualQrException::realBillRequired();
         }
 
         if (trim($billAmount) !== $submission->amount) {
@@ -45,7 +49,7 @@ final readonly class PaymentApprovalService
         }
 
         return [
-            'submission' => $submission->withApproval($billFingerprint, $idempotencyKey),
+            'submission' => $submission->withApproval($billFingerprint, trim($billAmount), $idempotencyKey),
             'complete_edd_order' => false,
             'idempotency_key' => $idempotencyKey,
             'idempotent_replay' => false,

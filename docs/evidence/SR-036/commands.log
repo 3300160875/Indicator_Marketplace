@@ -103,3 +103,18 @@ git diff --check
 
 Exit: 0.
 Output: no output.
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+```
+
+Exit: 255 during independent QA fix.
+Output: expected RED failure because idempotent approval replay could return success before validating lock version and real bill parameters.
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+vendor/bin/pint --test packages/sr-payment-gateways/src/Gateway/ManualQr docs/evidence/SR-036
+```
+
+Exit: 0 after independent QA fix.
+Output: `SR-036 manual QR gateway checks passed.`; `{"tool":"pint","result":"passed"}`.

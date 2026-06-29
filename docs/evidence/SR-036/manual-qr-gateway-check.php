@@ -149,6 +149,22 @@ $replayed = $approval->approve(
 );
 sr036_same($approved['submission']->lockVersion, $replayed['submission']->lockVersion, 'idempotent replay does not bump lock version');
 sr036_same(true, $replayed['idempotent_replay'], 'idempotent replay is marked');
+sr036_expect_error('lock_version_mismatch', fn () => $approval->approve(
+    submission: $approved['submission'],
+    expectedLockVersion: 2,
+    idempotencyKey: 'approve-8801',
+    proofHash: 'sha256-proof',
+    billFingerprint: $fingerprintA,
+    billAmount: '106.20',
+));
+sr036_expect_error('real_bill_required', fn () => $approval->approve(
+    submission: $approved['submission'],
+    expectedLockVersion: 3,
+    idempotencyKey: 'approve-8801',
+    proofHash: '',
+    billFingerprint: null,
+    billAmount: null,
+));
 sr036_expect_error('amount_mismatch', fn () => $approval->approve(
     submission: $underReview,
     expectedLockVersion: 2,

@@ -15,6 +15,7 @@ final readonly class PaymentSubmission
         public string $state,
         public int $lockVersion,
         public ?string $billFingerprint,
+        public ?string $billAmount,
         public ?string $approvalIdempotencyKey,
     ) {}
 
@@ -34,6 +35,7 @@ final readonly class PaymentSubmission
             state: 'draft',
             lockVersion: 0,
             billFingerprint: null,
+            billAmount: null,
             approvalIdempotencyKey: null,
         );
     }
@@ -49,11 +51,12 @@ final readonly class PaymentSubmission
             state: $state,
             lockVersion: $this->lockVersion + 1,
             billFingerprint: $this->billFingerprint,
+            billAmount: $this->billAmount,
             approvalIdempotencyKey: $this->approvalIdempotencyKey,
         );
     }
 
-    public function withApproval(string $billFingerprint, string $idempotencyKey): self
+    public function withApproval(string $billFingerprint, string $billAmount, string $idempotencyKey): self
     {
         return new self(
             orderId: $this->orderId,
@@ -64,6 +67,7 @@ final readonly class PaymentSubmission
             state: 'approved',
             lockVersion: $this->lockVersion + 1,
             billFingerprint: $billFingerprint,
+            billAmount: $billAmount,
             approvalIdempotencyKey: $idempotencyKey,
         );
     }
