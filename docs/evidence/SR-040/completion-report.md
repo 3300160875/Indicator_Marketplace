@@ -1,0 +1,24 @@
+# SR-040 Completion Report
+
+- Task / status: SR-040, VERIFIED.
+- Branch: `feat/SR-040-payment-review-service`.
+- Scope completed:
+  - 实现支付审核应用服务 `PaymentReviewService` 的审批核心流程。
+  - 支持金额/时间校验、审批幂等键冲突、锁版本冲突、重复指纹防护、重放行为。
+  - 对接 `PaymentApprovalService` 完成状态迁移与审核凭证生成。
+  - 订单完成回调失败时抛出 `complete_order_failed`，成功时返回完成状态。
+- Files changed:
+  - `packages/sr-payment-gateways/src/Application/PaymentReviewService.php`
+  - `docs/evidence/SR-040/payment-review-service-check.php`
+  - `docs/evidence/SR-040/commands.log`
+  - `docs/evidence/SR-040/review-report.md`
+- Security / concurrency / correctness:
+  - 审批前校验 `permission`、`lock_version`、`idempotency key` 与审核指纹。
+  - 重放时确保审核人一致与 payload 可复核。
+  - 防止事务指纹重复与不一致。
+- Commands and results:
+  - 见 `docs/evidence/SR-040/commands.log`。
+- Known limitations:
+  - 回调与持久化网关、管理端接入仍在后续运行时任务完成。
+- Next safe task:
+  - 按计划推进 SR-041 的审批接线与权限网关。

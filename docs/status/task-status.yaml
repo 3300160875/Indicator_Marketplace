@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T03:16:40.522610+00:00'
+updated_at: '2026-06-29T04:22:11.118200+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -476,40 +476,57 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/37
     blockers: []
   SR-037:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-037-payment-submissions
+    claimed_at: '2026-06-29T03:40:30.960134+00:00'
+    updated_at: '2026-06-29T03:53:14.960928+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-037/payment-submissions-check.php
+    - docs/evidence/SR-037/commands.log
+    - docs/evidence/SR-037/completion-report.md
+    - docs/evidence/SR-037/review-report.md
+    - docs/evidence/SR-037/review-report.md
     blockers: []
   SR-038:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-038-payment-proof-api
+    claimed_at: '2026-06-29T03:53:17.183518+00:00'
+    updated_at: '2026-06-29T04:22:11.118200+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-038/payment-proof-check.php
+    - docs/evidence/SR-038/commands.log
+    - docs/evidence/SR-038/completion-report.md
+    - docs/evidence/SR-038/review-report.md
     blockers: []
   SR-039:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-039-review-queue-concurrency
+    claimed_at: '2026-06-29T04:03:53.440516+00:00'
+    updated_at: '2026-06-29T04:22:11.118200+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-039/review-queue-check.php
+    - docs/evidence/SR-039/commands.log
+    - docs/evidence/SR-039/completion-report.md
+    - docs/evidence/SR-039/review-report.md
     blockers: []
   SR-040:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-040-payment-review-service
+    claimed_at: '2026-06-29T04:20:00+00:00'
+    updated_at: '2026-06-29T04:22:11.118200+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-040/payment-review-service-check.php
+    - docs/evidence/SR-040/commands.log
+    - docs/evidence/SR-040/completion-report.md
+    - docs/evidence/SR-040/review-report.md
     blockers: []
   SR-041:
     status: BACKLOG
