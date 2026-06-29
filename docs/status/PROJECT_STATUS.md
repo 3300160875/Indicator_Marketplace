@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: SR-037 创建 sr_payment_submissions 表与仓储
+- Next safe task: SR-041 接口接线与运行时权限
 - Gate 0: complete
 
 ## 本周完成
@@ -47,6 +47,10 @@
 - SR-034 已通过独立 QA 并标记 VERIFIED：订单项业务快照支持层已完成，商品类型/规则版本/价格/资源或套餐元数据冻结，unit/discount/total 金额入快照，已有快照按订单项幂等复用，非本人订单、退款单、缺失用户映射和缺失必填业务元数据会安全失败。
 - SR-035 已通过独立 QA 并标记 VERIFIED：用户订单列表与详情适配支持层已完成，只返回当前用户订单，状态映射为用户可读文案，缓存 key 包含用户与规则版本，空态/过期/撤权/配额重置有可复核投影，内部审核备注不会暴露。
 - SR-036 已通过独立 QA 并标记 VERIFIED：个人码人工支付 Gateway 支持层已完成，受手动支付开关控制，创建 intent 后 EDD 订单保持 pending，页面文案明确人工核验且不会自动到账，状态机/唯一指纹/锁版本/幂等审批均有证据覆盖，审批 replay 已校验锁版本与真实账单参数。
+- SR-037 已完成并进入 VERIFIED：`sr_payment_submissions` 实体、状态机、仓储、迁移与证据脚本已就绪。
+- SR-038 已完成并进入 VERIFIED：付款凭证提交 API 支持层已完成（幂等键、状态机约束、文件校验、时间线与状态查询）。
+- SR-039 已完成并进入 VERIFIED：审核队列并发控制支持层已完成（同一 reviewer 重入、锁超时、锁版本与超时释放）。
+- SR-040 已完成并进入 VERIFIED：支付审核服务完成层已完成（重放保护、权限控制、指纹校验、订单完成回调）。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -55,6 +59,5 @@
 
 ## 下一步
 
-1. 合并 SR-036 并在 main 上完成回归验证。
-2. SR-037 创建 sr_payment_submissions 表与仓储。
-3. SR-038 实现付款凭证提交接口。
+1. 推进 SR-038/039/040 产线 PR 提交。
+2. SR-041 接口接线与审批后台入口。
