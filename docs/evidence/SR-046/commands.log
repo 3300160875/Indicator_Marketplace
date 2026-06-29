@@ -1,0 +1,73 @@
+# SR-046 commands log
+
+## 2026-06-29 red test
+
+```bash
+php docs/evidence/SR-046/access-decision-check.php
+```
+
+Exit: 255.
+Output:
+`Failed opening required '.../packages/sr-contracts/src/Entitlement/AccessDecision.php'`
+
+说明：这是 TDD RED 阶段，证明 SR-046 的 AccessDecision 契约尚未实现。
+
+## 2026-06-29 implementation verification
+
+```bash
+php docs/evidence/SR-046/access-decision-check.php
+```
+
+Exit: 0.
+Output:
+`SR-046 access decision checks passed.`
+
+```bash
+php -l packages/sr-contracts/src/Entitlement/AccessDecision.php
+php -l packages/sr-contracts/src/Entitlement/AccessDecisionContext.php
+php -l packages/sr-entitlements/src/Application/EntitlementService.php
+composer --working-dir=packages/sr-contracts test
+composer --working-dir=packages/sr-entitlements test
+make test
+python3 tools/agent/validate_docs.py
+git diff --check
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-contracts/src/Entitlement/AccessDecision.php`
+`No syntax errors detected in packages/sr-contracts/src/Entitlement/AccessDecisionContext.php`
+`No syntax errors detected in packages/sr-entitlements/src/Application/EntitlementService.php`
+`sr-contracts tests: ok`
+`sr-entitlements skeleton tests: ok`
+`lint: ok`
+`test: ok`
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+## Required command deviations
+
+```bash
+make test-unit MODULE=sr-entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-integration TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+make test-concurrency TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+原因：当前仓库 Makefile 尚未提供上述三个细分 target。本任务以 SR-046 evidence 脚本、包级 composer test、全量 `make test`、`git diff --check` 与 `validate_docs.py` 替代。

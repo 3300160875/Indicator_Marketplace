@@ -1,0 +1,38 @@
+# SR-046 Completion Report
+
+- Task / status: SR-046, REVIEW.
+- Branch: `feat/SR-046-access-decision`.
+- Scope completed:
+  - 新增共享契约 `AccessDecision`，统一返回 `allowed`、`reason_code`、`source`、`entitlement_id`、`quota`、`expires_at` 与 `rules_version`。
+  - 新增 `AccessDecisionContext`，作为所有访问判断入口的稳定输入。
+  - 实现 `EntitlementService::decide()`，固定判断顺序：资源状态 -> 免费 -> 登录 -> 单购 -> 人工 -> VIP -> 范围/排除 -> 配额。
+  - 覆盖多权益稳定排序、到期边界、范围排除、taxonomy 范围、配额耗尽与匿名访问。
+- Files changed:
+  - `packages/sr-contracts/src/Entitlement/AccessDecision.php`
+  - `packages/sr-contracts/src/Entitlement/AccessDecisionContext.php`
+  - `packages/sr-entitlements/src/Application/EntitlementService.php`
+  - `docs/evidence/SR-046/access-decision-check.php`
+  - `docs/evidence/SR-046/commands.log`
+  - `docs/evidence/SR-046/review-report.md`
+  - `docs/status/task-status.yaml`
+- Contract changes:
+  - `AccessDecision` 是后续下载令牌、内容限制、会员中心和配额服务共用的访问判断结果契约。
+  - `AccessDecisionContext` 固定资源 ID、用户 ID、访问模式、资源状态、taxonomy term 与判断时间。
+- Migrations: none.
+- Commands and results:
+  - 见 `docs/evidence/SR-046/commands.log`。
+- Security/permission/concurrency checks:
+  - 未登录付费资源返回 `login_required`，不泄露权益详情。
+  - 撤权、过期和非 active 权益由 SR-045 `Entitlement::isActive()` 过滤。
+  - 多权益排序稳定：优先级高者优先；同优先级选择更晚过期；再按 ID 稳定排序。
+  - 配额耗尽返回 `quota_exhausted`，不会误判为可访问。
+- Known limitations:
+  - 本任务仅实现纯服务判断，不接 WordPress route、EDD hook、真实配额计数器或缓存层。
+  - 真实配额原子预占/结算/释放留给 SR-050。
+- Rollback:
+  - 回滚本任务提交，删除新增契约/服务和 SR-046 evidence 即可。
+- Next safe task(s):
+  - SR-047：订单完成授权监听器。
+  - SR-050：QuotaService 原子预占/结算/释放。
+- Commit/PR:
+  - 待提交。
