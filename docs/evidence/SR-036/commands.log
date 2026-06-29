@@ -1,0 +1,120 @@
+# SR-036 command log
+
+Branch: `feat/SR-036-manual-qr-gateway`
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected RED failure because `packages/sr-payment-gateways/src/Gateway/ManualQr/ManualQrException.php` did not exist yet.
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+```
+
+Exit: 255 during test script correction.
+Output: evidence script had a path/object variable collision; script was corrected before GREEN verification.
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+```
+
+Exit: 0 after implementation.
+Output: `SR-036 manual QR gateway checks passed.`
+
+```bash
+vendor/bin/pint --test packages/sr-payment-gateways/src/Gateway/ManualQr docs/evidence/SR-036
+```
+
+Exit: 1 before formatting.
+Output: Pint reported formatting fixes for the SR-036 evidence script.
+
+```bash
+composer --working-dir=packages/sr-payment-gateways test
+```
+
+Exit: 0.
+Output: `sr-payment-gateways skeleton tests: ok`
+
+```bash
+make test-unit MODULE=sr-payment-gateways
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason: repository-level target is not defined yet; replacement commands are `composer --working-dir=packages/sr-payment-gateways test` and `php docs/evidence/SR-036/manual-qr-gateway-check.php`.
+
+```bash
+vendor/bin/pint packages/sr-payment-gateways/src/Gateway/ManualQr docs/evidence/SR-036
+vendor/bin/pint --test packages/sr-payment-gateways/src/Gateway/ManualQr docs/evidence/SR-036
+```
+
+Exit: 0.
+Output: Pint fixed formatting, then `{"tool":"pint","result":"passed"}`.
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+```
+
+Exit: 0.
+Output: `SR-036 manual QR gateway checks passed.`
+
+```bash
+make test-integration TEST=Payment
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason: repository-level target is not defined yet; replacement command is `php docs/evidence/SR-036/manual-qr-gateway-check.php`.
+
+```bash
+make test-concurrency TEST=PaymentApproval
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-concurrency'. Stop.`
+Reason: repository-level target is not defined yet; replacement command is `php docs/evidence/SR-036/manual-qr-gateway-check.php`.
+
+```bash
+make test
+```
+
+Exit: 0.
+Output: `lint: ok`; `test: ok`.
+
+```bash
+composer --working-dir=packages/sr-payment-gateways validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: no output.
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+```
+
+Exit: 255 during independent QA fix.
+Output: expected RED failure because idempotent approval replay could return success before validating lock version and real bill parameters.
+
+```bash
+php docs/evidence/SR-036/manual-qr-gateway-check.php
+vendor/bin/pint --test packages/sr-payment-gateways/src/Gateway/ManualQr docs/evidence/SR-036
+```
+
+Exit: 0 after independent QA fix.
+Output: `SR-036 manual QR gateway checks passed.`; `{"tool":"pint","result":"passed"}`.
