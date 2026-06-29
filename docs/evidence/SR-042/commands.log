@@ -161,3 +161,13 @@ Exit: 0.
 Output:
 `Frontend gate	pass	13s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28349718605/job/83980018783`
 `PHP gate	pass	29s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28349718605/job/83980018782`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+gh pr checks 39 --watch
+```
+
+Exit: 0.
+Output:
+`Frontend gate	pass	8s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28349755956/job/83980125061`
+`PHP gate	pass	32s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28349755956/job/83980125111`
