@@ -448,17 +448,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/35
     blockers: []
   SR-035:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-035-account-order-projection
     claimed_at: '2026-06-29T02:23:20.749374+00:00'
-    updated_at: '2026-06-29T02:27:58Z'
+    updated_at: '2026-06-29T03:12:14Z'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/36
     evidence:
     - docs/evidence/SR-035/commands.log
     - docs/evidence/SR-035/account-orders-check.php
     - docs/evidence/SR-035/completion-report.md
     - docs/evidence/SR-035/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/36
     blockers: []
   SR-036:
     status: BACKLOG
