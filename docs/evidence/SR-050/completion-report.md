@@ -1,6 +1,6 @@
 # SR-050 Completion Report
 
-- Task / status: SR-050, REVIEW.
+- Task / status: SR-050, VERIFIED.
 - Branch: `feat/SR-050-quota-service`.
 - Scope completed:
   - 新增 `QuotaService`，提供 `reserve()`、`commit()`、`release()` 三段式配额操作。
@@ -15,6 +15,7 @@
   - `docs/evidence/SR-050/commands.log`
   - `docs/evidence/SR-050/completion-report.md`
   - `docs/evidence/SR-050/review-report.md`
+  - `docs/evidence/SR-050/qa-report.md`
   - `docs/status/task-status.yaml`
   - `docs/status/PROJECT_STATUS.md`
 - Contract changes:
