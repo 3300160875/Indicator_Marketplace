@@ -1,0 +1,134 @@
+# SR-048 commands log
+
+## 2026-06-29 red test
+
+```bash
+php docs/evidence/SR-048/membership-renewal-check.php
+```
+
+Exit: 255.
+Output:
+`Failed opening required '.../packages/sr-entitlements/src/Application/MembershipService.php'`
+
+说明：这是 TDD RED 阶段，证明 SR-048 的 MembershipService 尚未实现。
+
+## 2026-06-29 implementation verification
+
+```bash
+php docs/evidence/SR-048/membership-renewal-check.php
+```
+
+Exit: 0.
+Output:
+`SR-048 membership renewal checks passed.`
+
+覆盖：
+- 同套餐仍有效时从 latest_expires_at 起算；
+- 已过期同套餐从购买时间起算；
+- 每次续费创建新权益分段，不修改历史分段；
+- 多套餐并存按 coverage、quota、priority、expires_at、id 稳定择优并返回解释；
+- resource 覆盖优先于 taxonomy/all；
+- 相同 coverage 时更高 remaining quota 优先；
+- 相同 coverage/quota 时更高 priority 优先。
+
+## 2026-06-29 independent review follow-up
+
+```bash
+php docs/evidence/SR-048/membership-renewal-check.php
+```
+
+Exit: 255.
+Output:
+`MembershipService::createRenewalSegment(): Argument #1 ($request) must be of type ... MembershipRenewalRequest, array given`
+
+说明：这是复核后补充的 RED 阶段，证明旧 DTO 契约和旧实现无法覆盖调用方安全加载契约。
+
+```bash
+php docs/evidence/SR-048/membership-renewal-check.php
+```
+
+Exit: 0.
+Output:
+`SR-048 membership renewal checks passed.`
+
+追加覆盖：
+- 已撤权但未来到期的同套餐不参与续期顺延；
+- 续期公共契约使用数组 request，避免新增 DTO 文件越界或同文件 DTO autoload 风险；
+- quota 缺失、`available=false` 或 `remaining=0` 不参与择优；
+- 相同 coverage/quota/priority 时按更晚 expires_at，再按 id 稳定择优。
+
+```bash
+php -l packages/sr-entitlements/src/Application/MembershipService.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-entitlements/src/Application/MembershipService.php`
+
+```bash
+php -l docs/evidence/SR-048/membership-renewal-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in docs/evidence/SR-048/membership-renewal-check.php`
+
+```bash
+composer --working-dir=packages/sr-entitlements test
+```
+
+Exit: 0.
+Output:
+`sr-entitlements skeleton tests: ok`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: empty.
+
+## Required command deviations
+
+```bash
+make test-unit MODULE=sr-entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-integration TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+make test-concurrency TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+原因：当前仓库 Makefile 尚未提供上述三个细分 target。本任务以 SR-048 evidence 脚本、包级 composer test、全量 `make test`、`git diff --check` 与 `validate_docs.py` 替代。
