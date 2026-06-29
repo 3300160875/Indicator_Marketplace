@@ -11,4 +11,4 @@
 - Known limitations: persistence/repository wiring for snapshots is deferred; this task provides deterministic snapshot creation and idempotency contract.
 - Rollback: revert SR-034 commit/PR; no live order or user data is mutated.
 - Next safe task(s): SR-035 用户订单列表与下载入口；SR-036 生成订单状态机与边界文案。
-- Commit/PR: pending.
+- Commit/PR: https://github.com/3300160875/Indicator_Marketplace/pull/35.
