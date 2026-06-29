@@ -11,4 +11,4 @@
 - Known limitations: durable submission table, reviewer permissions, EDD order completion transaction and audit persistence are deferred to downstream payment tasks.
 - Rollback: revert SR-036 commit/PR; keep `SR_MANUAL_PAYMENT_ENABLED` false in runtime config.
 - Next safe task(s): SR-037 创建 sr_payment_submissions 表与仓储；SR-038 实现付款凭证提交接口。
-- Commit/PR: pending.
+- Commit/PR: https://github.com/3300160875/Indicator_Marketplace/pull/37.
