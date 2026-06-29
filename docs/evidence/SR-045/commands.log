@@ -1,0 +1,149 @@
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+php -l packages/sr-entitlements/src/Infrastructure/Repository/EntitlementRepository.php
+php -l packages/sr-entitlements/src/Infrastructure/Repository/InMemoryEntitlementRepository.php
+php -l packages/sr-entitlements/src/Infrastructure/Repository/Entitlement.php
+php -l packages/sr-entitlements/src/Infrastructure/Repository/EntitlementException.php
+php -l docs/evidence/SR-045/entitlement-repository-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/EntitlementRepository.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/InMemoryEntitlementRepository.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/Entitlement.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/EntitlementException.php`
+`No syntax errors detected in docs/evidence/SR-045/entitlement-repository-check.php`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+php docs/evidence/SR-045/entitlement-repository-check.php
+```
+
+Exit: 0.
+Output:
+`SR-045 entitlement repository checks passed.`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+composer validate --strict
+```
+
+Exit: 0.
+Output:
+`./composer.json is valid`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make lint
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+composer --working-dir=packages/sr-entitlements test
+```
+
+Exit: 0.
+Output:
+`> php tests/run.php`
+`sr-entitlements skeleton tests: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-unit MODULE=sr-entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-integration TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-concurrency TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git diff --check
+```
+
+Exit: 0.
+Output:
+`No whitespace errors`.
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git diff --stat HEAD
+```
+
+Exit: 0.
+Output:
+`docs/status/agent-locks.yaml | 10 +++++++-`
+`docs/status/task-status.yaml | 59 +++++++++++++++++++++++---------------------`
+`2 files changed, 40 insertions(+), 29 deletions(-)`
+
+说明：`git diff --stat` 当前仅统计已跟踪文件；SR-045 的新建仓储与证据文件仍为未跟踪状态，提交后将被纳入。
+
+## 2026-06-29 branch split verification
+
+SR-045 已从 SR-043 工作区拆出，并在 `feat/SR-045-rules-snapshot-repository` 上基于最新 `origin/main` 独立验证。
+
+```bash
+php -l docs/evidence/SR-045/entitlement-repository-check.php
+find packages/sr-entitlements/src/Infrastructure/Repository -name '*.php' -print -exec php -l {} \;
+php docs/evidence/SR-045/entitlement-repository-check.php
+composer --working-dir=packages/sr-entitlements test
+make test
+git diff --check
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in docs/evidence/SR-045/entitlement-repository-check.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/EntitlementException.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/Entitlement.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/EntitlementRepository.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/EntitlementStatus.php`
+`No syntax errors detected in packages/sr-entitlements/src/Infrastructure/Repository/InMemoryEntitlementRepository.php`
+`SR-045 entitlement repository checks passed.`
+`sr-entitlements skeleton tests: ok`
+`lint: ok`
+`test: ok`
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
