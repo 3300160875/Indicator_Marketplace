@@ -11,4 +11,4 @@
 - Known limitations: repository-level `make test-unit` and `make test-integration` targets do not exist yet; SR-032 records direct replacement commands.
 - Rollback: revert SR-032 commit/PR; no live order or product data is mutated.
 - Next safe task(s): SR-033 定制 EDD 结算与数字内容条款；SR-034 实现订单项业务快照。
-- Commit/PR: pending.
+- Commit/PR: https://github.com/3300160875/Indicator_Marketplace/pull/33.

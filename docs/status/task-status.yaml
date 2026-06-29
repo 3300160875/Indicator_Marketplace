@@ -410,8 +410,8 @@ tasks:
     owner: codex
     branch: feat/SR-032-access-price-validation
     claimed_at: '2026-06-29T01:38:11.878606+00:00'
-    updated_at: '2026-06-29T01:41:11.883799+00:00'
-    pr: null
+    updated_at: '2026-06-29T01:43:34+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/33
     evidence:
     - docs/evidence/SR-032/commands.log
     - docs/evidence/SR-032/commerce-access-check.php
