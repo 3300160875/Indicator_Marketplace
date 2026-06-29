@@ -1,0 +1,49 @@
+# SR-044 Completion Report
+
+- Task / status: SR-044, REVIEW.
+- Branch: `feat/SR-043-entitlement-core-tables`（同一分支内完成 SR-043/SR-044 代码实现）。
+- Scope completed:
+  - 在 `packages/sr-entitlements/src/Plan/` 下实现套餐元数据值对象：
+    - `MembershipPlanMetaException`
+    - `PlanDuration`
+    - `PlanScope`
+    - `PlanQuota`
+    - `MembershipPlanRules`
+  - 实现字段校验：
+    - duration value 必须为正整数
+    - duration unit 限定 `day/month/year`（显式拒绝 `lifetime`）
+    - scope type 必须为 `all/taxonomies/resources`
+    - scope rules 及排除 IDs 完成标准化
+    - quota period/limit/policy 做严格校验
+    - 规则版本 `rules_version` 必填
+    - `plan_active` 控制销售能力，`assertSellable()` 在无效时抛出 `plan_not_for_sale`
+  - `toOrderTermsSnapshot()` 输出结构化快照（duration/scope/quota/rules_version）。
+  - `docs/evidence/SR-044/membership-rules-check.php` 覆盖正常与异常场景。
+- Files changed:
+  - `packages/sr-entitlements/src/Plan/MembershipPlanMetaException.php`
+  - `packages/sr-entitlements/src/Plan/PlanDuration.php`
+  - `packages/sr-entitlements/src/Plan/PlanScope.php`
+  - `packages/sr-entitlements/src/Plan/PlanQuota.php`
+  - `packages/sr-entitlements/src/Plan/MembershipPlanRules.php`
+  - `docs/evidence/SR-044/membership-rules-check.php`
+- Contract changes:
+  - 形成稳定的套餐元数据解析契约（含 `rules_version`、范围、排除项、配额策略）供后续 SR-045/SR-047 使用。
+  - 明确错误码命名：`invalid_*` 与 `plan_not_for_sale`，便于后续 UI 与 API 返回。
+- Migrations:
+  - 无新增迁移。
+- Commands and results:
+  - 见 `docs/evidence/SR-044/commands.log`。
+- Security/permission/concurrency checks:
+  - 字段解析严格类型化，避免字符串数字混淆或非法枚举。
+  - 默认不允许无限期（`lifetime`）与无效配额，防止套餐默认放开下载。
+  - 排除项仅保留正整数 ID 并去重排序，避免异常数据进入快照。
+- Known limitations:
+  - 当前仅验证元数据结构化层，未接入 EDD 商品元数据读取/后台 UI 表单。
+  - 错误码与字段命名由当前任务约定承接，后续可配合 REST/admin 页面统一映射。
+- Rollback:
+  - 回滚该任务可移除新增计划元数据实现及 evidence，恢复到任务前状态。
+- Next safe task(s):
+  - SR-045：实现权益快照与 Repository。
+  - SR-047：订单完成授权监听器（需基于会员套餐快照）。
+- Commit/PR:
+  - 待提交后补充。

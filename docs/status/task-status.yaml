@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T04:58:38.820025+00:00'
+updated_at: '2026-06-29T05:13:44.198065+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -554,13 +554,17 @@ tasks:
     - docs/evidence/SR-042/outbox-framework-check.php
     blockers: []
   SR-043:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
-    pr: null
-    evidence: []
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-043-entitlement-core-tables
+    claimed_at: '2026-06-29T05:10:01.376352+00:00'
+    updated_at: '2026-06-29T05:13:44.198055+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/40
+    evidence:
+    - docs/evidence/SR-043/commands.log
+    - docs/evidence/SR-043/completion-report.md
+    - docs/evidence/SR-043/review-report.md
+    - docs/evidence/SR-043/schema-migrations-check.php
     blockers: []
   SR-044:
     status: BACKLOG
