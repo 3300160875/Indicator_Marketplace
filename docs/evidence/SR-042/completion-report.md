@@ -43,5 +43,8 @@
 - Next safe task(s):
   - SR-043/SR-044 的数据库与后台接线（需在 outbox 框架具备稳定基础后）。
 - Commit/PR:
-  - Commit: `17acfda`（`feat: implement SR-042 outbox framework`）
+  - Commits:
+    - `17acfda`（`feat: implement SR-042 outbox framework`）
+    - `f0f92f0`（`docs(SR-042): link branch and PR metadata`）
+    - `c819f04`（`docs(SR-042): log push and PR creation commands`）
   - PR: https://github.com/3300160875/Indicator_Marketplace/pull/39
