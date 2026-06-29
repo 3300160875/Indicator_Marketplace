@@ -151,8 +151,9 @@ $replay = $service->approve(
 );
 
 sr040_same(true, $replay['idempotent_replay'], 'approved submission returns idempotent replay');
-sr040_same(true, $replay['complete_order'], 'replay also tries order completion');
+sr040_same(false, $replay['complete_order'], 'replay does not complete order again');
 sr040_same($approved['submission']->transactionFingerprint, $replay['submission']->transactionFingerprint, 'replay keeps transaction fingerprint');
+sr040_same(1, count($completeRecords), 'approved replay does not call completion callback again');
 
 // 3) 重放 idempotency key 变化应拒绝。
 sr040_expect_error('idempotency_conflict', function () use ($service, $submission): void {
@@ -351,6 +352,50 @@ sr040_expect_error('complete_order_failed', function () use ($failService, $targ
     );
 });
 
-sr040_assert(count($completeRecords) >= 2, 'completion callback is invoked on first approval and replay.');
+$failed = $repoFail->findById($target->id);
+sr040_assert($failed !== null, 'failed completion submission remains queryable');
+sr040_same('under_review', $failed->state->value, 'failed completion restores submission to retryable under_review state');
+sr040_same('ORDER_COMPLETION_FAILED', $failed->decisionCode, 'failed completion records explainable decision code');
+sr040_same(null, $failed->approvalIdempotencyKeyHash, 'failed completion clears approval idempotency hash for retry');
+sr040_same(null, $failed->transactionFingerprint, 'failed completion releases transaction fingerprint for retry');
+sr040_same(3, $failed->lockVersion, 'failed completion recovery bumps lock version');
+sr040_same(1, count($completeRecords), 'completion callback is invoked only on first approval before failure scenario.');
+
+$retryCompleteRecords = [];
+$retryService = new PaymentReviewService(
+    repository: $repoFail,
+    approvalService: new PaymentApprovalService(new ManualPaymentSubmissionStateMachine),
+    completeOrder: function (int $submissionId, int $orderId, string $expectedAmount, string $verifiedAmount, string $verifiedPaidAt) use (&$retryCompleteRecords): bool {
+        $retryCompleteRecords[] = [
+            'submission_id' => $submissionId,
+            'order_id' => $orderId,
+            'expected_amount' => $expectedAmount,
+            'verified_amount' => $verifiedAmount,
+            'verified_paid_at' => $verifiedPaidAt,
+        ];
+
+        return true;
+    },
+    canApprove: static fn (int $reviewerId, PaymentSubmission $candidate): bool => true,
+    nowProvider: static fn (): string => '2026-06-29T10:12:00+08:00',
+);
+
+$retried = $retryService->approve(
+    submissionId: $failed->id,
+    reviewerId: 401,
+    expectedLockVersion: $failed->lockVersion,
+    idempotencyKey: 'complete-failed',
+    externalReference: 'TXN-008',
+    verifiedAmount: '80.00',
+    verifiedPaidAt: '2026-06-29T10:30:00+08:00',
+);
+
+sr040_same(false, $retried['idempotent_replay'], 'retry after completion failure is a fresh approval');
+sr040_same(true, $retried['complete_order'], 'retry after completion failure completes order');
+sr040_same('approved', $retried['submission']->state->value, 'retry after completion failure stores approved state');
+sr040_same(4, $retried['submission']->lockVersion, 'retry after completion failure increments recovered lock version');
+sr040_same(hash('sha256', 'complete-failed'), $retried['submission']->approvalIdempotencyKeyHash, 'retry after completion failure stores approval idempotency hash');
+sr040_same(1, count($retryCompleteRecords), 'retry after completion failure invokes completion callback once');
+sr040_same(608, $retryCompleteRecords[0]['order_id'], 'retry completion callback receives order id');
 
 echo "SR-040 payment review service checks passed.\n";

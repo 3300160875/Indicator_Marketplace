@@ -41,3 +41,81 @@ Exit: 0.
 Output:
 `lint: ok`
 `test: ok`
+
+## 2026-06-29 corrective verification
+
+```bash
+cd /home/devops-ubuntu/.config/superpowers/worktrees/project/fix-sr037-041-review
+php -l packages/sr-payment-gateways/src/Application/PaymentReviewService.php
+php -l docs/evidence/SR-040/payment-review-service-check.php
+php docs/evidence/SR-040/payment-review-service-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-payment-gateways/src/Application/PaymentReviewService.php`
+`No syntax errors detected in docs/evidence/SR-040/payment-review-service-check.php`
+`SR-040 payment review service checks passed.`
+
+```bash
+make test-unit MODULE=sr-payment-gateways
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-integration TEST=Payment
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+make test-concurrency TEST=PaymentApproval
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+原因：当前仓库 Makefile 未提供上述三个细分 target；本次以 evidence 脚本、包级 composer test、全量 `make test`、`git diff --check` 与 `validate_docs.py` 替代。
+
+```bash
+composer --working-dir=packages/sr-payment-gateways test
+```
+
+Exit: 0.
+Output:
+`> php tests/run.php`
+`sr-payment-gateways skeleton tests: ok`
+
+```bash
+make test
+git diff --check
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+## 2026-06-29 retry-after-completion-failure verification
+
+补充断言：订单完成回调失败后，submission 恢复为 `under_review`、清空审批幂等与交易指纹，并可使用恢复后的锁版本再次审批成功；重试成功时订单完成回调只执行一次。
+
+```bash
+php -l packages/sr-payment-gateways/src/Application/PaymentReviewService.php
+php -l docs/evidence/SR-040/payment-review-service-check.php
+php docs/evidence/SR-040/payment-review-service-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-payment-gateways/src/Application/PaymentReviewService.php`
+`No syntax errors detected in docs/evidence/SR-040/payment-review-service-check.php`
+`SR-040 payment review service checks passed.`
