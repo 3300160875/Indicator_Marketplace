@@ -1,0 +1,24 @@
+# SR-038 Completion Report
+
+- Task / status: SR-038, VERIFIED.
+- Branch: `feat/SR-038-payment-proof-api`.
+- Scope completed:
+  - 实现 `PaymentProofController` 的付款凭证提交与查询支撑行为。
+  - 增加 idempotency 映射、订单归属与状态校验。
+  - 完成渠道、金额、时间、proof 载荷（base64/data URL）与文件大小校验。
+  - 规范化重复提交和并发冲突报错码。
+- Files changed:
+  - `packages/sr-payment-gateways/src/Rest/PaymentProofController.php`
+  - `docs/evidence/SR-038/payment-proof-check.php`
+  - `docs/evidence/SR-038/commands.log`
+  - `docs/evidence/SR-038/review-report.md`
+- Security / concurrency / correctness:
+  - `submitPaymentProof` 在订单归属与状态校验外层阻断跨用户提交。
+  - `idempotency` 触发重复返回，payload 变更触发冲突。
+  - `proof` 处理对大小和格式进行显式限制，防止超大负载。
+- Commands and results:
+  - 见 `docs/evidence/SR-038/commands.log`。
+- Known limitations:
+  - 运行时 REST 路由注册与管理员权限层接线仍待在后续任务完成。
+- Next safe task:
+  - 与 SR-039/040 对齐后推进 SR-041。
