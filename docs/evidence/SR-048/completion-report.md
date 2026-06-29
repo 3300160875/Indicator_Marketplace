@@ -1,6 +1,6 @@
 # SR-048 Completion Report
 
-- Task / status: SR-048, REVIEW.
+- Task / status: SR-048, VERIFIED.
 - Branch: `feat/SR-048-membership-renewal`.
 - Scope completed:
   - 新增 `MembershipService::createRenewalSegment()`，同套餐在购买时仍 active 才从 latest_expires_at 起算续期；已过期或已撤权时从购买时间起算。
@@ -12,6 +12,8 @@
   - `docs/evidence/SR-048/membership-renewal-check.php`
   - `docs/evidence/SR-048/commands.log`
   - `docs/evidence/SR-048/completion-report.md`
+  - `docs/evidence/SR-048/review-report.md`
+  - `docs/evidence/SR-048/qa-report.md`
   - `docs/status/task-status.yaml`
   - `docs/status/PROJECT_STATUS.md`
 - Contract changes:
@@ -43,7 +45,7 @@
 - Rollback:
   - Revert this task commit and remove `MembershipService.php` plus SR-048 evidence/status changes.
 - Next safe task(s):
-  - Independent review/QA for SR-048.
+  - Merge SR-048 PR #48.
   - SR-049 refund revocation and manual grant/revoke.
 - Commit/PR:
   - Commit: `e428465`
