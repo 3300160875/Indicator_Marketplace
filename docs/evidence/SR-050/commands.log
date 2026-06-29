@@ -1,0 +1,110 @@
+# SR-050 commands log
+
+## 2026-06-29 red test
+
+```bash
+php docs/evidence/SR-050/quota-service-check.php
+```
+
+Exit: 255.
+Output:
+`Failed opening required '.../packages/sr-entitlements/src/Application/QuotaService.php'`
+
+说明：这是 TDD RED 阶段，证明 SR-050 的 QuotaService 尚未实现。
+
+## 2026-06-29 implementation verification
+
+```bash
+php docs/evidence/SR-050/quota-service-check.php
+```
+
+Exit: 0.
+Output:
+`SR-050 quota service checks passed.`
+
+覆盖：
+- reserve 原子检查 `used_count + reserved_count < limit_snapshot`；
+- 同一 `request_id` 重复 reserve 幂等，不重复预占；
+- commit/release 按 `reservation_id + request_id` 幂等，不重复计数且不出现负数；
+- 剩余 1 次时 100 次连续预占最多 1 个成功；
+- 可复现交错竞争：同一 request_id 进入锁后重查，不会双预占；
+- 可复现交错竞争：同一 reservation commit 进入锁后重读状态，不会 double count；
+- `(entitlement_id, period_type, period_key)` 独立 counter；
+- deadlock retry 后成功；
+- lock timeout 失败关闭。
+
+```bash
+php -l packages/sr-entitlements/src/Application/QuotaService.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-entitlements/src/Application/QuotaService.php`
+
+```bash
+php -l docs/evidence/SR-050/quota-service-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in docs/evidence/SR-050/quota-service-check.php`
+
+```bash
+composer --working-dir=packages/sr-entitlements test
+```
+
+Exit: 0.
+Output:
+`sr-entitlements skeleton tests: ok`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: empty.
+
+## Required command deviations
+
+```bash
+make test-unit MODULE=sr-entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-concurrency TEST=Quota
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+```bash
+wp sr quota:reconcile --dry-run
+```
+
+Exit: 127.
+Output:
+`zsh:1: command not found: wp`
+
+原因：当前仓库 Makefile 尚未提供细分 test target，当前容器也没有可用 `wp` CLI。本任务以 SR-050 evidence 脚本、包级 composer test、全量 `make test`、`git diff --check` 与 `validate_docs.py` 替代，并记录缺失命令。

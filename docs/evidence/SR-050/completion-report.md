@@ -1,0 +1,58 @@
+# SR-050 Completion Report
+
+- Task / status: SR-050, VERIFIED.
+- Branch: `feat/SR-050-quota-service`.
+- Scope completed:
+  - 新增 `QuotaService`，提供 `reserve()`、`commit()`、`release()` 三段式配额操作。
+  - 新增 `QuotaCounterStore` 契约，要求实现按 `(entitlement_id, period_type, period_key)` 进行 row-level lock / `SELECT FOR UPDATE` 等价锁定。
+  - 新增 `QuotaOperationResult`、`QuotaCounterRecord`、`QuotaReservationRecord` 与 `InMemoryQuotaCounterStore`，用于当前 allowed path 内的可复核逻辑和后续持久化实现接线。
+  - reserve 原子检查 `used_count + reserved_count < limit_snapshot`，不提前增加 used。
+  - commit/release 按 `reservation_id + request_id` 幂等，不重复计数、不出现负数。
+  - 覆盖剩余 1 个额度时 100 次连续预占最多一个成功、同 request/reservation 交错竞争、deadlock retry、lock timeout fail-closed。
+- Files changed:
+  - `packages/sr-entitlements/src/Application/QuotaService.php`
+  - `docs/evidence/SR-050/quota-service-check.php`
+  - `docs/evidence/SR-050/commands.log`
+  - `docs/evidence/SR-050/completion-report.md`
+  - `docs/evidence/SR-050/review-report.md`
+  - `docs/evidence/SR-050/qa-report.md`
+  - `docs/status/task-status.yaml`
+  - `docs/status/PROJECT_STATUS.md`
+- Contract changes:
+  - `QuotaService::reserve(int $entitlementId, int $userId, string $periodType, string $periodKey, int $limit, string $requestId, string $nowUtc): QuotaOperationResult`
+  - `QuotaService::commit(string $reservationId, string $requestId, string $nowUtc): QuotaOperationResult`
+  - `QuotaService::release(string $reservationId, string $requestId, string $nowUtc): QuotaOperationResult`
+  - `QuotaCounterStore::withCounterForUpdate()` 明确持久化实现必须在回调期间锁住唯一 counter。
+- Migrations:
+  - 无新增迁移；复用 SR-043 的 `sr_entitlement_counters` 唯一键 `(entitlement_id, period_type, period_key)`。
+- Database/migration impact:
+  - 本任务不修改 DDL；真实数据库 store 后续应以 `sr_entitlement_counters` 为事实源并使用 `SELECT ... FOR UPDATE`。
+- Events/Hooks:
+  - 无新增 hook。
+- Configuration/Feature Flags:
+  - 无新增配置。
+- Cache/invalidation:
+  - 无缓存层；计数以 store/counter 为事实源。
+- Backward compatibility:
+  - 纯新增服务，不改变现有 EntitlementService 或 AccessDecision 契约。
+- Observability/audit:
+  - 返回稳定状态码：`reserved`、`committed`、`released`、`quota_exhausted`、`deadlock_detected`、`lock_timeout` 等，便于后续审计/日志接线。
+- Commands and results:
+  - 见 `docs/evidence/SR-050/commands.log`。
+- Security/permission/concurrency checks:
+  - 输入 ID、limit、period、request_id、datetime 均做基础校验。
+  - reserve/commit/release 都通过 store 锁定 counter，当前内存实现可模拟 deadlock/timeout。
+  - 同一 request_id 幂等，避免重试导致重复预占。
+  - 计数不为负，剩余 1 次时 100 次连续预占最多 1 个成功。
+  - 交错竞争测试覆盖锁外 stale read 风险：同 request reserve 不会双预占，同 reservation commit 不会 double count。
+- Known limitations:
+  - 由于 SR-050 allowed code path 只允许 `QuotaService.php`，真实 PDO/WPDB store、WP-CLI reconcile 命令和数据库事务接线未在本任务越界实现。
+  - `wp sr quota:reconcile --dry-run` 当前环境无 `wp` CLI，已记录命令偏差。
+- Rollback:
+  - 回滚本任务提交，删除 `QuotaService.php` 与 SR-050 evidence/status 变更即可。
+- Next safe task(s):
+  - 独立复核/QA 将 SR-050 从 REVIEW 推进到 VERIFIED。
+  - SR-051/SR-052/SR-053 下载链路任务可在 SR-050 VERIFIED 后继续评估顺序。
+- Commit/PR:
+  - Commit: `b9e3290`
+  - PR #47: https://github.com/3300160875/Indicator_Marketplace/pull/47
