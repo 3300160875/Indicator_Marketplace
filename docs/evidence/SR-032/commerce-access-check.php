@@ -182,6 +182,22 @@ sr032_expect_error('product_type_mismatch', fn () => $validator->validate(new Re
     ],
 )));
 
+sr032_expect_error('product_type_mismatch', fn () => $validator->validate(new ResourcePurchaseRequest(
+    downloadId: 9001,
+    productType: ProductType::MembershipPlan,
+    accessMode: AccessMode::Purchase,
+    priceId: 0,
+    quantity: 1,
+    clientUnitAmount: '399.00',
+    discountCode: null,
+    resourceMeta: [
+        '_sr_product_type' => 'membership_plan',
+        '_sr_access_mode' => 'purchase',
+        '_sr_current_version_id' => 0,
+        '_sr_rights_status' => 'approved',
+    ],
+)));
+
 sr032_expect_error('access_mode_mismatch', fn () => $validator->validate(new ResourcePurchaseRequest(
     downloadId: 1001,
     productType: ProductType::Resource,
@@ -201,6 +217,22 @@ sr032_expect_error('discount_not_applicable', fn () => $validator->validate(new 
     quantity: 1,
     clientUnitAmount: '39.00',
     discountCode: 'VIPONLY',
+    resourceMeta: [
+        '_sr_product_type' => 'resource',
+        '_sr_access_mode' => 'purchase',
+        '_sr_current_version_id' => 501,
+        '_sr_rights_status' => 'approved',
+    ],
+)));
+
+sr032_expect_error('invalid_quantity', fn () => $validator->validate(new ResourcePurchaseRequest(
+    downloadId: 1001,
+    productType: ProductType::Resource,
+    accessMode: AccessMode::Purchase,
+    priceId: 0,
+    quantity: 0,
+    clientUnitAmount: '39.00',
+    discountCode: null,
     resourceMeta: [
         '_sr_product_type' => 'resource',
         '_sr_access_mode' => 'purchase',

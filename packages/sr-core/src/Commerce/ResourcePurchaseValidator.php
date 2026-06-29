@@ -19,6 +19,10 @@ final readonly class ResourcePurchaseValidator
             throw CommerceException::invalidQuantity($request->quantity);
         }
 
+        if ($request->productType !== ProductType::Resource) {
+            throw CommerceException::productTypeMismatch(ProductType::Resource->value, $request->productType->value);
+        }
+
         $metaProductType = (string) ($request->resourceMeta['_sr_product_type'] ?? 'resource');
         if ($metaProductType !== $request->productType->value) {
             throw CommerceException::productTypeMismatch($request->productType->value, $metaProductType);

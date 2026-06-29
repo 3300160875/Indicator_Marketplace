@@ -101,3 +101,17 @@ git diff --check
 
 Exit: 0.
 Output: no output.
+
+```bash
+php docs/evidence/SR-032/commerce-access-check.php
+```
+
+Exit: 255 during independent QA fix.
+Output: expected RED failure because `ResourcePurchaseValidator` still accepted `ProductType::MembershipPlan` when resource meta also declared `membership_plan`.
+
+```bash
+php docs/evidence/SR-032/commerce-access-check.php
+```
+
+Exit: 0 after independent QA fix.
+Output: `SR-032 commerce access and price checks passed.`
