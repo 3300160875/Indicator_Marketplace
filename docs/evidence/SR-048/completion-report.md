@@ -1,0 +1,52 @@
+# SR-048 Completion Report
+
+- Task / status: SR-048, VERIFIED.
+- Branch: `feat/SR-048-membership-renewal`.
+- Scope completed:
+  - 新增 `MembershipService::createRenewalSegment()`，同套餐在购买时仍 active 才从 latest_expires_at 起算续期；已过期或已撤权时从购买时间起算。
+  - 每次续费都通过 `EntitlementRepository::create()` 创建新的 membership entitlement segment，不修改历史分段来源期限。
+  - 新增 `MembershipService::chooseBestForResource()`，多套餐并存时按 coverage、quota、priority、expires_at、id 稳定择优。
+  - 公共契约使用数组 request / array result，避免在 SR-048 allowed path 之外新增 DTO 文件，同时规避同文件 DTO 的 PSR-4 autoload 风险。
+- Files changed:
+  - `packages/sr-entitlements/src/Application/MembershipService.php`
+  - `docs/evidence/SR-048/membership-renewal-check.php`
+  - `docs/evidence/SR-048/commands.log`
+  - `docs/evidence/SR-048/completion-report.md`
+  - `docs/evidence/SR-048/review-report.md`
+  - `docs/evidence/SR-048/qa-report.md`
+  - `docs/status/task-status.yaml`
+  - `docs/status/PROJECT_STATUS.md`
+- Contract changes:
+  - `MembershipService::createRenewalSegment(array $request): Entitlement`
+  - `MembershipService::chooseBestForResource(int $userId, int $resourceId, array $taxonomyTermIds, string $atUtc): array`
+  - Stable sort order: coverage -> quota -> priority -> expires_at -> id.
+- Migrations:
+  - none.
+- Events/Hooks:
+  - none.
+- Configuration/Feature Flags:
+  - none.
+- Cache/invalidation:
+  - no cache layer in this task.
+- Backward compatibility:
+  - Pure new service, no change to existing EntitlementService/QuotaService behavior.
+- Observability/audit:
+  - Choice result returns `reason` fields: code, coverage_type, quota_remaining, priority, expires_at.
+- Commands and results:
+  - See `docs/evidence/SR-048/commands.log`.
+- Security/permission/concurrency checks:
+  - User/resource IDs and duration values must be positive.
+  - Unsupported duration units fail closed.
+  - Renewal creates new segments and preserves historical segments.
+  - Expired, not-yet-started, and revoked entitlements are filtered by `Entitlement::isActive()`.
+  - Missing, exhausted, or explicitly unavailable quota fails closed during multi-plan choice.
+- Known limitations:
+  - This task implements pure service behavior only; it does not connect runtime hooks, database repositories, cache invalidation, or UI.
+- Rollback:
+  - Revert this task commit and remove `MembershipService.php` plus SR-048 evidence/status changes.
+- Next safe task(s):
+  - Merge SR-048 PR #48.
+  - SR-049 refund revocation and manual grant/revoke.
+- Commit/PR:
+  - Commit: `e428465`
+  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/48
