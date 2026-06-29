@@ -434,17 +434,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/34
     blockers: []
   SR-034:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-034-order-item-snapshots
     claimed_at: '2026-06-29T02:07:33.432446+00:00'
-    updated_at: '2026-06-29T02:12:46Z'
+    updated_at: '2026-06-29T02:20:51Z'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/35
     evidence:
     - docs/evidence/SR-034/commands.log
     - docs/evidence/SR-034/order-item-snapshot-check.php
     - docs/evidence/SR-034/completion-report.md
     - docs/evidence/SR-034/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/35
     blockers: []
   SR-035:
     status: BACKLOG
