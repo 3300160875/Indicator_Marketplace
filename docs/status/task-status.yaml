@@ -406,17 +406,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/32
     blockers: []
   SR-032:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-032-access-price-validation
     claimed_at: '2026-06-29T01:38:11.878606+00:00'
-    updated_at: '2026-06-29T01:43:34+00:00'
+    updated_at: '2026-06-29T01:51:26Z'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/33
     evidence:
     - docs/evidence/SR-032/commands.log
     - docs/evidence/SR-032/commerce-access-check.php
     - docs/evidence/SR-032/completion-report.md
     - docs/evidence/SR-032/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/33
     blockers: []
   SR-033:
     status: BACKLOG
