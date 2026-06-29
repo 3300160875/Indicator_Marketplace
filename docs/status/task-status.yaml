@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T07:49:31+00:00'
+updated_at: '2026-06-29T07:55:00+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -593,13 +593,17 @@ tasks:
     - docs/evidence/SR-045/entitlement-repository-check.php
     blockers: []
   SR-046:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-046-access-decision
+    claimed_at: '2026-06-29T07:52:00+00:00'
+    updated_at: '2026-06-29T07:55:00+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-046/access-decision-check.php
+    - docs/evidence/SR-046/commands.log
+    - docs/evidence/SR-046/completion-report.md
+    - docs/evidence/SR-046/review-report.md
     blockers: []
   SR-047:
     status: BACKLOG
