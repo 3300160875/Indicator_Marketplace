@@ -1,0 +1,107 @@
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+composer validate --strict
+```
+
+Exit: 0.
+Output:
+`./composer.json is valid`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make lint
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+php -l docs/evidence/SR-044/membership-rules-check.php
+php -l packages/sr-entitlements/src/Plan/MembershipPlanMetaException.php
+php -l packages/sr-entitlements/src/Plan/PlanDuration.php
+php -l packages/sr-entitlements/src/Plan/PlanScope.php
+php -l packages/sr-entitlements/src/Plan/PlanQuota.php
+php -l packages/sr-entitlements/src/Plan/MembershipPlanRules.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected` (all listed files)
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+php docs/evidence/SR-044/membership-rules-check.php
+```
+
+Exit: 0.
+Output:
+`SR-044 membership plan rules checks passed.`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-unit MODULE=plans
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+原因：仓库 Makefile 当前未提供 `test-unit` 入口；改以 `composer --working-dir=packages/sr-entitlements test` 进行可复核。
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test-integration
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+composer --working-dir=packages/sr-entitlements test
+```
+
+Exit: 0.
+Output:
+`sr-entitlements skeleton tests: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git diff --check
+```
+
+Exit: 0.
+Output:
+`No whitespace errors`.
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+gh pr checks 40
+```
+
+Exit: 0.
+Output:
+`Frontend gate	pass	11s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28350230187/job/83981416095`
+`PHP gate	pass	32s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28350230187/job/83981416127`

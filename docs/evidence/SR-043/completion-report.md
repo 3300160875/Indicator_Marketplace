@@ -1,0 +1,40 @@
+# SR-043 Completion Report
+
+- Task / status: SR-043, REVIEW.
+- Branch: `feat/SR-043-entitlement-core-tables`。
+- Scope completed:
+  - 在 `packages/sr-entitlements/src/Infrastructure/Migration/` 下实现三张核心表迁移定义：
+    - `EntitlementSchemaMigration`（`wp_sr_entitlements`）
+    - `EntitlementCounterSchemaMigration`（`wp_sr_entitlement_counters`）
+    - `DownloadEventsSchemaMigration`（`wp_sr_download_events`）
+  - 每张迁移实现了 `StockResource\Core\Infrastructure\Migration\Migration` 契约：`version()` / `tableName()` / `description()` / `checksum()` / `sql()` / `up()`。
+  - SQL 使用 `{prefix}` 动态占位符，不直接硬编码 `wp_`。
+  - 在 `docs/evidence/SR-043/schema-migrations-check.php` 中补齐可复核行为：字段名、索引、checksum 长度、版本格式、空迁移与重复迁移场景。
+- Files changed:
+  - `packages/sr-entitlements/src/Infrastructure/Migration/EntitlementSchemaMigration.php`
+  - `packages/sr-entitlements/src/Infrastructure/Migration/EntitlementCounterSchemaMigration.php`
+  - `packages/sr-entitlements/src/Infrastructure/Migration/DownloadEventsSchemaMigration.php`
+  - `docs/evidence/SR-043/schema-migrations-check.php`
+- Contract changes:
+  - 明确三张 `sr_*` 表的 DDL 结构，供后续 SR-045/050/SR-053 等任务消费。
+- Migrations:
+  - `sr_entitlements`（索引与唯一键包含 `uq_source_order_item`, `idx_user_active`, `idx_order`, `idx_parent`, `idx_resource`）
+  - `sr_entitlement_counters`（唯一键 `uq_counter_period`，索引 `idx_user_period`）
+  - `sr_download_events`（唯一键 `uq_event_request`, `uq_event_token`，索引 `idx_user_date`, `idx_resource_result`）
+- Commands and results:
+  - 见 `docs/evidence/SR-043/commands.log`。
+- Security/permission/concurrency checks:
+  - 迁移定义未涉及权限逻辑；唯一键与检查点设计支持幂等和防重复授权关联（按 `source_order_item_id`）。
+  - 重复迁移在 evidence 脚本中验证会跳过且不重放。
+- Known limitations:
+  - 未在当前环境执行 10万行 explain/慢查询压测（该项目约束由数据库基线任务或后续任务补齐）。
+  - 未接入真实 `MigrationCommand` 执行链（受当前任务允许路径边界限制）。
+- Rollback:
+  - 回滚该任务可还原新增文件。
+  - 线上环境若迁移已执行，需通过数据库 DDL 回滚脚本做逆向变更。
+- Next safe task(s):
+  - SR-044：会员套餐元数据建模。
+  - SR-045：权益快照与 EntitlementRepository。
+  - SR-047：订单完成授权监听。
+- Commit/PR:
+  - 待提交后补充。
