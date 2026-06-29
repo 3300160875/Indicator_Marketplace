@@ -1,0 +1,21 @@
+# SR-047 Review Notes
+
+- Review source: independent read-only subagent review during implementation.
+- Initial findings:
+  - Missing mission-critical `edd_complete_purchase` hook registration surface.
+  - Membership terms parsing expected nested arrays and did not support SR-034 normalized scalar terms snapshots.
+  - Concurrency duplicate branch lacked evidence.
+  - `lifetime` duration was accidentally allowed even though SR-044 rejects it.
+  - Second review also found `week` duration was still wider than SR-044's duration allowlist.
+- Fixes applied:
+  - Added `registerHooks()` for `edd_complete_purchase` and `handleCompletedOrderId()` resolver bridge.
+  - Added parsing for both nested SR-044 terms snapshots and flattened SR-034 scalar snapshots.
+  - Added evidence for `EddOrderAdapter + OrderSnapshotService` normalized snapshots.
+  - Added duplicate-source-order-item race injection evidence.
+  - Removed unsupported duration allowances; `lifetime` and `week` fail per order item.
+- Verification:
+  - `php docs/evidence/SR-047/order-completed-listener-check.php` passed.
+  - `composer --working-dir=packages/sr-entitlements test` passed.
+  - `make test` passed.
+  - `python3 tools/agent/validate_docs.py` passed.
+  - `git diff --check` passed.

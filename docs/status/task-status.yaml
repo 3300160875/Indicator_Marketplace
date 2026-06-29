@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T08:00:52+00:00'
+updated_at: '2026-06-29T08:36:06.452231+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -606,13 +606,18 @@ tasks:
     - docs/evidence/SR-046/review-report.md
     blockers: []
   SR-047:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
-    pr: null
-    evidence: []
+    status: VERIFIED
+    owner: codex
+    branch: feat/SR-047-order-completed-entitlement-grant
+    claimed_at: '2026-06-29T08:07:18.324580+00:00'
+    updated_at: '2026-06-29T08:36:06.452221+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/46
+    evidence:
+    - docs/evidence/SR-047/order-completed-listener-check.php
+    - docs/evidence/SR-047/commands.log
+    - docs/evidence/SR-047/completion-report.md
+    - docs/evidence/SR-047/review-report.md
+    - docs/evidence/SR-047/qa-report.md
     blockers: []
   SR-048:
     status: BACKLOG

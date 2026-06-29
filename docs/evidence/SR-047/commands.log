@@ -1,0 +1,109 @@
+# SR-047 commands log
+
+## 2026-06-29 red test
+
+```bash
+php docs/evidence/SR-047/order-completed-listener-check.php
+```
+
+Exit: 255.
+Output:
+`Failed opening required '.../packages/sr-entitlements/src/Integration/EddOrderListener.php'`
+
+说明：这是 TDD RED 阶段，证明 SR-047 的订单完成授权监听器尚未实现。
+
+## 2026-06-29 implementation verification
+
+```bash
+php docs/evidence/SR-047/order-completed-listener-check.php
+```
+
+Exit: 0.
+Output:
+`SR-047 order completed listener checks passed.`
+
+覆盖：
+- `edd_complete_purchase` hook 注册入口与 order id 回调；
+- `EddOrderAdapter + OrderSnapshotService` 生成的真实规范化会员套餐快照；
+- 资源商品与会员套餐权益映射；
+- 重复完成 10 次只授权一次；
+- 部分订单项失败后安全重跑；
+- `duplicate_source_order_item_id` 并发竞争故障注入；
+- SR-044 显式拒绝的 `lifetime` duration 不会创建永久会员权益；
+- SR-044 不支持的 `week` duration 不会被 SR-047 放行为会员权益。
+
+```bash
+php -l packages/sr-entitlements/src/Integration/EddOrderListener.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-entitlements/src/Integration/EddOrderListener.php`
+
+```bash
+php -l docs/evidence/SR-047/order-completed-listener-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in docs/evidence/SR-047/order-completed-listener-check.php`
+
+```bash
+composer --working-dir=packages/sr-entitlements test
+```
+
+Exit: 0.
+Output:
+`sr-entitlements skeleton tests: ok`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: empty.
+
+## Required command deviations
+
+```bash
+make test-unit MODULE=sr-entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-integration TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+make test-concurrency TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+原因：当前仓库 Makefile 尚未提供上述三个细分 target。本任务以 SR-047 evidence 脚本、包级 composer test、全量 `make test`、`git diff --check` 与 `validate_docs.py` 替代。

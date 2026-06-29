@@ -1,0 +1,49 @@
+# SR-047 Completion Report
+
+- Task / status: SR-047, VERIFIED.
+- Branch: `feat/SR-047-order-completed-entitlement-grant`.
+- Scope completed:
+  - 新增 `EddOrderListener::registerHooks()`，可在 runtime 接线时注册 `edd_complete_purchase` 订单完成点。
+  - 新增 `EddOrderListener::handleCompletedOrderId()` / `handle()`，消费订单完成事件与不可变 `OrderItemBusinessSnapshot` 列表。
+  - 资源商品订单项会创建 `resource` 权益，绑定 `resource_id`、`version_id` 与 `source_order_item_id`。
+  - 会员套餐订单项会创建 `membership` 权益，兼容 SR-044 嵌套 terms snapshot 与 SR-034 规范化后的扁平标量 terms snapshot，保留 plan download、plan code、scope、quota、priority 与 duration expiry。
+  - 以 `source_order_item_id` 做幂等：重复完成 10 次只授权一次，已存在授权会返回 `reused`。
+  - 按订单项隔离失败：单个坏快照不会回滚已创建授权，修复后重跑只补齐失败项。
+  - 补充并发 duplicate 故障注入：仓储唯一键竞争时重新查询胜出权益并转为 `reused`。
+  - SR-044 未支持的 duration unit 不会被监听器重新放行：`lifetime` 和 `week` 均不创建会员权益。
+- Files changed:
+  - `packages/sr-entitlements/src/Integration/EddOrderListener.php`
+  - `docs/evidence/SR-047/order-completed-listener-check.php`
+  - `docs/evidence/SR-047/commands.log`
+  - `docs/evidence/SR-047/completion-report.md`
+  - `docs/evidence/SR-047/review-report.md`
+  - `docs/evidence/SR-047/qa-report.md`
+  - `docs/status/task-status.yaml`
+  - `docs/status/PROJECT_STATUS.md`
+- Contract changes:
+  - 新增纯 PHP 监听器入口：`registerHooks(object $runtime, callable $completionResolver): void`、`handleCompletedOrderId(int $orderId, callable $completionResolver): array`、`handle(OrderCompletedEvent $event, iterable $snapshots): array`。
+  - 返回 `created`、`reused`、`failed` 三组结果，方便后续 WordPress/EDD hook 接线层做审计、重试和告警。
+- Migrations:
+  - 无新增迁移；复用 SR-043/SR-045 已定义的权益表与仓储契约。
+- Events/Hooks:
+  - 监听器可注册 EDD mission-critical 完成点 `edd_complete_purchase`。
+  - 本任务不修改插件启动入口；实际 runtime 调用 `registerHooks()` 接线留给后续允许启动入口的任务。
+- Commands and results:
+  - 见 `docs/evidence/SR-047/commands.log`。
+- Security/permission/concurrency checks:
+  - 事件 `order_id`、`customer_id` 必须与快照一致，否则按订单项失败记录，不创建权益。
+  - 幂等依赖 `source_order_item_id` 查询与仓储唯一约束；创建竞争命中重复时会重新查询并转为 `reused`。
+  - 每个订单项独立 try/catch，避免部分失败导致已授权项被重复创建或整体不可重跑。
+  - 会员 terms snapshot 仅接受 SR-044 duration allowlist：`day/month/year`；不重新引入 `lifetime` 或 `week` 产品规则。
+  - 不处理真实凭证、Cookie、Token、密钥或生产个人信息。
+- Known limitations:
+  - 当前仅完成领域监听器和内存仓储验证，真实数据库事务仓储/锁粒度需在后续允许路径中接入。
+  - WordPress/EDD 启动入口接线不在 SR-047 allowed paths 内，需后续允许启动入口的任务调用 `registerHooks()`。
+  - 三个细分 Make target 尚未在仓库中定义，已按任务要求记录偏差与替代命令。
+- Rollback:
+  - 回滚本任务提交，删除 `EddOrderListener.php` 与 SR-047 evidence/status 变更即可。
+- Next safe task(s):
+  - SR-050：QuotaService 原子预占/结算/释放。
+- Commit/PR:
+  - Commit: `e914f05`
+  - PR #46: https://github.com/3300160875/Indicator_Marketplace/pull/46
