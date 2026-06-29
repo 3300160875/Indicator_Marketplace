@@ -1,0 +1,38 @@
+# SR-041 Completion Report
+
+- Task / status: SR-041, REVIEW.
+- Branch: `feat/SR-041-decision-timeline`.
+- Scope completed:
+  - 在 `packages/sr-payment-gateways/src/Application/Decision/DecisionService.php` 实现审核决策服务，支持 `needs_more_info` 与 `reject`。
+  - 新增标准原因码白名单校验，并新增 `PaymentDecisionException` 提供稳定错误码。
+  - `DecisionService` 负责写入 `reviewer_id`、`decision_code`、`reviewed_at`、`internal_note`、`user_message` 与清空 `claimed_at`。
+  - 在 `web/app/themes/stock-resource-theme/components/payment-timeline/timeline.php` 实现支付审核用户时间线，仅展示用户可见字段。
+- Files changed:
+  - `docs/status/task-status.yaml`（任务流状态从 BACKLOG → REVIEW）
+  - `packages/sr-payment-gateways/src/Application/Decision/DecisionService.php`
+  - `web/app/themes/stock-resource-theme/components/payment-timeline/timeline.php`
+  - `docs/evidence/SR-041/payment-decision-check.php`
+  - `docs/evidence/SR-041/review-report.md`
+  - `docs/evidence/SR-041/commands.log`
+- Contract changes:
+  - 对 `DecisionService` 提供 `requestMoreInfo()` / `reject()` 与 `allowedDecisionCodes()`。
+  - 决策状态约束来源于 `PaymentSubmissionStateMachine`：`under_review -> needs_more_info / rejected`。
+- Migrations: none.
+- Commands and results:
+  - 见 `docs/evidence/SR-041/commands.log`。
+- Security/permission/concurrency checks:
+  - 决策前执行 reviewer 授权检查。
+  - 使用乐观锁（`expected_lock_version`）与状态机转移约束防止并发与非法流转。
+  - 限制标准原因码，拒绝非法原因码。
+  - 时间线组件仅展示 `state / time / user_message`，不输出 `internal_note`。
+- Required command deviations:
+  - 任务要求的 `make test-unit / make test-integration / make test-concurrency` 在当前仓库 Makefile 中缺失；已采用 `make test`（全量 lint + test）与 `composer --working-dir=packages/sr-payment-gateways test` 作为等效验证。
+- Known limitations:
+  - 未接入后台路由与 WordPress Admin UI（预计 SR-042 之后补齐）。
+  - 未补齐 `approved` 等其他状态的时间线扩展场景。
+- Rollback:
+  - 回退本任务提交，删除新增服务与组件文件，即可恢复到任务前状态。
+- Next safe task(s):
+  - SR-042（实现付款审核通知 Outbox）。
+- Commit/PR:
+  - 尚未提交 PR（待独立复核通过后提交）。

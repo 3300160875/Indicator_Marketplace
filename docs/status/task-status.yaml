@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T04:22:11.118200+00:00'
+updated_at: '2026-06-29T04:42:33.117457+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -529,13 +529,14 @@ tasks:
     - docs/evidence/SR-040/review-report.md
     blockers: []
   SR-041:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-041-decision-timeline
+    claimed_at: '2026-06-29T04:38:36.439022+00:00'
+    updated_at: '2026-06-29T04:42:33.117449+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-041/completion-report.md
     blockers: []
   SR-042:
     status: BACKLOG
