@@ -462,17 +462,18 @@ tasks:
     - https://github.com/3300160875/Indicator_Marketplace/pull/36
     blockers: []
   SR-036:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-036-manual-qr-gateway
     claimed_at: '2026-06-29T03:14:03.453209+00:00'
-    updated_at: '2026-06-29T03:17:41Z'
+    updated_at: '2026-06-29T03:25:33Z'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/37
     evidence:
     - docs/evidence/SR-036/commands.log
     - docs/evidence/SR-036/manual-qr-gateway-check.php
     - docs/evidence/SR-036/completion-report.md
     - docs/evidence/SR-036/review-report.md
+    - https://github.com/3300160875/Indicator_Marketplace/pull/37
     blockers: []
   SR-037:
     status: BACKLOG
