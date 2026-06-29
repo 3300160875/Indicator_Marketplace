@@ -6,6 +6,8 @@
   - 实现 `PaymentProofController` 的付款凭证提交与查询支撑行为。
   - 增加 idempotency 映射、订单归属与状态校验。
   - 完成渠道、金额、时间、proof 载荷（base64/data URL）与文件大小校验。
+  - 补充私有 proof writer 注入边界；没有 writer 时拒绝接受凭证，避免只生成 key 但未存储。
+  - 补充 JPEG/PNG/PDF 文件头校验，声明 MIME 与真实内容不一致时拒绝。
   - 规范化重复提交和并发冲突报错码。
 - Files changed:
   - `packages/sr-payment-gateways/src/Rest/PaymentProofController.php`
@@ -16,9 +18,11 @@
   - `submitPaymentProof` 在订单归属与状态校验外层阻断跨用户提交。
   - `idempotency` 触发重复返回，payload 变更触发冲突。
   - `proof` 处理对大小和格式进行显式限制，防止超大负载。
+  - proof 内容经私有 writer 写入，幂等重放不重复写入对象存储。
 - Commands and results:
   - 见 `docs/evidence/SR-038/commands.log`。
 - Known limitations:
   - 运行时 REST 路由注册与管理员权限层接线仍待在后续任务完成。
+  - 当前 writer 为注入边界，实际生产 adapter 接线需由后续 runtime/DI 任务注入 SR-028 StorageService。
 - Next safe task:
   - 与 SR-039/040 对齐后推进 SR-041。

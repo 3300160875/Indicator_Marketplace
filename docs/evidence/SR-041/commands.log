@@ -1,0 +1,136 @@
+# SR-041 commands log
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git status --short
+```
+
+Exit: 0.
+Output:
+`M docs/status/task-status.yaml`
+`?? docs/evidence/SR-041/`
+`?? packages/sr-payment-gateways/src/Application/Decision/`
+`?? web/app/themes/stock-resource-theme/components/payment-timeline/`
+
+```bash
+php -l packages/sr-payment-gateways/src/Application/Decision/DecisionService.php
+php -l web/app/themes/stock-resource-theme/components/payment-timeline/timeline.php
+php -l docs/evidence/SR-041/payment-decision-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-payment-gateways/src/Application/Decision/DecisionService.php`
+`No syntax errors detected in web/app/themes/stock-resource-theme/components/payment-timeline/timeline.php`
+`No syntax errors detected in docs/evidence/SR-041/payment-decision-check.php`
+
+```bash
+php docs/evidence/SR-041/payment-decision-check.php
+```
+
+Exit: 0.
+Output:
+`SR-041 payment decision checks passed.`
+
+```bash
+make test-unit MODULE=sr-payment-gateways
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+`原因：该仓库 Makefile 当前未提供 test-unit 入口，已用 make test + composer test 兜底验证。`
+
+```bash
+make test-integration TEST=Payment
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+`原因：该仓库 Makefile 当前未提供 test-integration 入口。`
+
+```bash
+make test-concurrency TEST=PaymentApproval
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+`原因：该仓库 Makefile 当前未提供 test-concurrency 入口。`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+make test-smoke
+```
+
+Exit: 1.
+Output:
+`mysqld is alive`
+`service "nginx" is not running`
+
+```bash
+composer --working-dir=packages/sr-payment-gateways test
+```
+
+Exit: 0.
+Output:
+`sr-payment-gateways skeleton tests: ok`
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output:
+`No whitespace errors`.
+
+```bash
+git diff --stat
+```
+
+Exit: 0.
+Output:
+` docs/status/task-status.yaml | 15 ++++++++-------`
+` 1 file changed, 8 insertions(+), 7 deletions(-)`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+## 2026-06-29 corrective branch verification
+
+SR-041 implementation from PR #38 was cherry-picked into `fix/sr037-041-review` so the SR-037→SR-041 chain can be reviewed with the corrective payment fixes.
+
+```bash
+cd /home/devops-ubuntu/.config/superpowers/worktrees/project/fix-sr037-041-review
+php docs/evidence/SR-041/payment-decision-check.php
+```
+
+Exit: 0.
+Output:
+`SR-041 payment decision checks passed.`
+
+```bash
+make test
+git diff --check
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`

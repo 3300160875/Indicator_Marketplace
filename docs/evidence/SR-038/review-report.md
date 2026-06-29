@@ -7,10 +7,12 @@
   - 拒绝订单非提交用户与订单状态不允许提交。
   - 校验 `channel`、`reported_amount`（金额格式）、`reported_paid_at`（时间格式）、`proof` 输入（缺失/无效类型/重复 payload）。
   - `proof` 超过 8MiB 时拒绝。
+  - JPEG/PNG/PDF 通过文件头检测；声明 MIME 与真实内容不一致时返回 `invalid_proof_type`。
 - 提交流程与幂等性:
   - 首次提交返回 `submitted` 状态且 `lock_version = 0`。
   - 同一 `idempotency key`、同一 payload 返回同一 `submission`。
   - 同一 key 但 payload 不一致返回 `state_conflict`。
+  - 首次提交调用私有 proof writer；幂等重放不会再次写入 proof。
 - 查询接口:
   - `getPaymentStatus` 与 `proofTimeline` 在有数据时返回可复核记录。
   - base64 data URL 场景可正确提取 MIME 并完成提交。
