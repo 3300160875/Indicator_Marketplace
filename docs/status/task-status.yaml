@@ -487,7 +487,6 @@ tasks:
     - docs/evidence/SR-037/commands.log
     - docs/evidence/SR-037/completion-report.md
     - docs/evidence/SR-037/review-report.md
-    - docs/evidence/SR-037/review-report.md
     blockers: []
   SR-038:
     status: VERIFIED
@@ -539,6 +538,7 @@ tasks:
     - docs/evidence/SR-041/commands.log
     - docs/evidence/SR-041/review-report.md
     - docs/evidence/SR-041/completion-report.md
+    - docs/evidence/SR-041/payment-decision-check.php
     blockers: []
   SR-042:
     status: BACKLOG

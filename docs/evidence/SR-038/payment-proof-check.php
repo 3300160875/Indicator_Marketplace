@@ -69,6 +69,10 @@ $orders = [
 
 $orderResolver = static fn (int $orderId): ?array => $orders[$orderId] ?? null;
 
+$pngBytes = "\x89PNG\r\n\x1A\n".'proof-png-body';
+$jpegBytes = "\xFF\xD8\xFF\xDA".'proof-jpeg-body';
+$proofWrites = [];
+
 $repository = new InMemoryPaymentSubmissionRepository;
 $controller = new PaymentProofController(
     repository: $repository,
@@ -87,6 +91,19 @@ $controller = new PaymentProofController(
         );
     },
     allowedStatuses: ['pending'],
+    proofWriter: static function (string $storageKey, string $content, string $mimeType, array $metadata) use (&$proofWrites): bool {
+        sr038_assert(! str_contains($storageKey, 'wp-content/uploads'), 'proof writer must not target public uploads path');
+        sr038_assert(str_starts_with($storageKey, 'proof/'), 'proof writer stores under private proof prefix');
+        sr038_assert(hash('sha256', $content) === $metadata['proof_sha256'], 'proof writer receives hash-matching content');
+        $proofWrites[] = [
+            'storage_key' => $storageKey,
+            'mime_type' => $mimeType,
+            'sha256' => $metadata['proof_sha256'],
+            'size' => $metadata['proof_file_size'],
+        ];
+
+        return true;
+    },
 );
 
 // 空的 idempotency key 被拒绝。
@@ -170,26 +187,39 @@ sr038_expect_error('invalid_proof_size', function () use ($controller, $hugeProo
     );
 });
 
+// 声明类型和真实文件头不一致时拒绝。
+sr038_expect_error('invalid_proof_type', function () use ($controller, $jpegBytes): void {
+    $controller->submitPaymentProof(
+        orderId: 101,
+        requestUserId: 9101,
+        idempotencyKey: 'mime-mismatch',
+        payload: ['channel' => 'wechat', 'reported_amount' => '59.00', 'reported_paid_at' => '2026-06-29T10:00:00+08:00', 'proof' => ['content' => $jpegBytes, 'mime_type' => 'image/png']],
+    );
+});
+
 // 首次提交成功。
 $first = $controller->submitPaymentProof(
     orderId: 101,
     requestUserId: 9101,
     idempotencyKey: 'idem-proof',
-    payload: ['channel' => 'wechat', 'reported_amount' => '59.00', 'reported_paid_at' => '2026-06-29T10:00:00+08:00', 'proof' => ['content' => 'abc', 'mime_type' => 'image/png'], 'payer_note' => 'note'],
+    payload: ['channel' => 'wechat', 'reported_amount' => '59.00', 'reported_paid_at' => '2026-06-29T10:00:00+08:00', 'proof' => ['content' => $pngBytes, 'mime_type' => 'image/png'], 'payer_note' => 'note'],
 );
 
 sr038_same('submitted', $first['data']['state'], 'initial submit creates submitted state');
 sr038_same(0, $first['data']['lock_version'], 'new submission starts with lock_version 0');
+sr038_same(1, count($proofWrites), 'initial submit writes private proof once');
+sr038_same('image/png', $proofWrites[0]['mime_type'], 'private proof write uses detected PNG mime');
 
 // 幂等键相同、相同内容返回同一提交。
 $second = $controller->submitPaymentProof(
     orderId: 101,
     requestUserId: 9101,
     idempotencyKey: 'idem-proof',
-    payload: ['channel' => 'wechat', 'reported_amount' => '59.00', 'reported_paid_at' => '2026-06-29T10:00:00+08:00', 'proof' => ['content' => 'abc', 'mime_type' => 'image/png'], 'payer_note' => 'note'],
+    payload: ['channel' => 'wechat', 'reported_amount' => '59.00', 'reported_paid_at' => '2026-06-29T10:00:00+08:00', 'proof' => ['content' => $pngBytes, 'mime_type' => 'image/png'], 'payer_note' => 'note'],
 );
 
 sr038_same($first['data']['id'], $second['data']['id'], 'same idempotency key returns same submission');
+sr038_same(1, count($proofWrites), 'idempotent replay does not write proof again');
 
 // 幂等键相同但 payload 变更应报错。
 sr038_expect_error('state_conflict', function () use ($controller): void {
@@ -197,7 +227,7 @@ sr038_expect_error('state_conflict', function () use ($controller): void {
         orderId: 101,
         requestUserId: 9101,
         idempotencyKey: 'idem-proof',
-        payload: ['channel' => 'wechat', 'reported_amount' => '60.00', 'reported_paid_at' => '2026-06-29T10:00:00+08:00', 'proof' => ['content' => 'abc', 'mime_type' => 'image/png']],
+        payload: ['channel' => 'wechat', 'reported_amount' => '60.00', 'reported_paid_at' => '2026-06-29T10:00:00+08:00', 'proof' => ['content' => "\x89PNG\r\n\x1A\n".'changed', 'mime_type' => 'image/png']],
     );
 });
 
@@ -210,7 +240,7 @@ $timeline = $controller->proofTimeline(orderId: 101, requestUserId: 9101);
 sr038_same(1, count($timeline['data']), 'timeline has one item for created submission');
 
 // 兼容 base64 data URL 的 MIME 获取。
-$base64Proof = 'data:image/jpeg;base64,'.base64_encode('jpeg-bytes');
+$base64Proof = 'data:image/jpeg;base64,'.base64_encode($jpegBytes);
 $base64Submit = $controller->submitPaymentProof(
     orderId: 101,
     requestUserId: 9101,
@@ -224,5 +254,7 @@ $base64Submit = $controller->submitPaymentProof(
 );
 
 sr038_assert($base64Submit['data']['lock_version'] === 0, 'base64 proof submit succeeds and lock_version is 0');
+sr038_same(2, count($proofWrites), 'base64 JPEG proof is stored privately');
+sr038_same('image/jpeg', $proofWrites[1]['mime_type'], 'base64 JPEG uses detected JPEG mime');
 
 echo "SR-038 payment proof checks passed.\n";

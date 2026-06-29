@@ -157,11 +157,20 @@ final readonly class PaymentReviewService
             throw new PaymentReviewException($exception->codeName, $exception->getMessage());
         }
 
-        $completed = $this->completeOrderIfNeeded(
-            $updated,
-            (string) $verifiedAmount,
-            (string) $verifiedPaidAt,
-        );
+        try {
+            $completed = $this->completeOrderIfNeeded(
+                $updated,
+                (string) $verifiedAmount,
+                (string) $verifiedPaidAt,
+            );
+        } catch (PaymentReviewException $exception) {
+            if ($exception->codeName !== 'complete_order_failed') {
+                throw $exception;
+            }
+
+            $this->markCompletionFailed($updated, $exception->getMessage());
+            throw $exception;
+        }
 
         return [
             'submission' => $updated,
@@ -202,11 +211,9 @@ final readonly class PaymentReviewService
             throw new PaymentReviewException('permission_conflict', 'Submission was approved by another reviewer.');
         }
 
-        $completed = $this->completeOrderIfNeeded($submission, $verifiedAmount, $verifiedPaidAt);
-
         return [
             'submission' => $submission,
-            'complete_order' => $completed,
+            'complete_order' => false,
             'idempotent_replay' => true,
         ];
     }
@@ -236,6 +243,28 @@ final readonly class PaymentReviewService
         if ($exists !== null && $exists->id !== $submission->id) {
             throw new PaymentReviewException('duplicate_transaction_fingerprint', 'transaction fingerprint already used by another submission.');
         }
+    }
+
+    private function markCompletionFailed(PaymentSubmission $submission, string $message): void
+    {
+        $failed = PaymentSubmission::fromArray(array_replace(
+            $submission->toArray(),
+            [
+                'state' => SubmissionState::UnderReview->value,
+                'lock_version' => $submission->lockVersion + 1,
+                'transaction_fingerprint' => null,
+                'verified_amount' => null,
+                'verified_paid_at' => null,
+                'approval_idempotency_key_hash' => null,
+                'decision_code' => 'ORDER_COMPLETION_FAILED',
+                'internal_note' => mb_substr($message, 0, 2000),
+                'user_message' => '支付审核已通过，订单完成处理中，请稍后重试或联系客服。',
+                'reviewed_at' => null,
+                'updated_at' => $this->now(),
+            ],
+        ));
+
+        $this->repository->update($failed, $submission->lockVersion);
     }
 
     private function assertExpectedAmount(PaymentSubmission $submission, string $verifiedAmount): void
@@ -356,7 +385,9 @@ final class ManualSubmissionAdapter
             proofHash: $this->submission->proofSha256,
         );
 
-        $manual = $manual->withState($this->submission->state->value);
+        while ($manual->lockVersion < $this->submission->lockVersion) {
+            $manual = $manual->withState($this->submission->state->value);
+        }
         if ($this->submission->transactionFingerprint === null || $this->submission->verifiedAmount === null || $this->submission->approvalIdempotencyKeyHash === null) {
             return $manual;
         }

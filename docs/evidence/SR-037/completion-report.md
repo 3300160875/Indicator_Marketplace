@@ -1,0 +1,36 @@
+# SR-037 Completion Report
+
+- Task / status: SR-037, VERIFIED.
+- Branch: `feat/SR-037-payment-submissions`.
+- Scope completed:
+  - 在 `packages/sr-payment-gateways/src/Submission/` 新建付款凭证域实体与仓储层：状态机、提交对象、异常码、唯一指纹、仓储契约、内存仓储实现、迁移定义。
+  - 状态与字段约束覆盖：UUID/金额/时间戳/审阅人/版本与幂等安全字段的基础不变量；`lock_version` 乐观锁控制与状态迁移校验。
+  - 已补充 evidence 检查脚本 `docs/evidence/SR-037/payment-submissions-check.php`，覆盖状态迁移、指纹幂等、唯一键冲突、乐观锁、按订单/凭证检索和迁移 SQL 结构校验。
+- Files changed:
+  - `packages/sr-payment-gateways/src/Submission/PaymentSubmission.php`
+  - `packages/sr-payment-gateways/src/Submission/PaymentSubmissionStateMachine.php`
+  - `packages/sr-payment-gateways/src/Submission/PaymentSubmissionException.php`
+  - `packages/sr-payment-gateways/src/Submission/PaymentSubmissionSchemaMigration.php`
+  - `packages/sr-payment-gateways/src/Submission/PaymentSubmissionRepository.php`
+  - `packages/sr-payment-gateways/src/Submission/InMemoryPaymentSubmissionRepository.php`
+  - `packages/sr-payment-gateways/src/Submission/SubmissionState.php`
+  - `packages/sr-payment-gateways/src/Submission/TransactionFingerprint.php`
+  - `docs/evidence/SR-037/payment-submissions-check.php`
+  - `docs/status/task-status.yaml`
+  - `docs/status/agent-locks.yaml`
+- Contract changes:
+  - 新增核心领域契约与对象：`PaymentSubmission*` 相关值对象/枚举/仓储接口，以及 `PaymentSubmissionSchemaMigration`。
+- Migrations:
+  - 新增 `sr_payment_submissions` 建表 SQL（含主键、submission_key 唯一键、transaction_fingerprint 唯一键、与金额/索引定义），版本号 `202606290001`。
+- Commands and results:
+  - 全量见 `docs/evidence/SR-037/commands.log`
+  - 关键通过项：`php docs/evidence/SR-037/payment-submissions-check.php`、`composer --working-dir=packages/sr-payment-gateways test`、`vendor/bin/pint --test ...`、`make test`、`python3 tools/agent/validate_docs.py`。
+- Security/permission/concurrency checks:
+  - `PaymentSubmission` 约束了金额与路径格式（拒绝公开目录）、唯一键幂等与重复提交保护；`InMemoryPaymentSubmissionRepository` 与状态机均做 lock_version 检查，`duplicate_transaction_fingerprint` 保护同一支付回执不可重复确认。
+- Known limitations:
+  - 当前为内存仓储实现与领域层定义，未接入 WP 持久化层与真实数据库执行器；凭证审核接口、Reviewer 鉴权、审计记录与事件持久化在后续 SR-038/039 继续实现。
+- Rollback:
+  - 回退提交或暂不合并 `feat/SR-037-payment-submissions`；移除/禁用该任务相关调用即可。
+- Next safe task(s): SR-038.
+- Commit/PR:
+  - 远端 `origin/main` 曾缺失本 evidence 目录；本修复分支已恢复 SR-037 证据并纳入统一复核流程。

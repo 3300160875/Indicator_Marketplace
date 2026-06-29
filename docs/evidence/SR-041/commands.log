@@ -109,3 +109,28 @@ python3 tools/agent/validate_docs.py
 Exit: 0.
 Output:
 `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
+
+## 2026-06-29 corrective branch verification
+
+SR-041 implementation from PR #38 was cherry-picked into `fix/sr037-041-review` so the SR-037→SR-041 chain can be reviewed with the corrective payment fixes.
+
+```bash
+cd /home/devops-ubuntu/.config/superpowers/worktrees/project/fix-sr037-041-review
+php docs/evidence/SR-041/payment-decision-check.php
+```
+
+Exit: 0.
+Output:
+`SR-041 payment decision checks passed.`
+
+```bash
+make test
+git diff --check
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
