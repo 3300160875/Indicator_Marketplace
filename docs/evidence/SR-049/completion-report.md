@@ -1,0 +1,55 @@
+# SR-049 Completion Report
+
+- Task / status: SR-049, VERIFIED.
+- Branch: `feat/SR-049-revocation-service`.
+- Scope completed:
+  - 新增 `RevocationService::handleRefundedOrder()`，按退款事件中的订单项撤销对应权益。
+  - 新增 `RevocationService::grantManual()` 与 `revokeManual()`，人工动作必须提供原因、actor，并写入审计事件。
+  - 退款与人工撤权都会通过 immutable entitlement segment 的 `revoke()` 生成新状态，不改写 scope/quota 快照或历史来源字段。
+  - 撤权/人工授权均输出 cache invalidation keys，覆盖用户权益与下载令牌决策缓存。
+  - 退款重放会对 already revoked entitlement 补发 cache/token invalidation，用于恢复首次 invalidation 失败后的状态。
+- Files changed:
+  - `packages/sr-entitlements/src/Application/RevocationService.php`
+  - `docs/evidence/SR-049/revocation-service-check.php`
+  - `docs/evidence/SR-049/commands.log`
+  - `docs/evidence/SR-049/completion-report.md`
+  - `docs/evidence/SR-049/review-report.md`
+  - `docs/evidence/SR-049/qa-report.md`
+  - `docs/status/task-status.yaml`
+  - `docs/status/PROJECT_STATUS.md`
+- Contract changes:
+  - `RevocationService::handleRefundedOrder(OrderRefundedEvent $event): array`
+  - `RevocationService::grantManual(array $request): Entitlement`
+  - `RevocationService::revokeManual(int $entitlementId, int $actorId, string $reason, string $revokedAt): Entitlement`
+- Migrations:
+  - none.
+- Events/Hooks:
+  - Pure service only; runtime EDD refund hook registration is not connected in this task.
+- Configuration/Feature Flags:
+  - none.
+- Cache/invalidation:
+  - Service emits `user:{id}:entitlements`, `user:{id}:download_tokens`, and resource access keys when applicable through an injected invalidator callable.
+- Backward compatibility:
+  - Pure new service, no change to existing EntitlementService, MembershipService, QuotaService, or repository contracts.
+- Observability/audit:
+  - Service emits audit event arrays through an injected audit sink for refund revoke, manual grant, and manual revoke.
+- Commands and results:
+  - See `docs/evidence/SR-049/commands.log`.
+- Security/permission/concurrency checks:
+  - Manual actor IDs and entitlement IDs must be positive.
+  - Manual `resource_id` and `plan_download_id` must be positive when provided.
+  - Manual `expires_at` must be later than `starts_at`.
+  - Manual grant/revoke requires a non-empty reason.
+  - Refund replay is idempotent for already revoked entitlements.
+  - Refund replay re-emits cache invalidation for already revoked entitlements.
+  - Revocation preserves entitlement source fields and snapshot signature.
+- Known limitations:
+  - Runtime WordPress/EDD hook wiring, persistent audit storage, and concrete cache backend integration are deferred to later runtime/admin tasks.
+- Rollback:
+  - Revert this task commit and remove `RevocationService.php` plus SR-049 evidence/status changes.
+- Next safe task(s):
+  - Merge SR-049 PR #50.
+  - SR-051 service-side content restriction block/shortcode.
+- Commit/PR:
+  - Commit: `3a77774`
+  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/50

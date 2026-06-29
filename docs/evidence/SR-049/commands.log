@@ -1,0 +1,135 @@
+# SR-049 commands log
+
+## 2026-06-29 red test
+
+```bash
+php docs/evidence/SR-049/revocation-service-check.php
+```
+
+Exit: 255.
+Output:
+`Failed opening required '.../packages/sr-entitlements/src/Application/RevocationService.php'`
+
+说明：这是 TDD RED 阶段，证明 SR-049 的 RevocationService 尚未实现。
+
+## 2026-06-29 implementation verification
+
+```bash
+php docs/evidence/SR-049/revocation-service-check.php
+```
+
+Exit: 0.
+Output:
+`SR-049 revocation service checks passed.`
+
+覆盖：
+- 退款事件按 refunded order item id 立即撤销对应权益；
+- 部分退款不撤销未退款订单项；
+- 重放退款不会重复撤权；
+- 撤权后 entitlement `isActive()` 立即为 false，用于阻止新访问/下载令牌决策；
+- 退款撤权不改写历史 source order item 与权益快照；
+- 撤权和人工授权/撤销都会发出用户权益与下载令牌 cache invalidation keys；
+- 人工授权/撤销必须提供原因并写入审计事件。
+
+```bash
+php -l packages/sr-entitlements/src/Application/RevocationService.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-entitlements/src/Application/RevocationService.php`
+
+```bash
+php -l docs/evidence/SR-049/revocation-service-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in docs/evidence/SR-049/revocation-service-check.php`
+
+```bash
+composer --working-dir=packages/sr-entitlements test
+```
+
+Exit: 0.
+Output:
+`sr-entitlements skeleton tests: ok`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+
+说明：`1 locks` 是 SR-049 当前 claim，进入 REVIEW 并 release 后应恢复为 0。
+
+## 2026-06-29 independent review follow-up
+
+```bash
+php docs/evidence/SR-049/revocation-service-check.php
+```
+
+Exit: 255.
+Output:
+`refund replay re-emits token invalidation after cache failure`
+
+说明：这是独立复核后补充的 RED 阶段，证明旧实现无法在 cache invalidation 失败后通过退款重放补发失效信号。
+
+```bash
+php docs/evidence/SR-049/revocation-service-check.php
+```
+
+Exit: 0.
+Output:
+`SR-049 revocation service checks passed.`
+
+追加覆盖：
+- cache invalidation 失败会向上抛出，退款重放时对 already revoked entitlement 重新发出 user entitlement/download token invalidation；
+- 人工授权的可选 `resource_id`/`plan_download_id` 必须为正数；
+- 人工授权的 `expires_at` 必须晚于 `starts_at`。
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: empty.
+
+## Required command deviations
+
+```bash
+make test-unit MODULE=sr-entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-integration TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+make test-concurrency TEST=Entitlements
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+原因：当前仓库 Makefile 尚未提供上述三个细分 target。本任务以 SR-049 evidence 脚本、包级 composer test、全量 `make test`、`git diff --check` 与 `validate_docs.py` 替代。
