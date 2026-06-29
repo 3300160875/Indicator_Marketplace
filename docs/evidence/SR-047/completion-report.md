@@ -45,4 +45,5 @@
   - 独立复核/QA 将 SR-047 从 REVIEW 推进到 VERIFIED。
   - SR-050：QuotaService 原子预占/结算/释放。
 - Commit/PR:
-  - Pending.
+  - Commit: `e914f05`
+  - PR #46: https://github.com/3300160875/Indicator_Marketplace/pull/46
