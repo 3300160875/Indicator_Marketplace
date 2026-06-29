@@ -1,7 +1,7 @@
 # SR-042 Completion Report
 
 - Task / status: SR-042, REVIEW.
-- Branch: `feat/SR-042-payment-review-outbox`.
+- Branch: `feat/SR-042-payment-review-notification-outbox`.
 - Scope completed:
   - 在 `packages/sr-admin-ops/src/Outbox/` 中补齐 Outbox 运行时骨架（事件值对象、状态枚举、存储接口、内存仓储、发送器接口、执行结果、Worker）。
   - 完成 `PaymentReviewOutbox` 事件构造器，固定事件名 `order.payment_reviewed`、聚合类型 `payment_submission`，并提供稳定事件键。
@@ -43,5 +43,5 @@
 - Next safe task(s):
   - SR-043/SR-044 的数据库与后台接线（需在 outbox 框架具备稳定基础后）。
 - Commit/PR:
-  - 暂无。
-
+  - Commit: `17acfda`（`feat: implement SR-042 outbox framework`）
+  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/39

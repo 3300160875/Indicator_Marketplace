@@ -543,10 +543,10 @@ tasks:
   SR-042:
     status: REVIEW
     owner: codex
-    branch: feat/SR-042-payment-notification-outbox
+    branch: feat/SR-042-payment-review-notification-outbox
     claimed_at: '2026-06-29T04:54:12.473406+00:00'
-    updated_at: '2026-06-29T09:12:58.820016+00:00'
-    pr: null
+    updated_at: '2026-06-29T05:00:06+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/39
     evidence:
     - docs/evidence/SR-042/commands.log
     - docs/evidence/SR-042/review-report.md
