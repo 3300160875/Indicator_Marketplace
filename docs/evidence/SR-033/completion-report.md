@@ -11,4 +11,4 @@
 - Known limitations: runtime WordPress/EDD hook wiring is deferred; repository-level `make test-unit` and `make test-integration` targets do not exist yet.
 - Rollback: revert SR-033 commit/PR; no live order, payment or user data is mutated.
 - Next safe task(s): SR-034 实现订单项业务快照；SR-035 用户订单列表与下载入口。
-- Commit/PR: pending.
+- Commit/PR: https://github.com/3300160875/Indicator_Marketplace/pull/34.

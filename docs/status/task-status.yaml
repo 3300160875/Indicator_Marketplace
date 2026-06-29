@@ -424,8 +424,8 @@ tasks:
     owner: codex
     branch: feat/SR-033-checkout-terms
     claimed_at: '2026-06-29T01:54:44.781323+00:00'
-    updated_at: '2026-06-29T01:58:05.354208+00:00'
-    pr: null
+    updated_at: '2026-06-29T01:59:12Z'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/34
     evidence:
     - docs/evidence/SR-033/commands.log
     - docs/evidence/SR-033/checkout-terms-check.php
