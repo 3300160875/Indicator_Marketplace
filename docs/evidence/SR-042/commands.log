@@ -123,3 +123,31 @@ Output:
   docs/status/agent-locks.yaml | 10 +++++++---
   ... (new file additions: 9 files under packages/sr-admin-ops/src/Outbox and 1 evidence file)`
 
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git push -u origin feat/SR-042-payment-review-notification-outbox
+```
+
+Exit: 0.
+Output:
+`Everything up-to-date` or `To https://github.com/3300160875/Indicator_Marketplace.git` push recorded.
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+gh pr create --fill
+```
+
+Exit: 0.
+Output:
+`Warning: 1 uncommitted change`
+`https://github.com/3300160875/Indicator_Marketplace/pull/39`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+git push
+```
+
+Exit: 0.
+Output:
+`To https://github.com/3300160875/Indicator_Marketplace.git`
+`   17acfda..f0f92f0  feat/SR-042-payment-review-notification-outbox -> feat/SR-042-payment-review-notification-outbox`
