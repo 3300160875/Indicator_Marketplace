@@ -41,3 +41,65 @@ Exit: 0.
 Output:
 `lint: ok`
 `test: ok`
+
+## 2026-06-29 corrective verification
+
+```bash
+cd /home/devops-ubuntu/.config/superpowers/worktrees/project/fix-sr037-041-review
+php -l packages/sr-payment-gateways/src/Rest/PaymentProofController.php
+php -l docs/evidence/SR-038/payment-proof-check.php
+php docs/evidence/SR-038/payment-proof-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected in packages/sr-payment-gateways/src/Rest/PaymentProofController.php`
+`No syntax errors detected in docs/evidence/SR-038/payment-proof-check.php`
+`SR-038 payment proof checks passed.`
+
+```bash
+make test-unit MODULE=sr-payment-gateways
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-integration TEST=Payment
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+```bash
+make test-concurrency TEST=PaymentApproval
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-concurrency'.  Stop.`
+
+原因：当前仓库 Makefile 未提供上述三个细分 target；本次以 evidence 脚本、包级 composer test、全量 `make test`、`git diff --check` 与 `validate_docs.py` 替代。
+
+```bash
+composer --working-dir=packages/sr-payment-gateways test
+```
+
+Exit: 0.
+Output:
+`> php tests/run.php`
+`sr-payment-gateways skeleton tests: ok`
+
+```bash
+make test
+git diff --check
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`

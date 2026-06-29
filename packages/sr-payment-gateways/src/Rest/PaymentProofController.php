@@ -33,8 +33,11 @@ final readonly class PaymentProofController
 
     private mixed $idempotencyKeyProvider;
 
+    private mixed $proofWriter;
+
     /**
      * @param callable(int): array<string, mixed> $orderResolver
+     * @param callable(string, string, string, array<string, mixed>): bool $proofWriter
      */
     public function __construct(
         private PaymentSubmissionRepository $repository,
@@ -42,6 +45,7 @@ final readonly class PaymentProofController
         mixed $nowProvider = null,
         mixed $idempotencyKeyProvider = null,
         private array $allowedStatuses = ['pending'],
+        mixed $proofWriter = null,
     ) {
         if (! is_callable($this->orderResolver)) {
             throw new RuntimeException('orderResolver must be callable.');
@@ -53,6 +57,16 @@ final readonly class PaymentProofController
             $userId,
             $idempotencyKey,
         );
+        $this->proofWriter = $proofWriter ?? static function (string $storageKey, string $content, string $mimeType, array $metadata): bool {
+            throw new PaymentProofException(
+                'proof_storage_unavailable',
+                'A private proof writer is required before accepting payment proof submissions.',
+            );
+        };
+
+        if (! is_callable($this->proofWriter)) {
+            throw new RuntimeException('proofWriter must be callable.');
+        }
     }
 
     /**
@@ -109,18 +123,15 @@ final readonly class PaymentProofController
             throw new PaymentProofException('invalid_proof', 'proof payload content is empty.');
         }
 
-        $proofMime = self::normalizeProofMime($proofData);
-        if ($proofMime === null || ! isset(self::ALLOWED_MIME[$proofMime])) {
-            throw new PaymentProofException('invalid_proof_type', 'proof mime type must be image/jpeg, image/jpg, image/png or application/pdf.');
-        }
-
         $proofSize = strlen($proofRaw);
         if ($proofSize <= 0 || $proofSize > self::MAX_PROOF_BYTES) {
             throw new PaymentProofException('invalid_proof_size', 'proof must be 1..8MiB.');
         }
 
+        $proofMime = self::assertProofMime($proofData, $proofRaw);
         $proofContent = $proofMime === 'image/jpeg' ? self::stripExif($proofRaw, $proofMime) : $proofRaw;
         $proofHash = hash('sha256', $proofContent);
+        $submissionKey = ($this->idempotencyKeyProvider)($orderId, $requestUserId, $idempotencyKey);
         $proofStorageKey = self::buildProofStorageKey(
             orderId: $orderId,
             userId: $requestUserId,
@@ -129,7 +140,7 @@ final readonly class PaymentProofController
         );
 
         $submission = PaymentSubmission::create(
-            submissionKey: ($this->idempotencyKeyProvider)($orderId, $requestUserId, $idempotencyKey),
+            submissionKey: $submissionKey,
             orderId: $orderId,
             userId: $requestUserId,
             channel: $channel,
@@ -148,6 +159,15 @@ final readonly class PaymentProofController
         );
 
         try {
+            if ($this->repository->findBySubmissionKey($submissionKey) === null) {
+                $this->persistProof($proofStorageKey, $proofContent, $proofMime, [
+                    'proof_sha256' => $proofHash,
+                    'proof_file_size' => strlen($proofContent),
+                    'order_id' => $orderId,
+                    'user_id' => $requestUserId,
+                ]);
+            }
+
             $submission = $this->repository->create($submission);
         } catch (PaymentSubmissionException $exception) {
             throw match ($exception->codeName) {
@@ -322,6 +342,55 @@ final readonly class PaymentProofController
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $proof
+     */
+    private static function assertProofMime(array $proof, string $content): string
+    {
+        $declaredMime = self::normalizeMime(self::normalizeProofMime($proof));
+        if ($declaredMime !== null && ! isset(self::ALLOWED_MIME[$declaredMime])) {
+            throw new PaymentProofException('invalid_proof_type', 'proof mime type must be image/jpeg, image/jpg, image/png or application/pdf.');
+        }
+
+        $detectedMime = self::detectProofMime($content);
+        if ($detectedMime === null || ! isset(self::ALLOWED_MIME[$detectedMime])) {
+            throw new PaymentProofException('invalid_proof_type', 'proof content must be a valid JPEG, PNG or PDF.');
+        }
+
+        if ($declaredMime !== null && $declaredMime !== $detectedMime) {
+            throw new PaymentProofException('invalid_proof_type', 'proof declared mime does not match file content.');
+        }
+
+        return $detectedMime;
+    }
+
+    private static function normalizeMime(?string $mime): ?string
+    {
+        if ($mime === null) {
+            return null;
+        }
+
+        $mime = strtolower(trim($mime));
+        return $mime === 'image/jpg' ? 'image/jpeg' : $mime;
+    }
+
+    private static function detectProofMime(string $content): ?string
+    {
+        if (str_starts_with($content, "\xFF\xD8")) {
+            return 'image/jpeg';
+        }
+
+        if (str_starts_with($content, "\x89PNG\r\n\x1A\n")) {
+            return 'image/png';
+        }
+
+        if (str_starts_with($content, '%PDF-')) {
+            return 'application/pdf';
+        }
+
+        return null;
+    }
+
     private static function buildProofStorageKey(int $orderId, int $userId, string $proofHash, string $proofMime): string
     {
         $digest = substr($proofHash, 0, 16);
@@ -408,6 +477,17 @@ final readonly class PaymentProofController
     private static function newRequestId(): string
     {
         return (string) bin2hex(random_bytes(16));
+    }
+
+    /**
+     * @param array<string, mixed> $metadata
+     */
+    private function persistProof(string $storageKey, string $content, string $mimeType, array $metadata): void
+    {
+        $stored = ($this->proofWriter)($storageKey, $content, $mimeType, $metadata);
+        if ($stored !== true) {
+            throw new PaymentProofException('proof_storage_failed', 'Payment proof could not be stored privately.');
+        }
     }
 
     private function publicSubmission(PaymentSubmission $submission): array

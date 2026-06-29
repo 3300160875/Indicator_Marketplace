@@ -35,4 +35,5 @@
 - Next safe task(s):
   - SR-042（实现付款审核通知 Outbox）。
 - Commit/PR:
-  - 尚未提交 PR（待独立复核通过后提交）。
+  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/38
+  - 本修复分支已 cherry-pick SR-041 现有提交，用于与 SR-037 到 SR-040 的修复一起复核；SR-041 状态仍保持 `REVIEW`，等待独立复核/合并。

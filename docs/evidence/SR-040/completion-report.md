@@ -7,6 +7,9 @@
   - 支持金额/时间校验、审批幂等键冲突、锁版本冲突、重复指纹防护、重放行为。
   - 对接 `PaymentApprovalService` 完成状态迁移与审核凭证生成。
   - 订单完成回调失败时抛出 `complete_order_failed`，成功时返回完成状态。
+  - 修正已批准重放行为：重放只返回既有审核结果，不再次触发订单完成回调。
+  - 订单完成回调失败时恢复为可重试 `under_review`，记录 `ORDER_COMPLETION_FAILED` 与用户可解释消息，并释放审批幂等/交易指纹以便重试。
+  - 补充失败后重试验证：使用恢复后的 `lock_version` 重新审批可成功完成订单，且重试完成回调只执行一次。
 - Files changed:
   - `packages/sr-payment-gateways/src/Application/PaymentReviewService.php`
   - `docs/evidence/SR-040/payment-review-service-check.php`
@@ -16,6 +19,8 @@
   - 审批前校验 `permission`、`lock_version`、`idempotency key` 与审核指纹。
   - 重放时确保审核人一致与 payload 可复核。
   - 防止事务指纹重复与不一致。
+  - 重放不重复完成订单；失败后状态可解释且可重新进入审批完成流程。
+  - 失败恢复会保留锁版本连续性，避免恢复后的二次审批被错误的适配层锁版本拒绝。
 - Commands and results:
   - 见 `docs/evidence/SR-040/commands.log`。
 - Known limitations:
