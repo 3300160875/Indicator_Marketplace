@@ -1,6 +1,6 @@
 # SR-047 Completion Report
 
-- Task / status: SR-047, REVIEW.
+- Task / status: SR-047, VERIFIED.
 - Branch: `feat/SR-047-order-completed-entitlement-grant`.
 - Scope completed:
   - 新增 `EddOrderListener::registerHooks()`，可在 runtime 接线时注册 `edd_complete_purchase` 订单完成点。
@@ -17,6 +17,7 @@
   - `docs/evidence/SR-047/commands.log`
   - `docs/evidence/SR-047/completion-report.md`
   - `docs/evidence/SR-047/review-report.md`
+  - `docs/evidence/SR-047/qa-report.md`
   - `docs/status/task-status.yaml`
   - `docs/status/PROJECT_STATUS.md`
 - Contract changes:
@@ -42,7 +43,6 @@
 - Rollback:
   - 回滚本任务提交，删除 `EddOrderListener.php` 与 SR-047 evidence/status 变更即可。
 - Next safe task(s):
-  - 独立复核/QA 将 SR-047 从 REVIEW 推进到 VERIFIED。
   - SR-050：QuotaService 原子预占/结算/释放。
 - Commit/PR:
   - Commit: `e914f05`

@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 独立复核 SR-047；通过后推进 SR-050 QuotaService 原子预占/结算/释放
+- Next safe task: SR-050 QuotaService 原子预占/结算/释放
 - Gate 0: complete
 
 ## 本周完成
@@ -57,7 +57,7 @@
 - SR-044 已随 PR #40 合入 `main` 并标记 VERIFIED：会员套餐元数据解析、范围/配额/规则版本校验已完成。
 - SR-045 已随 PR #42 合入 `main` 并标记 VERIFIED：权益快照仓储契约、内存实现、快照签名与不可变校验已完成。
 - SR-046 已随 PR #44 合入 `main` 并标记 VERIFIED：AccessDecision 契约、AccessDecisionContext 与 EntitlementService 访问判断已完成。
-- SR-047 已完成实现并进入 REVIEW（PR #46）：订单完成授权监听器支持资源商品/会员套餐授权、`source_order_item_id` 幂等、重复完成 10 次只授权一次和部分失败安全重跑。
+- SR-047 已通过独立 QA 并进入 VERIFIED（PR #46）：订单完成授权监听器支持资源商品/会员套餐授权、`source_order_item_id` 幂等、重复完成 10 次只授权一次和部分失败安全重跑。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -66,5 +66,5 @@
 
 ## 下一步
 
-1. 安排独立复核/QA：将 SR-047 从 REVIEW 推进到 VERIFIED。
-2. SR-047 通过后推进 SR-050：QuotaService 原子预占/结算/释放。
+1. 合并 SR-047 PR #46。
+2. 推进 SR-050：QuotaService 原子预占/结算/释放。
