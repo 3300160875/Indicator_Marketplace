@@ -643,7 +643,7 @@ tasks:
     branch: feat/SR-050-quota-service
     claimed_at: '2026-06-29T08:38:27.097703+00:00'
     updated_at: '2026-06-29T08:49:22.087526+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/47
     evidence:
     - docs/evidence/SR-050/quota-service-check.php
     - docs/evidence/SR-050/commands.log

@@ -53,4 +53,5 @@
   - 独立复核/QA 将 SR-050 从 REVIEW 推进到 VERIFIED。
   - SR-051/SR-052/SR-053 下载链路任务可在 SR-050 VERIFIED 后继续评估顺序。
 - Commit/PR:
-  - Pending.
+  - Commit: `b9e3290`
+  - PR #47: https://github.com/3300160875/Indicator_Marketplace/pull/47
