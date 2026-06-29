@@ -639,7 +639,7 @@ tasks:
     branch: feat/SR-049-revocation-service
     claimed_at: '2026-06-29T09:35:07.156615+00:00'
     updated_at: '2026-06-29T09:38:46.540117+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/50
     evidence:
     - docs/evidence/SR-049/revocation-service-check.php
     - docs/evidence/SR-049/commands.log

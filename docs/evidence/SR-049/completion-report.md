@@ -49,4 +49,5 @@
   - Independent review/QA for SR-049.
   - SR-051 service-side content restriction block/shortcode.
 - Commit/PR:
-  - Pending.
+  - Commit: `3a77774`
+  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/50
