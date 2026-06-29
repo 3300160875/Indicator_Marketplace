@@ -1,0 +1,37 @@
+# SR-045 Completion Report
+
+- Task / status: SR-045, REVIEW.
+- Branch: `feat/SR-045-rules-snapshot-repository`。
+- Scope completed:
+  - 在 `packages/sr-entitlements/src/Infrastructure/Repository/` 下新增/完善权益快照仓储核心契约：
+    - `Entitlement`：新增规则快照/时间窗的领域值对象能力（快照签名、时效判定、快照标准化、不可变快照构造边界）。
+    - `EntitlementStatus`：权益状态枚举。
+    - `EntitlementException`：与 Repository 场景相关的错误码与工厂。
+    - `EntitlementRepository`：仓储接口。
+    - `InMemoryEntitlementRepository`：内存仓储实现（`create/save/find/forUser/findBySourceOrderItem/currentForUserResource`）。
+  - `docs/evidence/SR-045/entitlement-repository-check.php` 覆盖创建、唯一约束、查询和快照不可变场景。
+- Files changed:
+  - `packages/sr-entitlements/src/Infrastructure/Repository/EntitlementStatus.php`
+  - `packages/sr-entitlements/src/Infrastructure/Repository/EntitlementException.php`
+  - `packages/sr-entitlements/src/Infrastructure/Repository/Entitlement.php`
+  - `packages/sr-entitlements/src/Infrastructure/Repository/EntitlementRepository.php`
+  - `packages/sr-entitlements/src/Infrastructure/Repository/InMemoryEntitlementRepository.php`
+  - `docs/evidence/SR-045/entitlement-repository-check.php`
+- Contract changes:
+  - 定义权益仓储接口与内存实现，后续数据库仓储可通过同一契约接线。
+  - `snapshotSignature()` 与保存约束确认快照不可变。
+- Migrations:
+  - 无新增迁移文件。
+- Commands and results:
+  - 见 `docs/evidence/SR-045/commands.log`。
+- Security/permission/concurrency checks:
+  - 快照签名与 `source_order_item_id` 唯一索引约束（内存实现）减少重复授权/重复发放风险。
+  - `create/save` 都校验输入 id 与快照一致性；`currentForUserResource` 基于时间窗与状态筛选。
+- Known limitations:
+  - 当前仅完成内存仓储，数据库持久化实现需在后续允许路径内完成。
+- Rollback:
+  - 回滚可移除本次新增文件并恢复到未创建对应仓储实现前状态。
+- Next safe task(s):
+  - SR-047（订单完成授权监听器）读取快照与仓储契约进行幂等授权下发。
+- Commit/PR:
+  - 待提交。

@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T06:30:35.042147+00:00'
+updated_at: '2026-06-29T07:28:30+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -580,13 +580,17 @@ tasks:
     - docs/evidence/SR-044/review-report.md
     blockers: []
   SR-045:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-045-rules-snapshot-repository
+    claimed_at: '2026-06-29T06:31:00.207182+00:00'
+    updated_at: '2026-06-29T07:28:30+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-045/commands.log
+    - docs/evidence/SR-045/completion-report.md
+    - docs/evidence/SR-045/review-report.md
+    - docs/evidence/SR-045/entitlement-repository-check.php
     blockers: []
   SR-046:
     status: BACKLOG
