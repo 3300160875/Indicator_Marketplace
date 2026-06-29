@@ -98,6 +98,7 @@ $disabledPolicy = new CheckoutPolicy(
 );
 $createdOrders = 0;
 $disabledCreator = new CheckoutOrderCreator($disabledPolicy, new CheckoutSnapshotFactory);
+$enabledCreator = new CheckoutOrderCreator($loginPolicy, new CheckoutSnapshotFactory);
 sr033_expect_error('payment_disabled', function () use ($disabledCreator, $request, &$createdOrders): void {
     $disabledCreator->create($request, static function (array $snapshot) use (&$createdOrders): array {
         $createdOrders++;
@@ -107,7 +108,54 @@ sr033_expect_error('payment_disabled', function () use ($disabledCreator, $reque
 });
 sr033_same(0, $createdOrders, 'payment disabled must not call real EDD order creation');
 
-$enabledCreator = new CheckoutOrderCreator($loginPolicy, new CheckoutSnapshotFactory);
+$manualDisabledCreator = new CheckoutOrderCreator(new CheckoutPolicy(
+    manualPaymentEnabled: false,
+    gate0Approved: true,
+    loginBaseUrl: '/wp-login.php',
+), new CheckoutSnapshotFactory);
+sr033_expect_error('payment_disabled', function () use ($manualDisabledCreator, $request, &$createdOrders): void {
+    $manualDisabledCreator->create($request, static function (array $snapshot) use (&$createdOrders): array {
+        $createdOrders++;
+
+        return ['id' => 998, 'snapshot' => $snapshot];
+    });
+});
+sr033_same(0, $createdOrders, 'manual payment disabled must not call real EDD order creation');
+
+$gate0DisabledCreator = new CheckoutOrderCreator(new CheckoutPolicy(
+    manualPaymentEnabled: true,
+    gate0Approved: false,
+    loginBaseUrl: '/wp-login.php',
+), new CheckoutSnapshotFactory);
+sr033_expect_error('payment_disabled', function () use ($gate0DisabledCreator, $request, &$createdOrders): void {
+    $gate0DisabledCreator->create($request, static function (array $snapshot) use (&$createdOrders): array {
+        $createdOrders++;
+
+        return ['id' => 997, 'snapshot' => $snapshot];
+    });
+});
+sr033_same(0, $createdOrders, 'Gate 0 disabled must not call real EDD order creation');
+
+$guestRequest = new CheckoutRequest(
+    userId: null,
+    returnUrl: $request->returnUrl,
+    serverTotal: $request->serverTotal,
+    clientTotal: $request->clientTotal,
+    currency: $request->currency,
+    termsAccepted: true,
+    digitalDeliveryAccepted: true,
+    terms: $terms,
+    lineItems: $request->lineItems,
+);
+sr033_expect_error('login_required', function () use ($enabledCreator, $guestRequest, &$createdOrders): void {
+    $enabledCreator->create($guestRequest, static function (array $snapshot) use (&$createdOrders): array {
+        $createdOrders++;
+
+        return ['id' => 996, 'snapshot' => $snapshot];
+    });
+});
+sr033_same(0, $createdOrders, 'guest create must not call real EDD order creation');
+
 $created = $enabledCreator->create($request, static function (array $snapshot) use (&$createdOrders): array {
     $createdOrders++;
 

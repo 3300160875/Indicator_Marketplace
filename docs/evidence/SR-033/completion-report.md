@@ -8,6 +8,7 @@
 - Migrations: none.
 - Commands and results: see `docs/evidence/SR-033/commands.log`.
 - Security/permission/concurrency checks: login required for order creation, payment disabled short-circuits before EDD order callback, terms and digital delivery confirmation are required, template avoids direct payment mutation and SQL.
+- Independent QA: Russell PASS with no blockers; evidence was strengthened to cover manual payment disabled, Gate 0 disabled and guest create paths separately.
 - Known limitations: runtime WordPress/EDD hook wiring is deferred; repository-level `make test-unit` and `make test-integration` targets do not exist yet.
 - Rollback: revert SR-033 commit/PR; no live order, payment or user data is mutated.
 - Next safe task(s): SR-034 实现订单项业务快照；SR-035 用户订单列表与下载入口。
