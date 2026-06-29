@@ -481,7 +481,7 @@ tasks:
     branch: feat/SR-037-payment-submissions
     claimed_at: '2026-06-29T03:40:30.960134+00:00'
     updated_at: '2026-06-29T03:53:14.960928+00:00'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/48
+    pr: null
     evidence:
     - docs/evidence/SR-037/payment-submissions-check.php
     - docs/evidence/SR-037/commands.log
@@ -625,7 +625,7 @@ tasks:
     branch: feat/SR-048-membership-renewal
     claimed_at: '2026-06-29T09:10:30.759090+00:00'
     updated_at: '2026-06-29T09:14:03.457517+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/48
     evidence:
     - docs/evidence/SR-048/membership-renewal-check.php
     - docs/evidence/SR-048/commands.log
