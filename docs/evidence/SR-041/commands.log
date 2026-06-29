@@ -108,4 +108,4 @@ python3 tools/agent/validate_docs.py
 
 Exit: 0.
 Output:
-`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+`OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`
