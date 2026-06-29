@@ -1,0 +1,24 @@
+# SR-050 Review Notes
+
+- Review source: independent read-only subagent review during implementation.
+- Initial findings:
+  - `reserve()` checked `request_id` before locking but did not re-check inside the locked counter section.
+  - `commit()` / `release()` read reservation state before locking and could double count under replay/interleaving.
+  - The first evidence script used a sequential 100-loop and over-described it as concurrency coverage.
+  - Some wording could be read as claiming a real SQL `SELECT FOR UPDATE` implementation.
+- Fixes applied:
+  - Added locked-section `request_id` re-check in `reserve()`.
+  - Added locked-section reservation re-read and status check in `commit()` / `release()`.
+  - Added interleaving evidence for same-request reserve and same-reservation commit races.
+  - Tightened evidence wording to describe store lock semantics and deferred real PDO/WPDB store wiring.
+- Verification:
+  - `php docs/evidence/SR-050/quota-service-check.php` passed.
+  - `php -l packages/sr-entitlements/src/Application/QuotaService.php` passed.
+  - `php -l docs/evidence/SR-050/quota-service-check.php` passed.
+  - `composer --working-dir=packages/sr-entitlements test` passed.
+  - `make test` passed.
+  - `python3 tools/agent/validate_docs.py` passed.
+  - `git diff --check` passed.
+- Review result:
+  - No blocking/high issues remain.
+  - Ready to submit PR for independent QA.

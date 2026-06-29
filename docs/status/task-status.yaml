@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T08:36:06.452231+00:00'
+updated_at: '2026-06-29T08:49:22.087536+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -638,13 +638,17 @@ tasks:
     evidence: []
     blockers: []
   SR-050:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-050-quota-service
+    claimed_at: '2026-06-29T08:38:27.097703+00:00'
+    updated_at: '2026-06-29T08:49:22.087526+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-050/quota-service-check.php
+    - docs/evidence/SR-050/commands.log
+    - docs/evidence/SR-050/completion-report.md
+    - docs/evidence/SR-050/review-report.md
     blockers: []
   SR-051:
     status: BACKLOG
