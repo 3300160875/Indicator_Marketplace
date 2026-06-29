@@ -1,0 +1,105 @@
+# SR-033 command log
+
+Branch: `feat/SR-033-checkout-terms`
+
+```bash
+php docs/evidence/SR-033/checkout-terms-check.php
+```
+
+Exit: 255 before implementation.
+Output: expected RED failure because `packages/sr-payment-gateways/src/Checkout/CheckoutException.php` did not exist yet.
+
+```bash
+php docs/evidence/SR-033/checkout-terms-check.php
+```
+
+Exit: 0 after implementation.
+Output: `SR-033 checkout terms checks passed.`
+
+```bash
+vendor/bin/pint --test packages/sr-payment-gateways/src/Checkout docs/evidence/SR-033 web/app/themes/stock-resource-theme/edd_templates
+```
+
+Exit: 1 before formatting.
+Output: Pint reported formatting fixes for new Checkout classes and evidence script.
+
+```bash
+composer --working-dir=packages/sr-payment-gateways test
+```
+
+Exit: 0.
+Output: `sr-payment-gateways skeleton tests: ok`
+
+```bash
+composer validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+vendor/bin/pint packages/sr-payment-gateways/src/Checkout docs/evidence/SR-033 web/app/themes/stock-resource-theme/edd_templates
+vendor/bin/pint --test packages/sr-payment-gateways/src/Checkout docs/evidence/SR-033 web/app/themes/stock-resource-theme/edd_templates
+```
+
+Exit: 0.
+Output: Pint fixed formatting, then `{"tool":"pint","result":"passed"}`.
+
+```bash
+composer --working-dir=packages/sr-payment-gateways validate --strict
+```
+
+Exit: 0.
+Output: `./composer.json is valid`
+
+```bash
+make lint
+```
+
+Exit: 0.
+Output: `lint: ok`
+
+```bash
+make test-unit MODULE=checkout
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-unit'. Stop.`
+Reason: repository-level target is not defined yet; replacement commands are `composer --working-dir=packages/sr-payment-gateways test` and `php docs/evidence/SR-033/checkout-terms-check.php`.
+
+```bash
+make test-integration
+```
+
+Exit: 2.
+Output: `make: *** No rule to make target 'test-integration'. Stop.`
+Reason: repository-level target is not defined yet; replacement command is `php docs/evidence/SR-033/checkout-terms-check.php`.
+
+```bash
+make test
+```
+
+Exit: 0.
+Output: `lint: ok`; `test: ok`.
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output: `OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent`.
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: no output.
+
+```bash
+php docs/evidence/SR-033/checkout-terms-check.php
+vendor/bin/pint --test docs/evidence/SR-033/checkout-terms-check.php
+```
+
+Exit: 0 after independent QA evidence enhancement.
+Output: `SR-033 checkout terms checks passed.`; `{"tool":"pint","result":"passed"}`.
