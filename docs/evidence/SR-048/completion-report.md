@@ -46,4 +46,5 @@
   - Independent review/QA for SR-048.
   - SR-049 refund revocation and manual grant/revoke.
 - Commit/PR:
-  - Pending.
+  - Commit: `e428465`
+  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/48
