@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 合并 SR-049 PR #50；随后推进 SR-051 服务端内容限制区块/短代码
+- Next safe task: SR-051 服务端内容限制区块/短代码
 - Gate 0: complete
 
 ## 本周完成
@@ -59,7 +59,7 @@
 - SR-046 已随 PR #44 合入 `main` 并标记 VERIFIED：AccessDecision 契约、AccessDecisionContext 与 EntitlementService 访问判断已完成。
 - SR-047 已通过独立 QA 并进入 VERIFIED（PR #46）：订单完成授权监听器支持资源商品/会员套餐授权、`source_order_item_id` 幂等、重复完成 10 次只授权一次和部分失败安全重跑。
 - SR-048 已随 PR #48 合入 `main` 并标记 VERIFIED：MembershipService 支持 active 同套餐续期顺延、过期/撤权后从当前购买时间起算、多套餐并存稳定择优和可解释选择结果。
-- SR-049 已通过独立 QA 并进入 VERIFIED（PR #50）：RevocationService 支持退款撤权、人工授权/撤销、原因必填、审计事件和用户权益/下载令牌缓存失效信号。
+- SR-049 已随 PR #50 合入 `main` 并标记 VERIFIED：RevocationService 支持退款撤权、人工授权/撤销、原因必填、审计事件和用户权益/下载令牌缓存失效信号。
 - SR-050 已通过独立 QA 并进入 VERIFIED（PR #47）：QuotaService 支持 reserve/commit/release、request_id 幂等、deadlock retry、lock timeout fail-closed 和配额不超发检查。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
@@ -69,5 +69,5 @@
 
 ## 下一步
 
-1. 合并 SR-049 PR #50。
-2. 推进 SR-051：服务端内容限制区块/短代码。
+1. 推进 SR-051：服务端内容限制区块/短代码。
+2. SR-051 完成后继续 SR-052：会员中心、权益与配额 API。
