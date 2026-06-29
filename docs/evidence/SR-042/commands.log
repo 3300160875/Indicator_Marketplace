@@ -151,3 +151,13 @@ Exit: 0.
 Output:
 `To https://github.com/3300160875/Indicator_Marketplace.git`
 `   17acfda..f0f92f0  feat/SR-042-payment-review-notification-outbox -> feat/SR-042-payment-review-notification-outbox`
+
+```bash
+cd /home/devops-ubuntu/Developer/Indicator_Marketplace/project
+gh pr checks 39
+```
+
+Exit: 0.
+Output:
+`Frontend gate	pass	13s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28349718605/job/83980018783`
+`PHP gate	pass	29s	https://github.com/3300160875/Indicator_Marketplace/actions/runs/28349718605/job/83980018782`
