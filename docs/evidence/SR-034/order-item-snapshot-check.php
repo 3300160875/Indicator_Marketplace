@@ -72,6 +72,7 @@ $fixture['items'][1][0]['snapshot'] = [
     'rules_version' => 'rules-2026-06',
     'price_id' => 2,
     'unit_amount' => '12.34',
+    'discount_amount' => '0',
     'total_amount' => '12.34',
     'terms_snapshot' => [
         'service_terms_version' => 'terms-2026-06',
@@ -88,6 +89,7 @@ $fixture['items'][3][0]['snapshot'] = [
     'rules_version' => 'rules-2026-06',
     'price_id' => 0,
     'unit_amount' => '8.00',
+    'discount_amount' => '0',
     'total_amount' => '8.00',
     'terms_snapshot' => [
         'service_terms_version' => 'terms-2026-06',
@@ -131,6 +133,94 @@ $fixture['items'][5] = [
         ],
     ],
 ];
+$fixture['orders'][6] = [
+    'id' => 6,
+    'type' => 'sale',
+    'status' => 'complete',
+    'customer_id' => 20,
+    'subtotal' => '1.000000000',
+    'tax' => '0.000000000',
+    'total' => '1.000000000',
+    'currency' => 'CNY',
+    'date_created' => '2026-06-25T07:10:00Z',
+    'date_completed' => '2026-06-25T07:12:00Z',
+];
+$fixture['items'][6] = [
+    [
+        'id' => 601,
+        'order_id' => 6,
+        'product_id' => 13,
+        'price_id' => 0,
+        'quantity' => 1,
+        'subtotal' => '1.000000000',
+        'tax' => '0.000000000',
+        'total' => '1.000000000',
+        'snapshot' => [
+            'product_type' => 'resource',
+            'rules_version' => 'rules-2026-06',
+            'terms_snapshot' => ['service_terms_version' => 'terms-2026-06'],
+        ],
+    ],
+];
+$fixture['orders'][7] = [
+    'id' => 7,
+    'type' => 'sale',
+    'status' => 'complete',
+    'customer_id' => 20,
+    'subtotal' => '1.000000000',
+    'tax' => '0.000000000',
+    'total' => '1.000000000',
+    'currency' => 'CNY',
+    'date_created' => '2026-06-25T07:20:00Z',
+    'date_completed' => '2026-06-25T07:22:00Z',
+];
+$fixture['items'][7] = [
+    [
+        'id' => 701,
+        'order_id' => 7,
+        'product_id' => 14,
+        'price_id' => 0,
+        'quantity' => 1,
+        'subtotal' => '1.000000000',
+        'tax' => '0.000000000',
+        'total' => '1.000000000',
+        'snapshot' => [
+            'product_type' => 'membership_plan',
+            'rules_version' => 'rules-2026-06',
+            'terms_snapshot' => ['service_terms_version' => 'terms-2026-06'],
+        ],
+    ],
+];
+$fixture['orders'][8] = [
+    'id' => 8,
+    'type' => 'sale',
+    'status' => 'complete',
+    'customer_id' => 20,
+    'subtotal' => '1.000000000',
+    'tax' => '0.000000000',
+    'total' => '1.000000000',
+    'currency' => 'CNY',
+    'date_created' => '2026-06-25T07:30:00Z',
+    'date_completed' => '2026-06-25T07:32:00Z',
+];
+$fixture['items'][8] = [
+    [
+        'id' => 801,
+        'order_id' => 8,
+        'product_id' => 15,
+        'price_id' => 0,
+        'quantity' => 1,
+        'subtotal' => '1.000000000',
+        'tax' => '0.000000000',
+        'total' => '1.000000000',
+        'snapshot' => [
+            'product_type' => 'resource',
+            'resource_id' => 1008,
+            'version_id' => 508,
+            'rules_version' => 'rules-2026-06',
+        ],
+    ],
+];
 
 $adapter = new EddOrderAdapter($fixture);
 $service = new OrderSnapshotService;
@@ -148,6 +238,8 @@ sr034_same(501, $snapshot->versionId, 'snapshot freezes resource version id');
 sr034_same(null, $snapshot->planDownloadId, 'resource snapshot does not invent plan id');
 sr034_same('rules-2026-06', $snapshot->rulesVersion, 'snapshot freezes rules version');
 sr034_same(2, $snapshot->priceId, 'snapshot freezes price id from business snapshot');
+sr034_same('12.34', $snapshot->unitAmount, 'snapshot freezes unit amount');
+sr034_same('0', $snapshot->discountAmount, 'snapshot freezes discount amount');
 sr034_same('12.34', $snapshot->totalAmount, 'snapshot freezes item amount');
 sr034_same('CNY', $snapshot->currency, 'snapshot freezes currency');
 sr034_same('none', $snapshot->refundStatus, 'completed order has no refund status');
@@ -178,6 +270,9 @@ sr034_same('partial', $planSnapshots[0]->refundStatus, 'partially refunded order
 sr034_expect_error('order_not_owned', fn () => $service->snapshotsForOrder($adapter, orderId: 1, userId: 999));
 sr034_expect_error('missing_user_mapping', fn () => $service->snapshotsForOrder($adapter, orderId: 5, userId: 0));
 sr034_expect_error('refund_order_not_accessible', fn () => $service->snapshotsForOrder($adapter, orderId: 2, userId: 200));
+sr034_expect_error('invalid_snapshot', fn () => $service->snapshotsForOrder($adapter, orderId: 6, userId: 200));
+sr034_expect_error('invalid_snapshot', fn () => $service->snapshotsForOrder($adapter, orderId: 7, userId: 200));
+sr034_expect_error('invalid_snapshot', fn () => $service->snapshotsForOrder($adapter, orderId: 8, userId: 200));
 
 $source = '';
 foreach (glob($core.'/src/Commerce/OrderSnapshot/*.php') ?: [] as $file) {

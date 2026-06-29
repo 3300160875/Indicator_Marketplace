@@ -109,3 +109,20 @@ git diff --check
 
 Exit: 0.
 Output: no output.
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+```
+
+Exit: 255 during independent QA fix.
+Output: expected RED failure because the snapshot did not yet freeze `unit_amount`/`discount_amount` and did not reject incomplete business metadata.
+
+```bash
+php docs/evidence/SR-034/order-item-snapshot-check.php
+vendor/bin/pint --test packages/sr-core/src/Commerce/OrderSnapshot docs/evidence/SR-034
+composer --working-dir=packages/sr-core test
+make test
+```
+
+Exit: 0 after independent QA fix.
+Output: `SR-034 order item snapshot checks passed.`; `{"tool":"pint","result":"passed"}`; `sr-core runtime tests: ok`; `lint: ok`; `test: ok`.

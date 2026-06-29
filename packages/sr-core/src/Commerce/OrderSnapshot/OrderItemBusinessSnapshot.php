@@ -23,7 +23,9 @@ final readonly class OrderItemBusinessSnapshot
         public int $priceId,
         public int $quantity,
         public string $currency,
+        public string $unitAmount,
         public string $subtotalAmount,
+        public string $discountAmount,
         public string $taxAmount,
         public string $totalAmount,
         public string $productType,
@@ -50,7 +52,22 @@ final readonly class OrderItemBusinessSnapshot
 
         $termsSnapshot = $business['terms_snapshot'] ?? [];
         if (! is_array($termsSnapshot)) {
-            $termsSnapshot = [];
+            throw OrderSnapshotException::invalidSnapshot('terms_snapshot is required');
+        }
+        $normalizedTermsSnapshot = self::normalizeTermsSnapshot($termsSnapshot);
+        if ($normalizedTermsSnapshot === []) {
+            throw OrderSnapshotException::invalidSnapshot('terms_snapshot is required');
+        }
+
+        $resourceId = self::intValue($business, 'resource_id');
+        $versionId = self::intValue($business, 'version_id');
+        $planDownloadId = self::intValue($business, 'plan_download_id');
+        $planCode = self::nullableStringValue($business, 'plan_code');
+        if ($productType === 'resource' && ($resourceId === null || $versionId === null)) {
+            throw OrderSnapshotException::invalidSnapshot('resource_id and version_id are required for resource snapshots');
+        }
+        if ($productType === 'membership_plan' && ($planDownloadId === null || $planCode === null)) {
+            throw OrderSnapshotException::invalidSnapshot('plan_download_id and plan_code are required for membership plan snapshots');
         }
 
         $payload = [
@@ -63,18 +80,20 @@ final readonly class OrderItemBusinessSnapshot
             'price_id' => self::intValue($business, 'price_id') ?? $item->priceId,
             'quantity' => $item->quantity,
             'currency' => strtoupper($order->currency),
+            'unit_amount' => self::amountValue($business, 'unit_amount', $item->total->toString()),
             'subtotal_amount' => self::amountValue($business, 'subtotal_amount', $item->subtotal->toString()),
+            'discount_amount' => self::amountValue($business, 'discount_amount', '0'),
             'tax_amount' => $item->tax->toString(),
             'total_amount' => self::amountValue($business, 'total_amount', $item->total->toString()),
             'product_type' => $productType,
             'rules_version' => $rulesVersion,
             'access_mode' => self::stringValue($business, 'access_mode'),
             'refund_status' => self::refundStatus($order->status),
-            'resource_id' => self::intValue($business, 'resource_id'),
-            'version_id' => self::intValue($business, 'version_id'),
-            'plan_download_id' => self::intValue($business, 'plan_download_id'),
-            'plan_code' => self::nullableStringValue($business, 'plan_code'),
-            'terms_snapshot' => self::normalizeTermsSnapshot($termsSnapshot),
+            'resource_id' => $resourceId,
+            'version_id' => $versionId,
+            'plan_download_id' => $planDownloadId,
+            'plan_code' => $planCode,
+            'terms_snapshot' => $normalizedTermsSnapshot,
             'captured_at' => $order->completedAt !== '' ? $order->completedAt : $order->createdAt,
         ];
 
@@ -87,7 +106,9 @@ final readonly class OrderItemBusinessSnapshot
             priceId: $payload['price_id'],
             quantity: $payload['quantity'],
             currency: $payload['currency'],
+            unitAmount: $payload['unit_amount'],
             subtotalAmount: $payload['subtotal_amount'],
+            discountAmount: $payload['discount_amount'],
             taxAmount: $payload['tax_amount'],
             totalAmount: $payload['total_amount'],
             productType: $payload['product_type'],
@@ -119,7 +140,9 @@ final readonly class OrderItemBusinessSnapshot
             'price_id' => $this->priceId,
             'quantity' => $this->quantity,
             'currency' => $this->currency,
+            'unit_amount' => $this->unitAmount,
             'subtotal_amount' => $this->subtotalAmount,
+            'discount_amount' => $this->discountAmount,
             'tax_amount' => $this->taxAmount,
             'total_amount' => $this->totalAmount,
             'product_type' => $this->productType,
