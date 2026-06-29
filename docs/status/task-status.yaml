@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-29T07:28:30+00:00'
+updated_at: '2026-06-29T07:49:31+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -528,12 +528,12 @@ tasks:
     - docs/evidence/SR-040/review-report.md
     blockers: []
   SR-041:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-041-decision-timeline
     claimed_at: '2026-06-29T04:38:36.439022+00:00'
-    updated_at: '2026-06-29T04:45:01+00:00'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/38
+    updated_at: '2026-06-29T07:05:39+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/41
     evidence:
     - docs/evidence/SR-041/commands.log
     - docs/evidence/SR-041/review-report.md
@@ -541,11 +541,11 @@ tasks:
     - docs/evidence/SR-041/payment-decision-check.php
     blockers: []
   SR-042:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-042-payment-review-notification-outbox
     claimed_at: '2026-06-29T04:54:12.473406+00:00'
-    updated_at: '2026-06-29T05:00:06+00:00'
+    updated_at: '2026-06-29T07:26:17+00:00'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/39
     evidence:
     - docs/evidence/SR-042/commands.log
@@ -580,12 +580,12 @@ tasks:
     - docs/evidence/SR-044/review-report.md
     blockers: []
   SR-045:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-045-rules-snapshot-repository
     claimed_at: '2026-06-29T06:31:00.207182+00:00'
-    updated_at: '2026-06-29T07:28:30+00:00'
-    pr: null
+    updated_at: '2026-06-29T07:30:36+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/42
     evidence:
     - docs/evidence/SR-045/commands.log
     - docs/evidence/SR-045/completion-report.md

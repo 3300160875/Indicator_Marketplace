@@ -1,8 +1,8 @@
 # SR-041 Review Report
 
 - Review scope: `packages/sr-payment-gateways/src/Application/Decision/DecisionService.php` and `docs/evidence/SR-041/payment-decision-check.php`。
-- Scope verdict: pending independent review.
-- GitHub state: PR #38 is open at https://github.com/3300160875/Indicator_Marketplace/pull/38; this fix branch includes the same SR-041 commits for end-to-end SR-037 through SR-041 review continuity.
+- Scope verdict: PASS.
+- GitHub state: SR-041 was superseded by the corrective review PR #41 and merged into `main` at `07003c7443e5b5d9d014910533635b1f10d2fca3`; PR #38 was closed as superseded.
 - 本地复核结论:
   - `DecisionService` 正确实现 `requestMoreInfo` 与 `reject` 的决策动作；
   - 状态机转移仅限 `under_review -> needs_more_info / rejected`；

@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: SR-041 接口接线与运行时权限
+- Next safe task: SR-046 实现 AccessDecision 与 EntitlementService
 - Gate 0: complete
 
 ## 本周完成
@@ -51,6 +51,11 @@
 - SR-038 已完成并进入 VERIFIED：付款凭证提交 API 支持层已完成（幂等键、状态机约束、文件校验、时间线与状态查询）。
 - SR-039 已完成并进入 VERIFIED：审核队列并发控制支持层已完成（同一 reviewer 重入、锁超时、锁版本与超时释放）。
 - SR-040 已完成并进入 VERIFIED：支付审核服务完成层已完成（重放保护、权限控制、指纹校验、订单完成回调）。
+- SR-041 已随 PR #41 合入 `main` 并标记 VERIFIED：审核决策服务与支付审核用户时间线已完成，原 PR #38 已关闭为 superseded。
+- SR-042 已随 PR #39 合入 `main` 并标记 VERIFIED：付款审核通知 Outbox 框架、重试/死信与内存仓储支持层已完成。
+- SR-043 已随 PR #40 合入 `main` 并标记 VERIFIED：权益、配额计数与下载事件核心表迁移定义已完成。
+- SR-044 已随 PR #40 合入 `main` 并标记 VERIFIED：会员套餐元数据解析、范围/配额/规则版本校验已完成。
+- SR-045 已随 PR #42 合入 `main` 并标记 VERIFIED：权益快照仓储契约、内存实现、快照签名与不可变校验已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -59,5 +64,5 @@
 
 ## 下一步
 
-1. 推进 SR-038/039/040 产线 PR 提交。
-2. SR-041 接口接线与审批后台入口。
+1. 推进 SR-046：实现 AccessDecision 与 EntitlementService，统一免费/单购/人工/VIP/拒绝的访问判断。
+2. SR-046 完成后推进 SR-047：订单完成授权监听器，将 EDD 完成订单转成权益。

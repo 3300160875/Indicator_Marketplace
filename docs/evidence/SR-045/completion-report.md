@@ -1,6 +1,6 @@
 # SR-045 Completion Report
 
-- Task / status: SR-045, REVIEW.
+- Task / status: SR-045, VERIFIED.
 - Branch: `feat/SR-045-rules-snapshot-repository`。
 - Scope completed:
   - 在 `packages/sr-entitlements/src/Infrastructure/Repository/` 下新增/完善权益快照仓储核心契约：
@@ -34,4 +34,5 @@
 - Next safe task(s):
   - SR-047（订单完成授权监听器）读取快照与仓储契约进行幂等授权下发。
 - Commit/PR:
-  - 待提交。
+  - PR #42: https://github.com/3300160875/Indicator_Marketplace/pull/42
+  - Merge commit: `7e1766416812c7db87fbc302dedfb64cd1a58abf`
