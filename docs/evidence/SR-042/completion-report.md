@@ -1,6 +1,6 @@
 # SR-042 Completion Report
 
-- Task / status: SR-042, REVIEW.
+- Task / status: SR-042, VERIFIED.
 - Branch: `feat/SR-042-payment-review-notification-outbox`.
 - Scope completed:
   - 在 `packages/sr-admin-ops/src/Outbox/` 中补齐 Outbox 运行时骨架（事件值对象、状态枚举、存储接口、内存仓储、发送器接口、执行结果、Worker）。
@@ -51,3 +51,4 @@
     - `76e200e`（`docs(SR-042): include PR-check commit in completion metadata`）
     - `7baee5c`（`docs(SR-042): log latest PR checks run`）
   - PR: https://github.com/3300160875/Indicator_Marketplace/pull/39
+  - Merge commit: `8651a8c44e6b57f1041a99a14825fbda4a9993b4`

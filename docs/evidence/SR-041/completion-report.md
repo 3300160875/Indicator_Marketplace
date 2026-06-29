@@ -1,6 +1,6 @@
 # SR-041 Completion Report
 
-- Task / status: SR-041, REVIEW.
+- Task / status: SR-041, VERIFIED.
 - Branch: `feat/SR-041-decision-timeline`.
 - Scope completed:
   - 在 `packages/sr-payment-gateways/src/Application/Decision/DecisionService.php` 实现审核决策服务，支持 `needs_more_info` 与 `reject`。
@@ -35,5 +35,6 @@
 - Next safe task(s):
   - SR-042（实现付款审核通知 Outbox）。
 - Commit/PR:
-  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/38
-  - 本修复分支已 cherry-pick SR-041 现有提交，用于与 SR-037 到 SR-040 的修复一起复核；SR-041 状态仍保持 `REVIEW`，等待独立复核/合并。
+  - PR #41: https://github.com/3300160875/Indicator_Marketplace/pull/41
+  - Merge commit: `07003c7443e5b5d9d014910533635b1f10d2fca3`
+  - 原 PR #38 已关闭，SR-041 内容已随 #41 的 SR-037 到 SR-041 连续修复一起合入 `main`。
