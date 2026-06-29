@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: SR-035 用户订单列表与下载入口
+- Next safe task: SR-036 生成订单状态机与边界文案
 - Gate 0: complete
 
 ## 本周完成
@@ -45,6 +45,7 @@
 - SR-032 已通过独立 QA 并标记 VERIFIED：资源访问模式与价格校验已完成，free/purchase/vip/purchase_or_vip/unavailable 受控，服务端重新计算金额，`ResourcePurchaseValidator` 仅接受资源商品并拒绝会员套餐混入资源购买流程。
 - SR-033 已通过独立 QA 并标记 VERIFIED：定制 EDD 结算与数字内容条款支持层已完成，未登录策略明确，Gate 0/付款开关关闭时不会调用真实订单创建回调，服务端金额、条款版本和数字内容确认会进入结算快照。
 - SR-034 已通过独立 QA 并标记 VERIFIED：订单项业务快照支持层已完成，商品类型/规则版本/价格/资源或套餐元数据冻结，unit/discount/total 金额入快照，已有快照按订单项幂等复用，非本人订单、退款单、缺失用户映射和缺失必填业务元数据会安全失败。
+- SR-035 已进入 REVIEW：用户订单列表与详情适配支持层已完成，只返回当前用户订单，状态映射为用户可读文案，缓存 key 包含用户与规则版本，空态/过期/撤权/配额重置有可复核投影，内部审核备注不会暴露。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -53,6 +54,6 @@
 
 ## 下一步
 
-1. 合并 SR-034 并在 main 上完成回归验证。
-2. SR-035 用户订单列表与下载入口。
-3. SR-036 生成订单状态机与边界文案。
+1. 完成 SR-035 PR / CI / independent QA / merge / VERIFIED 收口。
+2. SR-036 生成订单状态机与边界文案。
+3. SR-037 实现订单/权益事件 Outbox。
