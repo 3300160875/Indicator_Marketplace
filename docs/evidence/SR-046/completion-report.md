@@ -1,6 +1,6 @@
 # SR-046 Completion Report
 
-- Task / status: SR-046, REVIEW.
+- Task / status: SR-046, VERIFIED.
 - Branch: `feat/SR-046-access-decision`.
 - Scope completed:
   - 新增共享契约 `AccessDecision`，统一返回 `allowed`、`reason_code`、`source`、`entitlement_id`、`quota`、`expires_at` 与 `rules_version`。
@@ -35,4 +35,5 @@
   - SR-047：订单完成授权监听器。
   - SR-050：QuotaService 原子预占/结算/释放。
 - Commit/PR:
-  - 待提交。
+  - PR #44: https://github.com/3300160875/Indicator_Marketplace/pull/44
+  - Merge commit: `fd9692c17075d7f952bf752b1206b426634979e8`
