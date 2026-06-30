@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T03:54:13.486279+00:00'
+updated_at: '2026-06-30T04:05:49.662835+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -507,7 +507,7 @@ tasks:
     branch: feat/SR-039-review-queue-concurrency
     claimed_at: '2026-06-29T04:03:53.440516+00:00'
     updated_at: '2026-06-29T04:22:11.118200+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/66
     evidence:
     - docs/evidence/SR-039/review-queue-check.php
     - docs/evidence/SR-039/commands.log
@@ -728,11 +728,11 @@ tasks:
     - docs/evidence/SR-055/review-report.md
     blockers: []
   SR-056:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-056-download-settlement
     claimed_at: '2026-06-30T03:49:53.008065+00:00'
-    updated_at: '2026-06-30T03:54:13.486270+00:00'
+    updated_at: '2026-06-30T04:05:49.662825+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-056/download-settlement-check.php
