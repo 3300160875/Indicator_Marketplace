@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T03:08:59.380639+00:00'
+updated_at: '2026-06-30T03:30:34.358224+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -715,13 +715,17 @@ tasks:
     - docs/evidence/SR-054/review-report.md
     blockers: []
   SR-055:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-055-consume-token-delivery
+    claimed_at: '2026-06-30T03:28:15.665211+00:00'
+    updated_at: '2026-06-30T03:30:34.358215+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-055/consume-download-token-check.php
+    - docs/evidence/SR-055/commands.log
+    - docs/evidence/SR-055/completion-report.md
+    - docs/evidence/SR-055/review-report.md
     blockers: []
   SR-056:
     status: BACKLOG
