@@ -21,6 +21,70 @@ php_lint_tracked() {
   done
 }
 
+package_for_module() {
+  module="$(printf '%s' "${1:-}" | tr '[:upper:]' '[:lower:]')"
+  case "$module" in
+    ""|"all"|"plugins")
+      printf '%s\n' "all"
+      ;;
+    "contracts"|"sr-contracts")
+      printf '%s\n' "packages/sr-contracts"
+      ;;
+    "bootstrap"|"platform"|"sr-platform-bootstrap")
+      printf '%s\n' "packages/sr-platform-bootstrap"
+      ;;
+    "core"|"api"|"seo"|"content"|"fixtures"|"resources"|"taxonomy"|"versions"|"observability"|"sr-core")
+      printf '%s\n' "packages/sr-core"
+      ;;
+    "sr-entitlements"|"entitlements"|"account"|"accounts"|"plans"|"rights"|"favorites")
+      printf '%s\n' "packages/sr-entitlements"
+      ;;
+    "sr-private-downloads"|"downloads"|"storage")
+      printf '%s\n' "packages/sr-private-downloads"
+      ;;
+    "sr-payment-gateways"|"payment"|"payments"|"checkout"|"commerce"|"orders"|"edd")
+      printf '%s\n' "packages/sr-payment-gateways"
+      ;;
+    "sr-admin-ops"|"admin"|"audit"|"reports"|"support"|"notification")
+      printf '%s\n' "packages/sr-admin-ops"
+      ;;
+    *)
+      printf 'Unknown MODULE: %s\n' "$module" >&2
+      printf 'Known examples: sr-entitlements, sr-private-downloads, sr-payment-gateways, sr-admin-ops, sr-core, contracts, bootstrap, account, downloads.\n' >&2
+      return 2
+      ;;
+  esac
+}
+
+run_package_test() {
+  package_dir="$1"
+  if [ ! -f "$package_dir/composer.json" ]; then
+    printf 'Missing package composer.json: %s\n' "$package_dir" >&2
+    return 1
+  fi
+
+  if command -v composer >/dev/null 2>&1; then
+    composer --working-dir="$package_dir" test
+    return $?
+  fi
+
+  if [ -f "$package_dir/tests/run.php" ]; then
+    php "$package_dir/tests/run.php"
+    return $?
+  fi
+
+  printf 'No package test runner found: %s\n' "$package_dir" >&2
+  return 1
+}
+
+run_all_package_tests() {
+  for package_dir in packages/*; do
+    if [ -f "$package_dir/composer.json" ]; then
+      run_package_test "$package_dir"
+    fi
+  done
+}
+
 case "${1:-help}" in
   help)
     cat <<'EOF'
@@ -34,6 +98,10 @@ Development commands:
   make seed        run seed data when available
   make lint        validate compose, shell scripts, Composer metadata and tracked PHP syntax
   make test        run local smoke-level tests available in W1
+  make test-unit MODULE=<name>
+                   run package-level unit tests for a module alias
+  make test-integration TEST=<name>
+                   run repository integration gate; TEST narrows the intent label when available
   make test-smoke  verify running Docker services
   make e2e         run end-to-end tests when available
   make status      show Docker service status
@@ -90,6 +158,23 @@ EOF
   test)
     bin/dev lint
     printf 'test: ok\n'
+    ;;
+  test-unit)
+    target="$(package_for_module "${2:-all}")"
+    if [ "$target" = "all" ]; then
+      run_all_package_tests
+    else
+      run_package_test "$target"
+    fi
+    printf 'test-unit: ok\n'
+    ;;
+  test-integration)
+    label="${2:-all}"
+    if [ -n "$label" ]; then
+      printf 'test-integration: running repository gate for %s\n' "$label"
+    fi
+    bin/dev test
+    printf 'test-integration: ok\n'
     ;;
   smoke|test-smoke)
     exec infra/docker/smoke.sh
