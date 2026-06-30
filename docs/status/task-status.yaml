@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T03:30:34.358224+00:00'
+updated_at: '2026-06-30T03:54:13.486279+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -494,7 +494,7 @@ tasks:
     branch: feat/SR-038-payment-proof-api
     claimed_at: '2026-06-29T03:53:17.183518+00:00'
     updated_at: '2026-06-29T04:22:11.118200+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/66
     evidence:
     - docs/evidence/SR-038/payment-proof-check.php
     - docs/evidence/SR-038/commands.log
@@ -728,13 +728,17 @@ tasks:
     - docs/evidence/SR-055/review-report.md
     blockers: []
   SR-056:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-056-download-settlement
+    claimed_at: '2026-06-30T03:49:53.008065+00:00'
+    updated_at: '2026-06-30T03:54:13.486270+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-056/download-settlement-check.php
+    - docs/evidence/SR-056/commands.log
+    - docs/evidence/SR-056/completion-report.md
+    - docs/evidence/SR-056/review-report.md
     blockers: []
   SR-057:
     status: BACKLOG
