@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T05:07:10.184060+00:00'
+updated_at: '2026-06-30T06:42:00.132955+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -754,13 +754,18 @@ tasks:
     - docs/evidence/SR-057/review-report.md
     blockers: []
   SR-058:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-058-nginx-cache-hotlink
+    claimed_at: '2026-06-30T06:37:13.478484+00:00'
+    updated_at: '2026-06-30T06:42:00.132945+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-058/nginx-policy-check.php
+    - docs/evidence/SR-058/nginx-runtime-check.sh
+    - docs/evidence/SR-058/commands.log
+    - docs/evidence/SR-058/completion-report.md
+    - docs/evidence/SR-058/review-report.md
     blockers: []
   SR-059:
     status: BACKLOG
