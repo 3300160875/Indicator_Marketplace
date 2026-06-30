@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T06:56:51.658337+00:00'
+updated_at: '2026-06-30T07:12:30.925530+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -768,12 +768,12 @@ tasks:
     - docs/evidence/SR-058/review-report.md
     blockers: []
   SR-059:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-059-rights-publication-gate
     claimed_at: '2026-06-30T06:51:33.455256+00:00'
-    updated_at: '2026-06-30T06:56:51.658311+00:00'
-    pr: null
+    updated_at: '2026-06-30T07:12:30.925519+00:00'
+    pr: 73
     evidence:
     - docs/evidence/SR-059/rights-gate-check.php
     - docs/evidence/SR-059/commands.log

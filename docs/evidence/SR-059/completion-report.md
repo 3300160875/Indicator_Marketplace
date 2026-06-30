@@ -84,5 +84,5 @@ Full output summary: `docs/evidence/SR-059/commands.log`.
 
 ## Commit / PR
 
-- Commit: pending
-- PR: pending
+- Commit: `ed49b9c`
+- PR #73: https://github.com/3300160875/Indicator_Marketplace/pull/73
