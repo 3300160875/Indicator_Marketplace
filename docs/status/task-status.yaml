@@ -702,7 +702,7 @@ tasks:
     - docs/evidence/SR-053/review-report.md
     blockers: []
   SR-054:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-054-create-token-api
     claimed_at: '2026-06-30T03:06:06.477744+00:00'
