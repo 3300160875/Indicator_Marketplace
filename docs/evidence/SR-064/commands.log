@@ -1,0 +1,76 @@
+SR-064 command log
+Generated: 2026-06-30T19:12:17+08:00
+Branch: feat/SR-064-reports-health
+
+Context
+- Dependencies checked: SR-042 VERIFIED, SR-056 VERIFIED, SR-060 VERIFIED.
+- Contracts read: docs/tasks/SR-064.md, docs/contracts/permissions.yaml, docs/contracts/schema.sql, docs/contracts/openapi.yaml.
+- Allowed code paths used: packages/sr-admin-ops/src/Reports/**.
+- RED evidence: php docs/evidence/SR-064/reports-health-check.php failed before implementation because Reports support classes did not exist.
+
+Commands
+1. php docs/evidence/SR-064/reports-health-check.php
+   Exit before implementation: 255
+   RED result: missing Reports support class under packages/sr-admin-ops/src/Reports.
+
+2. php docs/evidence/SR-064/reports-health-check.php
+   Exit after implementation: 0
+   Result: SR-064 reports and health checks passed.
+   Coverage:
+   - orders completed without entitlement metric is visible.
+   - download failure rate metric is visible.
+   - average payment review duration metric is visible.
+   - reporting timezone and freshness delay are documented in metric definitions.
+   - report build is read-only and does not mutate fact snapshots.
+   - health checks expose outbox dead letters, download settlement backlog and audit freshness.
+   - CSV export is aggregate-only and hides emails, order IDs, tokens and storage keys.
+   - foreground query guards reject oversized windows and raw fact sets.
+   - facts outside the ReportingWindow are excluded from metric calculations.
+   - legacy finance report capabilities are not accepted for SR-064 view/export.
+
+3. composer validate --strict
+   Exit: 0
+   Result: ./composer.json is valid.
+
+4. make lint
+   Exit: 0
+   Result: lint: ok.
+
+5. make test-unit MODULE=reports
+   Exit: 0
+   Result: sr-admin-ops skeleton tests ok; test-unit ok.
+   Note: SR-064 behavior coverage is provided by docs/evidence/SR-064/reports-health-check.php.
+
+6. make test-integration
+   Exit: 0
+   Result: repository gate for all passed; lint ok; test ok; test-integration ok.
+
+7. git diff --check
+   Exit: 0
+   Result: no whitespace errors in tracked diff.
+
+8. python tools/agent/validate_docs.py
+   Exit: 127
+   Result: command not found in this environment.
+   Deviation: task card requires python, but this runner only has python3 available.
+
+9. python3 tools/agent/validate_docs.py
+   Exit: 0
+   Result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+10. php -l docs/evidence/SR-064/reports-health-check.php
+    Exit: 0
+    Result: No syntax errors detected.
+
+11. find packages/sr-admin-ops/src/Reports -name '*.php' -print | sort | xargs -n1 php -l
+    Exit: 0
+    Result: No syntax errors detected in all SR-064 Reports classes.
+
+Failure / attack checks
+- Unprivileged users cannot view reports.
+- View-only users cannot export reports.
+- CSV export contains aggregate metrics only and does not leak emails, order IDs, tokens or storage keys.
+- Foreground reports reject oversized date windows and oversized raw fact sets.
+- Window-external facts are excluded from report metrics.
+- Legacy finance report capabilities are denied for view/export.
+- Report build is read-only and does not mutate fact snapshots.

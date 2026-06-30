@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T11:10:17.125404+00:00'
+updated_at: '2026-06-30T11:16:02.471325+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -833,13 +833,17 @@ tasks:
     - docs/evidence/SR-063/review-report.md
     blockers: []
   SR-064:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-064-reports-health
+    claimed_at: '2026-06-30T11:12:17.530913+00:00'
+    updated_at: '2026-06-30T11:16:02.471306+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-064/reports-health-check.php
+    - docs/evidence/SR-064/commands.log
+    - docs/evidence/SR-064/completion-report.md
+    - docs/evidence/SR-064/review-report.md
     blockers: []
   SR-065:
     status: BACKLOG
