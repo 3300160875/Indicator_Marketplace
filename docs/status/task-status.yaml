@@ -494,7 +494,7 @@ tasks:
     branch: feat/SR-038-payment-proof-api
     claimed_at: '2026-06-29T03:53:17.183518+00:00'
     updated_at: '2026-06-29T04:22:11.118200+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/66
     evidence:
     - docs/evidence/SR-038/payment-proof-check.php
     - docs/evidence/SR-038/commands.log
