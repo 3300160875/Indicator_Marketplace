@@ -64,6 +64,7 @@
 - SR-051 已随 PR #52 合入 `main` 并标记 VERIFIED：ContentRestriction 服务端支持层可按 AccessDecision 渲染短代码/区块，未授权与编辑器预览不会输出隐藏内容，并提供用户/资源维度 cache vary keys。
 - SR-052 已随 PR #54 合入 `main` 并标记 VERIFIED：会员中心 `/me` 权益投影、可注册 REST route wrapper、用户+规则版本缓存读写/失效、会员权益模板与独立 QA 证据已完成；启动入口和账户页接线留给后续允许改 bootstrap/template 入口的任务。
 - 测试入口补强已完成：仓库级 `make test-unit MODULE=...`、`make test-integration TEST=...` 与 `make test-concurrency TEST=...` 已可用，`account`、`sr-private-downloads`、`Downloads` 和 `DownloadTokens` 路径验证通过。
+- SR-053 已随 PR #59 合入 `main` 并标记 VERIFIED：`sr_download_tokens` schema 定义、HMAC token hash 存储、32 字节 Base64URL raw token、120 秒 TTL、request_id/token_hash 唯一、原子单次消费契约和 DownloadTokens 并发证据已完成。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -72,5 +73,5 @@
 
 ## 下一步
 
-1. 推进 SR-053：下载令牌服务。
-2. SR-053 完成后继续 SR-054：下载令牌 REST API / 校验链路。
+1. 推进 SR-054：下载令牌 REST API / 校验链路。
+2. SR-054 完成后继续 SR-055：私有对象 302 交付链路。
