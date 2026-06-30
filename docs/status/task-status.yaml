@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T02:05:13.143199+00:00'
+updated_at: '2026-06-30T02:14:35.240677+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -662,17 +662,18 @@ tasks:
     - docs/evidence/SR-050/qa-report.md
     blockers: []
   SR-051:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-051-content-restriction
     claimed_at: '2026-06-30T02:01:55.103757+00:00'
-    updated_at: '2026-06-30T02:05:13.143186+00:00'
+    updated_at: '2026-06-30T02:14:35.240667+00:00'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/52
     evidence:
     - docs/evidence/SR-051/content-restriction-check.php
     - docs/evidence/SR-051/commands.log
     - docs/evidence/SR-051/completion-report.md
     - docs/evidence/SR-051/review-report.md
+    - docs/evidence/SR-051/qa-report.md
     blockers: []
   SR-052:
     status: BACKLOG

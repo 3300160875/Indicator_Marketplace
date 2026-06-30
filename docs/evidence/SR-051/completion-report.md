@@ -1,6 +1,6 @@
 # SR-051 Completion Report
 
-- Task / status: SR-051, REVIEW.
+- Task / status: SR-051, VERIFIED.
 - Branch: `feat/SR-051-content-restriction`.
 - Scope completed:
   - 新增 `ContentRestrictionService`，为服务端区块/短代码渲染提供统一入口。
@@ -16,6 +16,8 @@
   - `docs/evidence/SR-051/content-restriction-check.php`
   - `docs/evidence/SR-051/commands.log`
   - `docs/evidence/SR-051/completion-report.md`
+  - `docs/evidence/SR-051/review-report.md`
+  - `docs/evidence/SR-051/qa-report.md`
   - `docs/status/task-status.yaml`
   - `docs/status/PROJECT_STATUS.md`
 - Contract changes:
@@ -46,7 +48,7 @@
 - Rollback:
   - Revert this task commit and remove `ContentRestriction/**` plus SR-051 evidence/status changes.
 - Next safe task(s):
-  - Independent review/QA for SR-051.
+  - Merge SR-051 PR #52.
   - SR-052 member center entitlement/quota API.
 - Commit/PR:
   - Commit: `82170b9`
