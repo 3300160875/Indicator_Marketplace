@@ -707,7 +707,7 @@ tasks:
     branch: feat/SR-054-create-token-api
     claimed_at: '2026-06-30T03:06:06.477744+00:00'
     updated_at: '2026-06-30T03:08:59.380623+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/62
     evidence:
     - docs/evidence/SR-054/create-download-token-api-check.php
     - docs/evidence/SR-054/commands.log
