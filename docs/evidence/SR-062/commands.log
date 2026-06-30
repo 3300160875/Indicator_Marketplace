@@ -1,0 +1,71 @@
+SR-062 command log
+Generated: 2026-06-30T18:43:13+08:00
+Branch: feat/SR-062-favorites
+
+Context
+- Dependencies checked: SR-011 VERIFIED, SR-017 VERIFIED.
+- Contracts read: docs/contracts/schema.sql, docs/contracts/openapi.yaml, docs/contracts/permissions.yaml.
+- Allowed code paths used: packages/sr-admin-ops/src/Favorite/**.
+- RED evidence: php docs/evidence/SR-062/favorite-check.php failed before implementation because Favorite support classes did not exist.
+
+Commands
+1. php docs/evidence/SR-062/favorite-check.php
+   Exit before implementation: 255
+   RED result: missing Favorite support class under packages/sr-admin-ops/src/Favorite.
+
+2. php docs/evidence/SR-062/favorite-check.php
+   Exit after implementation: 0
+   Result: SR-062 favorite checks passed.
+   Coverage:
+   - user+resource uniqueness prevents duplicate favorites.
+   - add and delete are idempotent.
+   - setFavorite(true/false) maps to add/remove.
+   - user listing is scoped to the requested user.
+   - cache invalidation keys include user list and user+resource entries.
+   - draft/unpublished resource favorites render unavailable placeholders without leaking title, slug or excerpt.
+   - invalid user_id and resource_id fail with stable error codes.
+
+3. composer validate --strict
+   Exit: 0
+   Result: ./composer.json is valid.
+
+4. make lint
+   Exit: 0
+   Result: lint: ok.
+
+5. make test-unit MODULE=favorites
+   Exit: 0
+   Result: sr-entitlements skeleton tests ok; test-unit ok.
+   Note: MODULE=favorites currently maps to the existing repository skeleton runner; SR-062 behavior coverage is provided by docs/evidence/SR-062/favorite-check.php.
+
+6. make test-integration
+   Exit: 0
+   Result: repository gate for all passed; lint ok; test ok; test-integration ok.
+
+7. git diff --check
+   Exit: 0
+   Result: no whitespace errors in tracked diff.
+
+8. python tools/agent/validate_docs.py
+   Exit: 127
+   Result: command not found in this environment.
+   Deviation: task card requires python, but this runner only has python3 available.
+
+9. python3 tools/agent/validate_docs.py
+   Exit: 0
+   Result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+10. php -l docs/evidence/SR-062/favorite-check.php
+    Exit: 0
+    Result: No syntax errors detected.
+
+11. find packages/sr-admin-ops/src/Favorite -name '*.php' -print | sort | xargs -n1 php -l
+    Exit: 0
+    Result: No syntax errors detected in all SR-062 Favorite classes.
+
+Failure / attack checks
+- Invalid user_id and resource_id fail with stable error codes.
+- Duplicate add does not create duplicate rows.
+- Delete is idempotent when the favorite is already absent.
+- Favorites list is user-scoped.
+- Draft/unpublished resource favorites render unavailable placeholders and do not leak title, slug or excerpt.
