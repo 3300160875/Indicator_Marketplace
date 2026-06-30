@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T10:03:30.014280+00:00'
+updated_at: '2026-06-30T10:20:31.612385+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -781,12 +781,12 @@ tasks:
     - docs/evidence/SR-059/review-report.md
     blockers: []
   SR-060:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-060-audit-log-query
     claimed_at: '2026-06-30T10:00:17.005737+00:00'
-    updated_at: '2026-06-30T10:03:30.014269+00:00'
-    pr: null
+    updated_at: '2026-06-30T10:20:31.612375+00:00'
+    pr: 75
     evidence:
     - docs/evidence/SR-060/audit-log-check.php
     - docs/evidence/SR-060/commands.log
