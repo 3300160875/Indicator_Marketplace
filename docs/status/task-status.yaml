@@ -812,7 +812,7 @@ tasks:
     branch: feat/SR-062-favorites
     claimed_at: '2026-06-30T10:43:13.045049+00:00'
     updated_at: '2026-06-30T10:52:21.681763+00:00'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/81
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/79
     evidence:
     - docs/evidence/SR-062/favorite-check.php
     - docs/evidence/SR-062/commands.log
@@ -825,7 +825,7 @@ tasks:
     branch: feat/SR-063-admin-workbench
     claimed_at: '2026-06-30T10:54:28.988839+00:00'
     updated_at: '2026-06-30T11:10:17.125395+00:00'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/83
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/81
     evidence:
     - docs/evidence/SR-063/admin-workbench-check.php
     - docs/evidence/SR-063/commands.log
@@ -838,7 +838,7 @@ tasks:
     branch: feat/SR-064-reports-health
     claimed_at: '2026-06-30T11:12:17.530913+00:00'
     updated_at: '2026-06-30T11:26:35.608738+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/83
     evidence:
     - docs/evidence/SR-064/reports-health-check.php
     - docs/evidence/SR-064/commands.log
