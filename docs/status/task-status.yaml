@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T11:16:02.471325+00:00'
+updated_at: '2026-06-30T11:26:35.608746+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -825,7 +825,7 @@ tasks:
     branch: feat/SR-063-admin-workbench
     claimed_at: '2026-06-30T10:54:28.988839+00:00'
     updated_at: '2026-06-30T11:10:17.125395+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/83
     evidence:
     - docs/evidence/SR-063/admin-workbench-check.php
     - docs/evidence/SR-063/commands.log
@@ -833,11 +833,11 @@ tasks:
     - docs/evidence/SR-063/review-report.md
     blockers: []
   SR-064:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-064-reports-health
     claimed_at: '2026-06-30T11:12:17.530913+00:00'
-    updated_at: '2026-06-30T11:16:02.471306+00:00'
+    updated_at: '2026-06-30T11:26:35.608738+00:00'
     pr: null
     evidence:
     - docs/evidence/SR-064/reports-health-check.php
