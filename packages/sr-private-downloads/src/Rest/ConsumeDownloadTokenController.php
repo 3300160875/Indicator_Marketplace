@@ -5,6 +5,8 @@ namespace StockResource\PrivateDownloads\Rest;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use StockResource\PrivateDownloads\Security\DownloadSecurityPolicy;
+use StockResource\PrivateDownloads\Security\DownloadSecurityRequest;
 
 final class ConsumeDownloadTokenController
 {
@@ -16,12 +18,23 @@ final class ConsumeDownloadTokenController
         private DeliveryQuotaGateway $quota,
         private DeliveryEventSink $events,
         ?DeliveryTransactionRunner $transactions = null,
+        private ?DeliverySecurityGateway $security = null,
     ) {
         $this->transactions = $transactions ?? new RecordingDeliveryTransactionRunner();
     }
 
     public function consume(ConsumeDownloadTokenRequest $request): ConsumeDownloadTokenResponse
     {
+        $security = $this->security?->inspect($request);
+        if ($security !== null && ! $security->allowed) {
+            return ConsumeDownloadTokenResponse::securityError(
+                statusCode: $security->statusCode,
+                code: $security->code,
+                requestId: $request->requestId(),
+                retryAfterUtc: $security->retryAfterUtc,
+            );
+        }
+
         $locked = $this->tokens->lockForDelivery($request);
         if ($locked->record === null) {
             return ConsumeDownloadTokenResponse::error($locked->statusCode, $locked->code, $request->requestId());
@@ -77,6 +90,8 @@ final readonly class ConsumeDownloadTokenRequest
         public int $versionId,
         public string $nowUtc,
         public string $requestId = '',
+        public ?string $ipHash = null,
+        public ?string $uaHash = null,
     ) {
         if (trim($this->rawToken) === '') {
             throw new \InvalidArgumentException('raw_token is required.');
@@ -88,6 +103,11 @@ final readonly class ConsumeDownloadTokenRequest
         }
         if (DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $this->nowUtc) === false) {
             throw new \InvalidArgumentException('now_utc must be ISO-8601.');
+        }
+        foreach (['ip_hash' => $this->ipHash, 'ua_hash' => $this->uaHash] as $field => $value) {
+            if ($value !== null && ! (bool) preg_match('/^[a-f0-9]{64}$/i', $value)) {
+                throw new \InvalidArgumentException($field.' must be a sha256 hex hash.');
+            }
         }
     }
 
@@ -148,6 +168,23 @@ final readonly class ConsumeDownloadTokenResponse
         ]);
     }
 
+    public static function securityError(int $statusCode, string $code, string $requestId, ?string $retryAfterUtc = null): self
+    {
+        $body = [
+            'error_code' => $code,
+            'message' => self::messageFor($code),
+            'request_id' => $requestId,
+        ];
+        if ($retryAfterUtc !== null) {
+            $body['retry_after_utc'] = $retryAfterUtc;
+        }
+
+        return new self($statusCode, [
+            'Cache-Control' => 'private, no-store',
+            'X-Request-ID' => $requestId,
+        ], $body);
+    }
+
     private static function messageFor(string $code): string
     {
         return match ($code) {
@@ -156,6 +193,9 @@ final readonly class ConsumeDownloadTokenResponse
             'token_binding_mismatch' => 'Download token does not match this request.',
             'token_expired' => 'Download token has expired.',
             'object_not_found' => 'Download object was not found.',
+            'token_replay' => 'Download token replay was blocked.',
+            'rate_limited_user', 'rate_limited_ip', 'rate_limited_resource' => 'Download request rate limit exceeded.',
+            'account_sharing_restricted' => 'Download access is temporarily restricted.',
             default => 'Download delivery failed.',
         };
     }
@@ -257,6 +297,71 @@ interface DeliveryQuotaGateway
     public function commit(string $quotaReservationId): void;
 
     public function release(string $quotaReservationId): void;
+}
+
+interface DeliverySecurityGateway
+{
+    public function inspect(ConsumeDownloadTokenRequest $request): DeliverySecurityDecision;
+}
+
+final readonly class DeliverySecurityDecision
+{
+    public function __construct(
+        public bool $allowed,
+        public string $code,
+        public int $statusCode,
+        public ?string $retryAfterUtc = null,
+    ) {
+    }
+
+    public static function allow(): self
+    {
+        return new self(true, 'allowed', 200);
+    }
+
+    public static function block(string $code, int $statusCode, ?string $retryAfterUtc = null): self
+    {
+        return new self(false, $code, $statusCode, $retryAfterUtc);
+    }
+}
+
+final readonly class DownloadSecurityPolicyGateway implements DeliverySecurityGateway
+{
+    public function __construct(private DownloadSecurityPolicy $policy)
+    {
+    }
+
+    public function inspect(ConsumeDownloadTokenRequest $request): DeliverySecurityDecision
+    {
+        $decision = $this->policy->inspect(new DownloadSecurityRequest(
+            requestId: $request->requestId(),
+            userId: $request->userId,
+            resourceId: $request->resourceId,
+            versionId: $request->versionId,
+            tokenFingerprint: hash('sha256', $request->rawToken),
+            ipHash: $request->ipHash ?? hash('sha256', 'missing-ip'),
+            uaHash: $request->uaHash ?? hash('sha256', 'missing-ua'),
+            nowUtc: $request->nowUtc,
+        ));
+        if ($decision->allowed) {
+            return DeliverySecurityDecision::allow();
+        }
+
+        return DeliverySecurityDecision::block(
+            code: $decision->code,
+            statusCode: self::statusCodeFor($decision->code),
+            retryAfterUtc: $decision->retryAfterUtc,
+        );
+    }
+
+    private static function statusCodeFor(string $code): int
+    {
+        return match ($code) {
+            'token_replay' => 410,
+            'account_sharing_restricted' => 429,
+            default => str_starts_with($code, 'rate_limited_') ? 429 : 403,
+        };
+    }
 }
 
 interface DeliveryEventSink

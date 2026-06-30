@@ -1,0 +1,81 @@
+SR-057 command log
+Generated: 2026-06-30T12:25:00+08:00
+Branch: feat/SR-057-download-security
+
+Context
+- Dependencies checked: SR-012 VERIFIED, SR-055 VERIFIED.
+- Contracts read: docs/contracts/openapi.yaml, docs/contracts/schema.sql, docs/contracts/events.yaml, docs/contracts/state-machines.yaml.
+- Allowed code paths used: packages/sr-private-downloads/src/Security/** plus user-authorized SR-057 runtime integration in packages/sr-private-downloads/src/Rest/ConsumeDownloadTokenController.php.
+- RED evidence: php docs/evidence/SR-057/download-security-check.php failed before implementation because DownloadSecurityPolicy.php did not exist.
+- QA remediation: split security types into PSR-4 files, require 64-hex token fingerprints, add controller security gateway integration, and cover real consume-chain replay/rate-limit blocking.
+
+Commands
+1. php -l packages/sr-private-downloads/src/Security/DownloadSecurityPolicy.php
+   Exit: 0
+   Result: No syntax errors detected.
+
+2. php -l docs/evidence/SR-057/download-security-check.php
+   Exit: 0
+   Result: No syntax errors detected.
+
+3. php docs/evidence/SR-057/download-security-check.php
+   Exit: 0
+   Result: SR-057 download security checks passed.
+   Coverage: isolated policy checks plus ConsumeDownloadTokenController integration for token replay and IP rate limiting before token lock/sign/quota mutation.
+
+4. make test-security
+   Exit: 2
+   Result: No rule to make target 'test-security'.
+   Deviation: repository target is not defined yet; SR-057 allowed path does not permit Makefile/bin/dev changes. Replaced with the SR-057 evidence script plus module and download regression targets below.
+
+5. composer audit
+   Exit: 0
+   Result: No security vulnerability advisories found.
+
+6. npm audit --audit-level=high
+   Exit: 0
+   Result: found 0 vulnerabilities.
+
+7. git diff --check
+   Exit: 0
+   Result: no whitespace errors.
+   Follow-up: after staging all SR-057 files, `git diff --cached --check` also exited 0.
+   Staged diff stat covered 14 files, including Security/**, ConsumeDownloadTokenController.php, SR-057 evidence and status.
+
+8. python tools/agent/validate_docs.py
+   Exit: 127
+   Result: command not found in this environment; recorded as task-card command deviation.
+
+9. python3 tools/agent/validate_docs.py
+   Exit: 0
+   Result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+10. make test-unit MODULE=sr-private-downloads
+    Exit: 0
+    Result: sr-private-downloads skeleton tests ok; test-unit ok.
+
+11. make test-integration TEST=Downloads
+    Exit: 0
+    Result: repository gate for Downloads passed; lint ok; test ok; test-integration ok.
+
+12. make test-concurrency TEST=DownloadTokens
+    Exit: 0
+    Result: SR-053 download token checks passed; sr-private-downloads skeleton tests ok; test-concurrency ok.
+
+13. make lint
+    Exit: 0
+    Result: lint ok.
+
+14. make test
+    Exit: 0
+    Result: lint ok; test ok.
+
+Failure / attack checks
+- Replayed token fingerprint is blocked with stable code token_replay and writes a security event.
+- User, IP, and resource rate limits independently block over-threshold requests and write security events.
+- Account-sharing detection first returns a non-blocking account_sharing_risk warning, then applies a reversible account_sharing_restricted restriction with retry_after_utc.
+- Expired account-sharing restriction clears temporary risk history and allows subsequent requests.
+- ConsumeDownloadTokenController with DownloadSecurityPolicyGateway blocks replay before token lock and blocks IP rate limit before signing/quota mutation.
+- Token fingerprints must be fixed 64-hex HMAC/SHA-256 values; raw token-like values fail validation.
+- Security classes are split into PSR-4 one-class-per-file and evidence loads them through an autoloader.
+- Security events store request/user/resource IDs and hashed IP/UA/token fingerprint only; no raw token or storage key appears in evidence.
