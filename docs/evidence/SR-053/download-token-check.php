@@ -51,6 +51,7 @@ $schema = new DownloadTokenSchema();
 $sql = $schema->sql('{prefix}');
 sr053_assert(str_contains($sql, 'CREATE TABLE {prefix}sr_download_tokens'), 'schema creates sr_download_tokens table');
 sr053_assert(str_contains($sql, 'token_hash CHAR(64) NOT NULL'), 'schema stores token hash');
+sr053_assert(str_contains($sql, 'entitlement_id BIGINT UNSIGNED NULL'), 'schema allows free-token entitlement to be null');
 sr053_assert(str_contains($sql, 'UNIQUE KEY uq_download_token_request (request_id)'), 'schema enforces unique request_id');
 sr053_assert(str_contains($sql, 'UNIQUE KEY uq_download_token_hash (token_hash)'), 'schema enforces unique token_hash');
 sr053_assert(! str_contains($sql, 'raw_token'), 'schema must not contain raw_token');
@@ -212,5 +213,25 @@ $mismatch = $expiredService->consume(
 );
 sr053_same(false, $mismatch->ok, 'wrong resource fails');
 sr053_same('token_binding_mismatch', $mismatch->status, 'token binding is enforced');
+
+$freeRepo = new InMemoryDownloadTokenRepository();
+$freeService = new DownloadTokenService(
+    repository: $freeRepo,
+    appKey: 'local-app-key-for-hmac-tests',
+    tokenBytes: new FixedTokenBytes(str_repeat("\x77", 32)),
+);
+$freeIssued = $freeService->issue(new DownloadTokenIssueRequest(
+    requestId: 'req-free-null-entitlement',
+    userId: 101,
+    resourceId: 88,
+    versionId: 7,
+    entitlementId: null,
+    quotaReservationId: 'none',
+    nowUtc: '2026-06-30T00:00:00+00:00',
+));
+$freeStored = $freeRepo->findByRequestId('req-free-null-entitlement');
+sr053_assert($freeStored !== null, 'free token record is stored');
+sr053_same(null, $freeStored->entitlementId, 'free token may omit entitlement binding');
+sr053_assert(! str_contains(json_encode($freeStored->toStorageArray(), JSON_THROW_ON_ERROR), $freeIssued->rawToken), 'free token storage does not contain raw token');
 
 echo "SR-053 download token checks passed\n";
