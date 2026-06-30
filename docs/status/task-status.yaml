@@ -694,7 +694,7 @@ tasks:
     branch: feat/SR-053-download-tokens
     claimed_at: '2026-06-30T02:47:32.017911+00:00'
     updated_at: '2026-06-30T02:51:30.537721+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/59
     evidence:
     - docs/evidence/SR-053/download-token-check.php
     - docs/evidence/SR-053/commands.log
