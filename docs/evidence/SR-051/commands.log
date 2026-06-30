@@ -1,0 +1,113 @@
+# SR-051 commands log
+
+## 2026-06-30 red test
+
+```bash
+php docs/evidence/SR-051/content-restriction-check.php
+```
+
+Exit: 255.
+Output:
+`Failed opening required '.../packages/sr-entitlements/src/ContentRestriction/ContentRestrictionRequest.php'`
+
+说明：这是 TDD RED 阶段，证明 SR-051 的 ContentRestriction 服务层尚未实现。
+
+## 2026-06-30 implementation verification
+
+```bash
+php docs/evidence/SR-051/content-restriction-check.php
+```
+
+Exit: 0.
+Output:
+`SR-051 content restriction checks passed.`
+
+覆盖：
+- PHP 服务端根据 `AccessDecision` 决定是否输出隐藏内容；
+- 已授权前台渲染返回受限内容；
+- 未授权前台/REST 渲染只返回占位，不包含隐藏内容；
+- REST result 的完整 payload 不包含隐藏内容；
+- 编辑器预览返回明确占位，且不输出隐藏内容；
+- cache vary key 包含 user/resource/surface/access_mode，避免跨用户缓存串用；
+- 无效 resource_id fail closed。
+
+```bash
+php -l packages/sr-entitlements/src/ContentRestriction/ContentRestrictionRequest.php
+php -l packages/sr-entitlements/src/ContentRestriction/RestrictedContentResult.php
+php -l packages/sr-entitlements/src/ContentRestriction/ContentRestrictionService.php
+php -l docs/evidence/SR-051/content-restriction-check.php
+```
+
+Exit: 0.
+Output:
+`No syntax errors detected ...`
+
+```bash
+composer validate --strict
+```
+
+Exit: 0.
+Output:
+`./composer.json is valid`
+
+```bash
+make lint
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+
+```bash
+composer --working-dir=packages/sr-entitlements test
+```
+
+Exit: 0.
+Output:
+`sr-entitlements skeleton tests: ok`
+
+```bash
+make test
+```
+
+Exit: 0.
+Output:
+`lint: ok`
+`test: ok`
+
+```bash
+python3 tools/agent/validate_docs.py
+```
+
+Exit: 0.
+Output:
+`OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent`
+
+说明：`1 locks` 是 SR-051 当前 claim，进入 REVIEW 并释放后应恢复为 0。
+
+```bash
+git diff --check
+```
+
+Exit: 0.
+Output: empty.
+
+## Required command deviations
+
+```bash
+make test-unit MODULE=content
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-unit'.  Stop.`
+
+```bash
+make test-integration
+```
+
+Exit: 2.
+Output:
+`make: *** No rule to make target 'test-integration'.  Stop.`
+
+原因：当前仓库 Makefile 尚未提供上述两个细分 target。本任务以 SR-051 evidence 脚本、包级 composer test、全量 `make test`、`make lint`、`composer validate --strict`、`git diff --check` 与 `validate_docs.py` 替代。
