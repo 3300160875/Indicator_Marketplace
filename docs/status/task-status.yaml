@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T02:14:35.240677+00:00'
+updated_at: '2026-06-30T02:25:44.285524+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -676,13 +676,17 @@ tasks:
     - docs/evidence/SR-051/qa-report.md
     blockers: []
   SR-052:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-052-me-entitlements-api
+    claimed_at: '2026-06-30T02:22:21.053980+00:00'
+    updated_at: '2026-06-30T02:25:44.285514+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-052/me-entitlements-check.php
+    - docs/evidence/SR-052/commands.log
+    - docs/evidence/SR-052/completion-report.md
+    - docs/evidence/SR-052/review-report.md
     blockers: []
   SR-053:
     status: BACKLOG
