@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T10:27:08.372775+00:00'
+updated_at: '2026-06-30T10:41:17.181048+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -794,12 +794,12 @@ tasks:
     - docs/evidence/SR-060/review-report.md
     blockers: []
   SR-061:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-061-support-tickets
     claimed_at: '2026-06-30T10:22:52.337887+00:00'
-    updated_at: '2026-06-30T10:27:08.372759+00:00'
-    pr: null
+    updated_at: '2026-06-30T10:41:17.181038+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/77
     evidence:
     - docs/evidence/SR-061/support-ticket-check.php
     - docs/evidence/SR-061/commands.log
