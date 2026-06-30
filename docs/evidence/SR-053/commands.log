@@ -1,0 +1,71 @@
+# SR-053 commands 2026-06-30T02:50:33Z
+$ php docs/evidence/SR-053/download-token-check.php
+SR-053 download token checks passed
+exit=0
+$ php -l packages/sr-private-downloads/src/Token/DownloadTokenService.php
+No syntax errors detected in packages/sr-private-downloads/src/Token/DownloadTokenService.php
+exit=0
+$ make test-unit MODULE=sr-private-downloads
+> php tests/run.php
+sr-private-downloads skeleton tests: ok
+test-unit: ok
+exit=0
+$ make test-integration TEST=Downloads
+test-integration: running repository gate for Downloads
+lint: ok
+test: ok
+test-integration: ok
+exit=0
+$ make test-concurrency TEST=DownloadTokens
+> php tests/run.php
+sr-private-downloads skeleton tests: ok
+test-concurrency: ok
+exit=0
+$ make lint
+lint: ok
+exit=0
+$ make test
+lint: ok
+test: ok
+exit=0
+$ git diff --check
+exit=0
+$ python tools/agent/validate_docs.py
+zsh:1: command not found: python
+exit=127
+$ python3 tools/agent/validate_docs.py
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+exit=0
+# SR-053 verification rerun after atomic consume and concurrency target fixes
+$ php docs/evidence/SR-053/download-token-check.php
+SR-053 download token checks passed
+exit=0
+$ make test-unit MODULE=sr-private-downloads
+> php tests/run.php
+sr-private-downloads skeleton tests: ok
+test-unit: ok
+exit=0
+$ make test-integration TEST=Downloads
+test-integration: running repository gate for Downloads
+lint: ok
+test: ok
+test-integration: ok
+exit=0
+$ make test-concurrency TEST=DownloadTokens
+SR-053 download token checks passed
+> php tests/run.php
+sr-private-downloads skeleton tests: ok
+test-concurrency: ok
+exit=0
+$ make lint
+lint: ok
+exit=0
+$ make test
+lint: ok
+test: ok
+exit=0
+$ git diff --check
+exit=0
+$ python3 tools/agent/validate_docs.py
+OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent
+exit=0
