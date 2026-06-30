@@ -182,6 +182,9 @@ EOF
     label="$(printf '%s' "${2:-all}" | tr '[:upper:]' '[:lower:]')"
     case "$label" in
       "downloadtokens"|"downloads"|"storage")
+        if [ "$label" = "downloadtokens" ] && [ -f "docs/evidence/SR-053/download-token-check.php" ]; then
+          php docs/evidence/SR-053/download-token-check.php
+        fi
         run_package_test "packages/sr-private-downloads"
         ;;
       "entitlements")
