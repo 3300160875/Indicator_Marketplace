@@ -1,0 +1,72 @@
+SR-058 command log
+Generated: 2026-06-30T14:41:30+08:00
+Branch: feat/SR-058-nginx-cache-hotlink
+
+Context
+- Dependency checked: SR-055 VERIFIED.
+- Task card allowed path says infra/nginx/**, but this repository's real Nginx mount is infra/docker/nginx/default.conf from docker-compose.yml.
+- User explicitly authorized modifying the real Nginx path for SR-058 before implementation.
+- RED evidence: php docs/evidence/SR-058/nginx-policy-check.php failed before implementation with "Bedrock EDD uploads location is missing".
+- Runtime gap found during implementation: dynamic location add_header did not show in truncated curl output until full headers were inspected; final implementation routes dynamic paths through @wordpress_no_store so final PHP responses emit Cache-Control.
+
+Commands
+1. php docs/evidence/SR-058/nginx-policy-check.php
+   Exit before implementation: 1
+   RED result: SR-058 check failed: Bedrock EDD uploads location is missing.
+
+2. php docs/evidence/SR-058/nginx-policy-check.php
+   Exit after implementation: 0
+   Result: SR-058 nginx policy checks passed.
+   Coverage: static config checks for EDD upload 403 rules, private object 403 rules, dynamic no-store routing, PHP-FPM preservation, and absence of cache directives in dynamic paths.
+
+3. docs/evidence/SR-058/nginx-runtime-check.sh
+   Exit: 0
+   Result: SR-058 nginx runtime checks passed.
+   Coverage:
+   - /app/uploads/edd/test.zip -> HTTP 403 with Cache-Control: private, no-store.
+   - /wp-content/uploads/edd/test.zip -> HTTP 403 with Cache-Control: private, no-store.
+   - /sr-private-objects/test.zip -> HTTP 403 with Cache-Control: private, no-store.
+   - /private-downloads/test.zip -> HTTP 403 with Cache-Control: private, no-store.
+   - /checkout/ -> Cache-Control: private, no-store.
+   - /account/ -> Cache-Control: private, no-store.
+   - /wp-json/ -> Cache-Control: private, no-store.
+   - /wp-json/download/download-tokens -> Cache-Control: private, no-store.
+   - /download/test -> Cache-Control: private, no-store.
+   - /download-tokens/test -> Cache-Control: private, no-store.
+
+4. docker compose config --quiet
+   Exit: 0
+   Result: compose config parsed successfully with no output.
+
+5. make bootstrap
+   Exit: 0
+   Result: Docker services started/refreshed; Composer install from lock was already satisfied; nginx, php, mariadb, redis, minio, and mailpit reported healthy/running.
+   Note: Docker emitted a non-fatal warning that buildx is not installed and Compose fell back from Bake.
+
+6. make test-smoke
+   Exit: 0
+   Result: mysqld is alive.
+
+7. docker compose exec -T nginx nginx -t
+   Exit: 0
+   Result: nginx configuration file syntax is ok; nginx configuration test is successful.
+
+8. git diff --check
+   Exit: 0
+   Result: no whitespace errors.
+
+9. python tools/agent/validate_docs.py
+   Exit: 127
+   Result: command not found in this environment.
+   Deviation: task card requires python, but this runner only has python3 available.
+
+10. python3 tools/agent/validate_docs.py
+    Exit: 0
+    Result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+Failure / attack checks
+- Public anonymous requests to EDD upload directories return 403.
+- Public anonymous requests to private object/download storage paths return 403.
+- Dynamic checkout/account/wp-json/download routes emit Cache-Control: private, no-store from the final PHP front controller response.
+- No fastcgi_cache, proxy_cache, or expires directives were introduced for dynamic routes.
+- Existing PHP-FPM routing and WordPress web root were preserved.
