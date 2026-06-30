@@ -667,7 +667,7 @@ tasks:
     branch: feat/SR-051-content-restriction
     claimed_at: '2026-06-30T02:01:55.103757+00:00'
     updated_at: '2026-06-30T02:05:13.143186+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/52
     evidence:
     - docs/evidence/SR-051/content-restriction-check.php
     - docs/evidence/SR-051/commands.log

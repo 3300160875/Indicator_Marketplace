@@ -49,4 +49,5 @@
   - Independent review/QA for SR-051.
   - SR-052 member center entitlement/quota API.
 - Commit/PR:
-  - Pending.
+  - Commit: `82170b9`
+  - PR: https://github.com/3300160875/Indicator_Marketplace/pull/52
