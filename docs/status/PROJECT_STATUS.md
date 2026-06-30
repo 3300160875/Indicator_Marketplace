@@ -69,6 +69,7 @@
 - SR-055 已随 PR #64 合入 `main` 并标记 VERIFIED：令牌消费、短签名与 302 交付支持层已完成，成功路径 consumed + quota commit + redirected event 处于事务边界，失败路径 failed + quota release + failed event，OpenAPI 错误状态和 request_id 契约已对齐。
 - SR-056 已随 PR #66 合入 `main` 并标记 VERIFIED：下载事件结算与失败补偿支持层已完成，覆盖 redirected 计数结算、failed/expired 释放、dry-run reconcile、request_id/token_id 幂等、QuotaService 真实 counter 变化和独立 QA PASS；真实 WP-CLI 注册留给后续允许改启动入口的任务。
 - SR-057 已随 PR #69 合入 `main` 并标记 VERIFIED：下载限流、防重放与异常规则已完成，覆盖用户/IP/资源多维限流、token replay 阻断、账号共享风险提示与可逆限制、阻断安全事件，以及消费下载链路前置安全检查。
+- SR-058 已随 PR #71 合入 `main` 并标记 VERIFIED：Nginx 防直链与动态页面缓存例外已完成，EDD 上传目录和私有对象/下载目录匿名访问返回 403，checkout/account/wp-json/download/download-tokens 动态入口返回 `Cache-Control: private, no-store`，并通过静态配置检查、runtime curl 检查、`docker compose config --quiet`、`make bootstrap`、`make test-smoke`、`nginx -t` 和独立 QA PASS。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -77,4 +78,4 @@
 
 ## 下一步
 
-1. 推进 SR-058：Nginx 防直链与动态页面缓存例外。
+1. 推进 SR-059：创建版权记录与发布 Gate。
