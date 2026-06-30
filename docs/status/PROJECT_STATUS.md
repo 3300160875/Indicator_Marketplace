@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 推进 SR-064 运营报表与导出支持
+- Next safe task: 推进 SR-065
 - Gate 0: complete
 
 ## 本周完成
@@ -75,6 +75,7 @@
 - SR-061 已随 PR #77 合入 `main` 并标记 VERIFIED：工单与消息模块支持层已完成，覆盖订单/资源/下载事件关联、关联所有权校验、私有附件 key 策略、客户/内部消息投影隔离、分配工单权限、可配置 SLA 与状态流转，以及 support audit action 本地登记；独立 QA 复核 PASS。
 - SR-062 已随 PR #79 合入 `main` 并标记 VERIFIED：收藏模块支持层已完成，覆盖 user+resource 唯一、幂等新增/删除/设置、用户维度列表、缓存失效 key，以及草稿/缺失/不可用资源收藏的不可泄露占位投影；独立 QA 复核 PASS。
 - SR-063 已随 PR #81 合入 `main` 并标记 VERIFIED：付款/会员/下载/版权任务工作台支持层已完成，覆盖任务队列聚合、角色字段投影、高风险动作 reason/二次确认、基于 domain task context 的 item/action/queue 校验、per-item audit records、批量上限和分页上限；独立 QA 发现的跨队列授权和 view-only retry 问题已修复并复核 PASS。
+- SR-064 已随 PR #83 合入 `main` 并标记 VERIFIED：MVP 业务报表与健康检查支持层已完成，覆盖订单完成无权益、下载失败率、审核时长、时区/新鲜度口径、窗口过滤、前台查询保护、聚合 CSV 导出权限与脱敏、outbox/download settlement/audit freshness 健康检查；独立 QA 发现的窗口过滤与 legacy 权限问题已修复并复核 PASS。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -83,4 +84,4 @@
 
 ## 下一步
 
-1. 推进 SR-064：运营报表与导出支持。
+1. 推进 SR-065。
