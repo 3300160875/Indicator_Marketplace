@@ -102,6 +102,8 @@ Development commands:
                    run package-level unit tests for a module alias
   make test-integration TEST=<name>
                    run repository integration gate; TEST narrows the intent label when available
+  make test-concurrency TEST=<name>
+                   run deterministic concurrency checks when a TEST alias is available
   make test-smoke  verify running Docker services
   make e2e         run end-to-end tests when available
   make status      show Docker service status
@@ -175,6 +177,28 @@ EOF
     fi
     bin/dev test
     printf 'test-integration: ok\n'
+    ;;
+  test-concurrency)
+    label="$(printf '%s' "${2:-all}" | tr '[:upper:]' '[:lower:]')"
+    case "$label" in
+      "downloadtokens"|"downloads"|"storage")
+        run_package_test "packages/sr-private-downloads"
+        ;;
+      "entitlements")
+        run_package_test "packages/sr-entitlements"
+        ;;
+      "payment")
+        run_package_test "packages/sr-payment-gateways"
+        ;;
+      ""|"all")
+        run_all_package_tests
+        ;;
+      *)
+        printf 'test-concurrency: no dedicated suite for %s; running repository gate\n' "$label"
+        bin/dev test
+        ;;
+    esac
+    printf 'test-concurrency: ok\n'
     ;;
   smoke|test-smoke)
     exec infra/docker/smoke.sh
