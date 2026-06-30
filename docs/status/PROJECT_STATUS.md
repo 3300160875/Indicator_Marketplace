@@ -68,7 +68,7 @@
 - SR-054 已随 PR #62 合入 `main` 并标记 VERIFIED：创建下载令牌 API 支持层已完成，事务内重查 EntitlementService、VIP 配额通过 QuotaService 预占、幂等 claim/complete、失败重放稳定、响应不暴露 storage_key 或签名 URL。
 - SR-055 已随 PR #64 合入 `main` 并标记 VERIFIED：令牌消费、短签名与 302 交付支持层已完成，成功路径 consumed + quota commit + redirected event 处于事务边界，失败路径 failed + quota release + failed event，OpenAPI 错误状态和 request_id 契约已对齐。
 - SR-056 已随 PR #66 合入 `main` 并标记 VERIFIED：下载事件结算与失败补偿支持层已完成，覆盖 redirected 计数结算、failed/expired 释放、dry-run reconcile、request_id/token_id 幂等、QuotaService 真实 counter 变化和独立 QA PASS；真实 WP-CLI 注册留给后续允许改启动入口的任务。
-- SR-057 已完成实现并提交 REVIEW（PR #69）：下载限流、防重放与异常规则已完成，覆盖用户/IP/资源多维限流、token replay 阻断、账号共享风险提示与可逆限制、阻断安全事件，以及消费下载链路前置安全检查。
+- SR-057 已随 PR #69 合入 `main` 并标记 VERIFIED：下载限流、防重放与异常规则已完成，覆盖用户/IP/资源多维限流、token replay 阻断、账号共享风险提示与可逆限制、阻断安全事件，以及消费下载链路前置安全检查。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -77,5 +77,4 @@
 
 ## 下一步
 
-1. 等待并合并 SR-057 PR #69，通过后将 SR-057 标记 VERIFIED。
-2. 推进 SR-058：Nginx 防直链与动态页面缓存例外。
+1. 推进 SR-058：Nginx 防直链与动态页面缓存例外。
