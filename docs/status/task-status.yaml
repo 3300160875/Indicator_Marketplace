@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T05:02:01.946029+00:00'
+updated_at: '2026-06-30T05:07:10.184060+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -741,12 +741,12 @@ tasks:
     - docs/evidence/SR-056/review-report.md
     blockers: []
   SR-057:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-057-download-security
     claimed_at: '2026-06-30T04:16:18.925174+00:00'
-    updated_at: '2026-06-30T05:02:01.945997+00:00'
-    pr: null
+    updated_at: '2026-06-30T05:07:10.184049+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/69
     evidence:
     - docs/evidence/SR-057/download-security-check.php
     - docs/evidence/SR-057/commands.log
