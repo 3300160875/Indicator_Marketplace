@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T02:51:30.537732+00:00'
+updated_at: '2026-06-30T03:08:59.380639+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -702,13 +702,17 @@ tasks:
     - docs/evidence/SR-053/review-report.md
     blockers: []
   SR-054:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-054-create-token-api
+    claimed_at: '2026-06-30T03:06:06.477744+00:00'
+    updated_at: '2026-06-30T03:08:59.380623+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-054/create-download-token-api-check.php
+    - docs/evidence/SR-054/commands.log
+    - docs/evidence/SR-054/completion-report.md
+    - docs/evidence/SR-054/review-report.md
     blockers: []
   SR-055:
     status: BACKLOG
