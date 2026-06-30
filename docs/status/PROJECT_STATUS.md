@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 推进 SR-063 用户浏览历史
+- Next safe task: 推进 SR-064 运营报表与导出支持
 - Gate 0: complete
 
 ## 本周完成
@@ -74,6 +74,7 @@
 - SR-060 已随 PR #75 合入 `main` 并标记 VERIFIED：审计日志支持层已完成，覆盖付款批准/撤权/发布/配置变更高风险动作、递归敏感字段脱敏、append-only 仓储接口、普通 administrator 无显式审计能力不可查询/删除、`request_id` 查询不绕过角色可见性、canonical `wp_sr_audit_logs` schema 对齐和查询视图 payload；独立 QA 的权限绕过、append-only 接口和 schema drift 发现已修复并复核 PASS。
 - SR-061 已随 PR #77 合入 `main` 并标记 VERIFIED：工单与消息模块支持层已完成，覆盖订单/资源/下载事件关联、关联所有权校验、私有附件 key 策略、客户/内部消息投影隔离、分配工单权限、可配置 SLA 与状态流转，以及 support audit action 本地登记；独立 QA 复核 PASS。
 - SR-062 已随 PR #79 合入 `main` 并标记 VERIFIED：收藏模块支持层已完成，覆盖 user+resource 唯一、幂等新增/删除/设置、用户维度列表、缓存失效 key，以及草稿/缺失/不可用资源收藏的不可泄露占位投影；独立 QA 复核 PASS。
+- SR-063 已随 PR #81 合入 `main` 并标记 VERIFIED：付款/会员/下载/版权任务工作台支持层已完成，覆盖任务队列聚合、角色字段投影、高风险动作 reason/二次确认、基于 domain task context 的 item/action/queue 校验、per-item audit records、批量上限和分页上限；独立 QA 发现的跨队列授权和 view-only retry 问题已修复并复核 PASS。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -82,4 +83,4 @@
 
 ## 下一步
 
-1. 推进 SR-063：用户浏览历史。
+1. 推进 SR-064：运营报表与导出支持。
