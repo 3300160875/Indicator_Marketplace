@@ -1,0 +1,52 @@
+# SR-051 Completion Report
+
+- Task / status: SR-051, REVIEW.
+- Branch: `feat/SR-051-content-restriction`.
+- Scope completed:
+  - 新增 `ContentRestrictionService`，为服务端区块/短代码渲染提供统一入口。
+  - 新增 `ContentRestrictionRequest`，归一化资源、用户、访问模式、资源状态、taxonomy term、surface 与判断时间。
+  - 新增 `RestrictedContentResult`，固定返回 `visible`、`html`、`AccessDecision`、reason 与 cache vary keys。
+  - 前台/REST 未授权时只输出占位，结果 payload 中不包含隐藏内容。
+  - 编辑器预览始终输出明确占位，不输出隐藏内容。
+  - cache vary key 固定包含 user/resource/surface/access_mode，避免跨用户缓存串用。
+- Files changed:
+  - `packages/sr-entitlements/src/ContentRestriction/ContentRestrictionRequest.php`
+  - `packages/sr-entitlements/src/ContentRestriction/RestrictedContentResult.php`
+  - `packages/sr-entitlements/src/ContentRestriction/ContentRestrictionService.php`
+  - `docs/evidence/SR-051/content-restriction-check.php`
+  - `docs/evidence/SR-051/commands.log`
+  - `docs/evidence/SR-051/completion-report.md`
+  - `docs/status/task-status.yaml`
+  - `docs/status/PROJECT_STATUS.md`
+- Contract changes:
+  - `ContentRestrictionService::renderShortcode(array $attributes, string $innerContent, array $runtime): RestrictedContentResult`
+  - `ContentRestrictionService::renderBlock(array $block, string $innerContent, array $runtime): RestrictedContentResult`
+  - Decision resolver callable must return `AccessDecision`.
+- Migrations:
+  - none.
+- Events/Hooks:
+  - Pure support layer only; WordPress block registration, shortcode registration, and REST wiring are not connected in this task.
+- Configuration/Feature Flags:
+  - none.
+- Cache/invalidation:
+  - Render result exposes cache vary keys; no concrete cache backend integration in this task.
+- Backward compatibility:
+  - Pure new namespace under `packages/sr-entitlements/src/ContentRestriction/**`; no changes to existing entitlement services or contracts.
+- Observability/audit:
+  - Result carries stable reason code and original `AccessDecision` details for callers to log/audit if needed.
+- Commands and results:
+  - See `docs/evidence/SR-051/commands.log`.
+- Security/permission/concurrency checks:
+  - Hidden content is never included in denied frontend/REST/editor result HTML.
+  - Full REST result payload is checked for hidden-content leakage.
+  - Invalid resource IDs fail closed.
+  - Cache vary keys include user and resource dimensions.
+- Known limitations:
+  - Runtime registration is deferred because SR-051 allowed paths do not include plugin bootstrap files or WordPress integration files.
+- Rollback:
+  - Revert this task commit and remove `ContentRestriction/**` plus SR-051 evidence/status changes.
+- Next safe task(s):
+  - Independent review/QA for SR-051.
+  - SR-052 member center entitlement/quota API.
+- Commit/PR:
+  - Pending.
