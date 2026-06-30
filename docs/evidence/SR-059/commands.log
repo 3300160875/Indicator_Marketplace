@@ -1,0 +1,83 @@
+SR-059 command log
+Generated: 2026-06-30T15:02:00+08:00
+Branch: feat/SR-059-rights-publication-gate
+
+Context
+- Dependencies checked: SR-011 VERIFIED, SR-015 VERIFIED.
+- Contracts read: docs/contracts/schema.sql, docs/contracts/feature-flags.yaml, docs/contracts/permissions.yaml, docs/contracts/events.yaml, docs/contracts/state-machines.yaml, docs/contracts/data-dictionary.yaml, docs/contracts/openapi.yaml.
+- Allowed code paths used: packages/sr-admin-ops/src/Rights/**.
+- RED evidence: php docs/evidence/SR-059/rights-gate-check.php failed before implementation because packages/sr-admin-ops/src/Rights/RightsAuditEvent.php did not exist.
+
+Commands
+1. php docs/evidence/SR-059/rights-gate-check.php
+   Exit before implementation: 255
+   RED result: missing Rights support class under packages/sr-admin-ops/src/Rights.
+
+2. php docs/evidence/SR-059/rights-gate-check.php
+   Exit after implementation: 0
+   Result: SR-059 rights gate checks passed.
+   Coverage:
+   - paid resources require rights_status=approved and a rights record.
+   - rights record resource_id and rights_record_id must match the publication request.
+   - private rights evidence storage keys are accepted.
+   - public URLs, absolute paths, and traversal evidence keys are rejected with stable code evidence_storage_not_private.
+   - rights evidence access is capability and owner scoped.
+   - rights evidence access accepts the contract capability view_sr_rights_evidence and the current matrix capability sr_review_rights_evidence, both under row-level owner scope.
+   - configurable expiry policy emits rights_expiring warnings before expiry.
+   - expired_action=pause_publication pauses publication/token issuance after expiry.
+   - expired_action=warn_only emits expiry warnings without pausing publication/token issuance.
+   - taken-down resources immediately block publication and new token issuance.
+   - audit events preserve blocked decisions without exposing evidence storage keys.
+
+3. composer validate --strict
+   Exit: 0
+   Result: ./composer.json is valid.
+
+4. make lint
+   Exit: 0
+   Result: lint: ok.
+
+5. make test-unit MODULE=rights
+   Exit: 0
+   Result: sr-entitlements skeleton tests ok; test-unit ok.
+   Deviation: existing bin/dev maps MODULE=rights to packages/sr-entitlements, not packages/sr-admin-ops. SR-059 did not modify bin/dev because it is outside allowed paths.
+
+6. make test-unit MODULE=sr-admin-ops
+   Exit: 0
+   Result: sr-admin-ops skeleton tests ok; test-unit ok.
+   Replacement coverage: package-level admin-ops test runner plus SR-059 evidence script above.
+
+7. make test-integration
+   Exit: 0
+   Result: repository gate for all passed; lint ok; test ok; test-integration ok.
+
+8. git diff --check
+   Exit: 0
+   Result: no whitespace errors.
+
+9. python tools/agent/validate_docs.py
+   Exit: 127
+   Result: command not found in this environment.
+   Deviation: task card requires python, but this runner only has python3 available.
+
+10. python3 tools/agent/validate_docs.py
+    Exit: 0
+    Result: OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent.
+
+11. php -l docs/evidence/SR-059/rights-gate-check.php
+    Exit: 0
+    Result: No syntax errors detected.
+
+12. find packages/sr-admin-ops/src/Rights -name '*.php' -print | sort | xargs -n1 php -l
+    Exit: 0
+    Result: No syntax errors detected in all SR-059 Rights classes.
+
+Failure / attack checks
+- Paid publication with pending rights status is blocked with rights_approval_required and rights_record_required.
+- Mismatched rights record resource IDs or record IDs are blocked.
+- Unsafe evidence keys such as public URLs, absolute paths or traversal paths are rejected and are not exposed through audit payloads.
+- A resource editor without rights review capability cannot view private rights evidence.
+- A contract rights reviewer with view_sr_rights_evidence can view owned private rights evidence, owner mismatch is denied, and current matrix sr_review_rights_evidence remains supported for compatibility.
+- Expired approved rights records block publication and new token issuance when expired_action=pause_publication.
+- Expired approved rights records only warn when expired_action=warn_only.
+- Taken-down resources block publication and token issuance even when rights are otherwise approved.
