@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 推进 SR-062 收藏模块
+- Next safe task: 推进 SR-063 用户浏览历史
 - Gate 0: complete
 
 ## 本周完成
@@ -73,6 +73,7 @@
 - SR-059 已随 PR #73 合入 `main` 并标记 VERIFIED：版权记录与发布 Gate 支持层已完成，覆盖付费资源必须 `rights_status=approved` 且绑定匹配 approved rights record、证据 storage key 私有校验、合同/当前权限能力名兼容且 owner-scoped、到期 warn-only/pause-publication 可配置、下架阻断新 token，以及不泄露 evidence key 的审计事件；独立 QA 的权限命名与 owner-scope 发现已修复并复核 PASS。
 - SR-060 已随 PR #75 合入 `main` 并标记 VERIFIED：审计日志支持层已完成，覆盖付款批准/撤权/发布/配置变更高风险动作、递归敏感字段脱敏、append-only 仓储接口、普通 administrator 无显式审计能力不可查询/删除、`request_id` 查询不绕过角色可见性、canonical `wp_sr_audit_logs` schema 对齐和查询视图 payload；独立 QA 的权限绕过、append-only 接口和 schema drift 发现已修复并复核 PASS。
 - SR-061 已随 PR #77 合入 `main` 并标记 VERIFIED：工单与消息模块支持层已完成，覆盖订单/资源/下载事件关联、关联所有权校验、私有附件 key 策略、客户/内部消息投影隔离、分配工单权限、可配置 SLA 与状态流转，以及 support audit action 本地登记；独立 QA 复核 PASS。
+- SR-062 已随 PR #79 合入 `main` 并标记 VERIFIED：收藏模块支持层已完成，覆盖 user+resource 唯一、幂等新增/删除/设置、用户维度列表、缓存失效 key，以及草稿/缺失/不可用资源收藏的不可泄露占位投影；独立 QA 复核 PASS。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -81,4 +82,4 @@
 
 ## 下一步
 
-1. 推进 SR-062：实现收藏模块。
+1. 推进 SR-063：用户浏览历史。
