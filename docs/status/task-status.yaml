@@ -733,7 +733,7 @@ tasks:
     branch: feat/SR-056-download-settlement
     claimed_at: '2026-06-30T03:49:53.008065+00:00'
     updated_at: '2026-06-30T04:05:49.662825+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/66
     evidence:
     - docs/evidence/SR-056/download-settlement-check.php
     - docs/evidence/SR-056/commands.log
