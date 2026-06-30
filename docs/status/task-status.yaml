@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T04:05:49.662835+00:00'
+updated_at: '2026-06-30T05:02:01.946029+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -741,13 +741,17 @@ tasks:
     - docs/evidence/SR-056/review-report.md
     blockers: []
   SR-057:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-057-download-security
+    claimed_at: '2026-06-30T04:16:18.925174+00:00'
+    updated_at: '2026-06-30T05:02:01.945997+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-057/download-security-check.php
+    - docs/evidence/SR-057/commands.log
+    - docs/evidence/SR-057/completion-report.md
+    - docs/evidence/SR-057/review-report.md
     blockers: []
   SR-058:
     status: BACKLOG
