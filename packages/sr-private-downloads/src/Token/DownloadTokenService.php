@@ -28,7 +28,7 @@ CREATE TABLE {$table} (
   user_id BIGINT UNSIGNED NOT NULL,
   resource_id BIGINT UNSIGNED NOT NULL,
   version_id BIGINT UNSIGNED NOT NULL,
-  entitlement_id BIGINT UNSIGNED NOT NULL,
+  entitlement_id BIGINT UNSIGNED NULL,
   quota_reservation_id VARCHAR(128) NOT NULL,
   status VARCHAR(24) NOT NULL DEFAULT 'issued',
   issued_at DATETIME NOT NULL,
@@ -53,7 +53,7 @@ final readonly class DownloadTokenIssueRequest
         public int $userId,
         public int $resourceId,
         public int $versionId,
-        public int $entitlementId,
+        public ?int $entitlementId,
         public string $quotaReservationId,
         public string $nowUtc,
         public int $ttlSeconds = 120,
@@ -62,7 +62,9 @@ final readonly class DownloadTokenIssueRequest
         self::assertPositive($this->userId, 'user_id');
         self::assertPositive($this->resourceId, 'resource_id');
         self::assertPositive($this->versionId, 'version_id');
-        self::assertPositive($this->entitlementId, 'entitlement_id');
+        if ($this->entitlementId !== null) {
+            self::assertPositive($this->entitlementId, 'entitlement_id');
+        }
         self::assertToken($this->quotaReservationId, 'quota_reservation_id');
         self::assertUtc($this->nowUtc, 'now_utc');
         if ($this->ttlSeconds < 1 || $this->ttlSeconds > 3600) {
@@ -101,7 +103,7 @@ final readonly class DownloadTokenIssueResult
         public int $userId,
         public int $resourceId,
         public int $versionId,
-        public int $entitlementId,
+        public ?int $entitlementId,
         public string $quotaReservationId,
         public int $ttlSeconds,
         public string $expiresAt,
@@ -190,7 +192,7 @@ final readonly class DownloadTokenRecord
         public int $userId,
         public int $resourceId,
         public int $versionId,
-        public int $entitlementId,
+        public ?int $entitlementId,
         public string $quotaReservationId,
         public string $status,
         public string $issuedAt,
@@ -207,7 +209,7 @@ final readonly class DownloadTokenRecord
         int $userId,
         int $resourceId,
         int $versionId,
-        int $entitlementId,
+        ?int $entitlementId,
         string $quotaReservationId,
         string $issuedAt,
         string $expiresAt,
