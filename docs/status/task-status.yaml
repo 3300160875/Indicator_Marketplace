@@ -720,7 +720,7 @@ tasks:
     branch: feat/SR-055-consume-token-delivery
     claimed_at: '2026-06-30T03:28:15.665211+00:00'
     updated_at: '2026-06-30T03:30:34.358215+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/64
     evidence:
     - docs/evidence/SR-055/consume-download-token-check.php
     - docs/evidence/SR-055/commands.log
