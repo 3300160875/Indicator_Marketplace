@@ -1,0 +1,93 @@
+# SR-052 commands 2026-06-30T02:24:50Z
+$ php docs/evidence/SR-052/me-entitlements-check.php
+SR-052 me entitlements API check passed
+exit=0
+$ php -l packages/sr-entitlements/src/Rest/Me/MeEntitlementsController.php
+No syntax errors detected in packages/sr-entitlements/src/Rest/Me/MeEntitlementsController.php
+exit=0
+$ php -l web/app/themes/stock-resource-theme/templates/account/membership.php
+No syntax errors detected in web/app/themes/stock-resource-theme/templates/account/membership.php
+exit=0
+$ composer validate --strict
+./composer.json is valid
+exit=0
+$ make lint
+lint: ok
+exit=0
+$ make test-unit MODULE=account
+make: *** No rule to make target 'test-unit'.  Stop.
+exit=2
+$ make test-integration
+make: *** No rule to make target 'test-integration'.  Stop.
+exit=2
+$ composer --working-dir=packages/sr-entitlements test
+> php tests/run.php
+sr-entitlements skeleton tests: ok
+exit=0
+$ make test
+lint: ok
+test: ok
+exit=0
+$ git diff --check
+exit=0
+$ python tools/agent/validate_docs.py
+zsh:1: command not found: python
+exit=127
+$ python3 tools/agent/validate_docs.py
+OK: 76 tasks, 1 locks, no cycles, task cards/contracts consistent
+exit=0
+# SR-052 verification rerun after evidence status fix
+$ php docs/evidence/SR-052/me-entitlements-check.php
+SR-052 me entitlements API check passed
+exit=0
+$ composer validate --strict
+./composer.json is valid
+exit=0
+$ make lint
+lint: ok
+exit=0
+$ composer --working-dir=packages/sr-entitlements test
+> php tests/run.php
+sr-entitlements skeleton tests: ok
+exit=0
+$ make test
+lint: ok
+test: ok
+exit=0
+$ git diff --check
+exit=0
+$ python3 tools/agent/validate_docs.py
+OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent
+exit=0
+# SR-052 verification rerun after QA feedback fixes
+$ php docs/evidence/SR-052/me-entitlements-check.php
+SR-052 me entitlements API check passed
+exit=0
+$ php -l packages/sr-entitlements/src/Rest/Me/MeEntitlementsController.php
+No syntax errors detected in packages/sr-entitlements/src/Rest/Me/MeEntitlementsController.php
+exit=0
+$ php -l web/app/themes/stock-resource-theme/templates/account/membership.php
+No syntax errors detected in web/app/themes/stock-resource-theme/templates/account/membership.php
+exit=0
+$ php -l docs/evidence/SR-052/me-entitlements-check.php
+No syntax errors detected in docs/evidence/SR-052/me-entitlements-check.php
+exit=0
+$ composer validate --strict
+./composer.json is valid
+exit=0
+$ make lint
+lint: ok
+exit=0
+$ composer --working-dir=packages/sr-entitlements test
+> php tests/run.php
+sr-entitlements skeleton tests: ok
+exit=0
+$ make test
+lint: ok
+test: ok
+exit=0
+$ git diff --check
+exit=0
+$ python3 tools/agent/validate_docs.py
+OK: 76 tasks, 0 locks, no cycles, task cards/contracts consistent
+exit=0
