@@ -520,7 +520,7 @@ tasks:
     branch: feat/SR-040-payment-review-service
     claimed_at: '2026-06-29T04:20:00+00:00'
     updated_at: '2026-06-29T04:22:11.118200+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/69
     evidence:
     - docs/evidence/SR-040/payment-review-service-check.php
     - docs/evidence/SR-040/commands.log
