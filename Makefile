@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help doctor bootstrap up down reset install migrate seed lint test test-unit test-integration test-smoke e2e status ci
+.PHONY: help doctor bootstrap up down reset install migrate seed lint test test-unit test-integration test-concurrency test-smoke e2e status ci
 
 help:
 	@bin/dev help
@@ -40,6 +40,9 @@ test-unit:
 
 test-integration:
 	@bin/dev test-integration "$(TEST)"
+
+test-concurrency:
+	@bin/dev test-concurrency "$(TEST)"
 
 test-smoke:
 	@bin/dev smoke

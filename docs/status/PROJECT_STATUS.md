@@ -63,7 +63,7 @@
 - SR-050 已通过独立 QA 并进入 VERIFIED（PR #47）：QuotaService 支持 reserve/commit/release、request_id 幂等、deadlock retry、lock timeout fail-closed 和配额不超发检查。
 - SR-051 已随 PR #52 合入 `main` 并标记 VERIFIED：ContentRestriction 服务端支持层可按 AccessDecision 渲染短代码/区块，未授权与编辑器预览不会输出隐藏内容，并提供用户/资源维度 cache vary keys。
 - SR-052 已随 PR #54 合入 `main` 并标记 VERIFIED：会员中心 `/me` 权益投影、可注册 REST route wrapper、用户+规则版本缓存读写/失效、会员权益模板与独立 QA 证据已完成；启动入口和账户页接线留给后续允许改 bootstrap/template 入口的任务。
-- 测试入口补强已完成：仓库级 `make test-unit MODULE=...` 与 `make test-integration TEST=...` 已可用，`account`、`sr-private-downloads` 和 `Downloads` 路径验证通过。
+- 测试入口补强已完成：仓库级 `make test-unit MODULE=...`、`make test-integration TEST=...` 与 `make test-concurrency TEST=...` 已可用，`account`、`sr-private-downloads`、`Downloads` 和 `DownloadTokens` 路径验证通过。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
