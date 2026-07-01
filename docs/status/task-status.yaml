@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T03:05:43.604645+00:00'
+updated_at: '2026-07-01T03:28:22.958398+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -865,7 +865,7 @@ tasks:
     branch: feat/SR-066-playwright-p0
     claimed_at: '2026-07-01T02:45:02.918651+00:00'
     updated_at: '2026-07-01T02:53:41.515891+00:00'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/89
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/88
     evidence:
     - docs/evidence/SR-066/commands.log
     - docs/evidence/SR-066/completion-report.md
@@ -892,13 +892,29 @@ tasks:
     - docs/evidence/SR-067/review-report.md
     blockers: []
   SR-068:
-    status: READY
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-07-01T02:45:02.785599+00:00'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-068-performance-baseline
+    claimed_at: '2026-07-01T03:14:10.878669+00:00'
+    updated_at: '2026-07-01T03:28:22.958387+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-068/commands.log
+    - docs/evidence/SR-068/completion-report.md
+    - docs/evidence/SR-068/review-report.md
+    - tests/performance/sr068-api-timing.php
+    - tests/performance/sr068-performance-check.mjs
+    - web/app/mu-plugins/stock-resource-runtime-loader.php
+    - packages/sr-core/src/Runtime/CoreRuntimeRegistrar.php
+    - packages/sr-entitlements/src/Plugin.php
+    - packages/sr-entitlements/sr-entitlements.php
+    - packages/sr-private-downloads/src/Plugin.php
+    - packages/sr-private-downloads/sr-private-downloads.php
+    - packages/sr-private-downloads/src/Rest/CreateDownloadTokenController.php
+    - infra/monitoring/sr068-performance-budget.json
+    - infra/monitoring/reports/sr068-baseline.json
+    - infra/monitoring/reports/sr068-compare.json
+    - infra/monitoring/reports/sr068-slow-query-report.md
     blockers: []
   SR-069:
     status: BACKLOG

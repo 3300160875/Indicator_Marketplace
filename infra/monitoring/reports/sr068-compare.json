@@ -1,0 +1,14 @@
+{
+  "task": "SR-068",
+  "generated_at": "2026-07-01T03:46:39.691Z",
+  "status": "pass",
+  "failures": [],
+  "checked": {
+    "lcp_p75": "140ms <= 2500ms",
+    "entitlement_api_p95": "37.724ms <= 500ms",
+    "download_token_api_p95": "39.883ms <= 500ms",
+    "query_plans": 7,
+    "endpoint_query_counts": 5,
+    "cache_isolation": true
+  }
+}

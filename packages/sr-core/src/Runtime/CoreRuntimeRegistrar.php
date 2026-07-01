@@ -33,6 +33,7 @@ final readonly class CoreRuntimeRegistrar
     {
         $this->registerTaxonomies($runtime);
         $this->registerRequestIdHeader($runtime);
+        $this->registerPrivateRestCacheHeader($runtime);
         $this->registerCliCommands($runtime);
     }
 
@@ -66,6 +67,30 @@ final readonly class CoreRuntimeRegistrar
 
             return $response;
         }, 10, 3);
+    }
+
+    private function registerPrivateRestCacheHeader(RuntimeEnvironment $runtime): void
+    {
+        $runtime->addFilter('rest_post_dispatch', function (mixed $response, mixed $server = null, mixed $request = null) use ($runtime): mixed {
+            unset($server);
+
+            $route = is_object($request) && method_exists($request, 'get_route')
+                ? (string) $request->get_route()
+                : '';
+            if (! str_starts_with($route, '/stock-resource/v1/')) {
+                return $response;
+            }
+
+            if (is_object($response) && method_exists($response, 'header')) {
+                $response->header('Cache-Control', 'private, no-store');
+
+                return $response;
+            }
+
+            $runtime->sendHeader('Cache-Control', 'private, no-store');
+
+            return $response;
+        }, 11, 3);
     }
 
     private function registerCliCommands(RuntimeEnvironment $runtime): void

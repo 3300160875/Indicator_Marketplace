@@ -208,6 +208,107 @@ final readonly class CreateDownloadTokenResponse
     }
 }
 
+final readonly class CreateDownloadTokenRouteRegistrar
+{
+    public function __construct(
+        private CreateDownloadTokenController $controller,
+        private string $namespace = 'stock-resource/v1',
+        private string $route = '/download-tokens',
+    ) {
+    }
+
+    public function register(): void
+    {
+        if (! function_exists('register_rest_route')) {
+            throw new \RuntimeException('register_rest_route is not available.');
+        }
+
+        register_rest_route($this->namespace, $this->route, [
+            'methods' => 'POST',
+            'callback' => $this->handle(...),
+            'permission_callback' => $this->permission(...),
+        ]);
+    }
+
+    public function permission(): bool
+    {
+        if (function_exists('is_user_logged_in')) {
+            return (bool) is_user_logged_in();
+        }
+
+        return $this->currentUserId() > 0;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function handle(mixed $request = null): array
+    {
+        $params = $this->requestParams($request);
+        $requestId = (string) ($params['request_id'] ?? $this->uuid());
+        $response = $this->controller->create(new CreateDownloadTokenRequest(
+            idempotencyKey: (string) ($params['idempotency_key'] ?? $requestId),
+            requestId: $requestId,
+            userId: $this->currentUserId(),
+            resourceId: max(1, (int) ($params['resource_id'] ?? 1)),
+            versionId: max(1, (int) ($params['version_id'] ?? 1)),
+            accessMode: (string) ($params['access_mode'] ?? 'free'),
+            resourceStatus: (string) ($params['resource_status'] ?? 'published'),
+            source: (string) ($params['source'] ?? 'rest'),
+            nowUtc: gmdate(\DateTimeInterface::ATOM),
+        ));
+
+        return [
+            'status_code' => $response->statusCode,
+            'body' => $response->body,
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function routeSpec(): array
+    {
+        return [
+            'namespace' => $this->namespace,
+            'route' => $this->route,
+            'methods' => 'POST',
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function requestParams(mixed $request): array
+    {
+        if (is_object($request) && method_exists($request, 'get_json_params')) {
+            $params = $request->get_json_params();
+
+            return is_array($params) ? $params : [];
+        }
+
+        return [];
+    }
+
+    private function currentUserId(): int
+    {
+        if (! function_exists('get_current_user_id')) {
+            return 0;
+        }
+
+        return max(0, (int) get_current_user_id());
+    }
+
+    private function uuid(): string
+    {
+        if (function_exists('wp_generate_uuid4')) {
+            return wp_generate_uuid4();
+        }
+
+        return '00000000-0000-4000-8000-'.bin2hex(random_bytes(6));
+    }
+}
+
 final readonly class AccessDecisionResult
 {
     /**

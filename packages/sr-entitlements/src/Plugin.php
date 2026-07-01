@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace StockResource\Entitlements;
 
+use StockResource\Entitlements\Infrastructure\Repository\InMemoryEntitlementRepository;
+use StockResource\Entitlements\Rest\Me\MeEntitlementsController;
+use StockResource\Entitlements\Rest\Me\MeEntitlementsRouteRegistrar;
+use StockResource\Entitlements\Rest\Me\WordPressMeEntitlementsCacheStore;
+
 final class Plugin
 {
     private const SLUG = 'sr-entitlements';
@@ -63,6 +68,22 @@ final class Plugin
 
     public static function boot(): bool
     {
-        return self::missingRuntimeDependencies() === [];
+        if (self::missingRuntimeDependencies() !== []) {
+            return false;
+        }
+
+        if (function_exists('add_action')) {
+            add_action('rest_api_init', static function (): void {
+                require_once __DIR__ . '/Rest/Me/MeEntitlementsController.php';
+
+                (new MeEntitlementsRouteRegistrar(new MeEntitlementsController(
+                    new InMemoryEntitlementRepository(),
+                    new WordPressMeEntitlementsCacheStore(),
+                    static fn(): string => 'rules-v1',
+                )))->register();
+            });
+        }
+
+        return true;
     }
 }

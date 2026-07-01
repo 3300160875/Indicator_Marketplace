@@ -23,6 +23,26 @@ foreach ($autoloads as $autoload) {
     }
 }
 
+spl_autoload_register(static function (string $class): void {
+    $prefixes = [
+        'StockResource\\Contracts\\' => dirname(__DIR__) . '/sr-contracts/src/',
+        'StockResource\\Entitlements\\' => dirname(__DIR__) . '/sr-entitlements/src/',
+        'StockResource\\PrivateDownloads\\' => __DIR__ . '/src/',
+    ];
+
+    foreach ($prefixes as $prefix => $baseDir) {
+        if (! str_starts_with($class, $prefix)) {
+            continue;
+        }
+
+        $relativeClass = substr($class, strlen($prefix));
+        $path = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+        if (is_readable($path)) {
+            require_once $path;
+        }
+    }
+});
+
 if (class_exists(Plugin::class)) {
     Plugin::boot();
 }
