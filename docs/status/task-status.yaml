@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T08:18:15.006287+00:00'
+updated_at: '2026-07-01T08:32:03.006062+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -919,13 +919,18 @@ tasks:
     - infra/monitoring/reports/sr068-slow-query-report.md
     blockers: []
   SR-069:
-    status: READY
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-07-01T08:18:15.006260+00:00'
+    status: REVIEW
+    owner: Codex
+    branch: feat/SR-069-security-closure
+    claimed_at: '2026-07-01T08:25:43.478326+00:00'
+    updated_at: '2026-07-01T08:32:03.006044+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-069/commands.log
+    - docs/evidence/SR-069/completion-report.md
+    - docs/evidence/SR-069/review-report.md
+    - tests/security/sr069_security_closure.php
+    - docs/security/SR-069-security-test-plan.md
     blockers: []
   SR-070:
     status: READY
