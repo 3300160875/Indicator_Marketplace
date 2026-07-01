@@ -1,28 +1,52 @@
 # SR-066 Review Report
 
-## Independent QA round 1
+## Previous Independent QA Round
 
 - Reviewer: Mencius
 - Result: FAIL
 - Date: 2026-07-01
 
-## Blocking findings
+## Previous Blocking Findings
 
-1. The attempted Playwright spec used static `page.setContent()` HTML and did not visit the real application, create an order, submit proof, switch reviewer context, trigger download, or execute refund.
-2. The repository root has no `npm run e2e` script and no Playwright dependency, so required commands cannot run in CI-repeatable form.
-3. The attempted spec used JSON import assertions that fail syntax checking under local Node `v22.23.0`.
-4. The generated trace/screenshot/retry artifacts were placeholders from a validation script, not automatic Playwright failure artifacts.
+1. Attempted spec used static `page.setContent()` and did not visit the real application.
+2. Root `npm run e2e` script and Playwright dependency were missing.
+3. JSON import assertion syntax failed under local Node.
+4. Trace/screenshot artifacts were placeholders rather than Playwright-generated failure artifacts.
 
-## Status decision
+## Unblock Retry Self-Review
 
-SR-066 is blocked rather than ready for review. Completing it requires a task scope that permits root tooling changes such as `package.json`, lockfile, CI workflow, and possibly test environment bootstrap, plus real application endpoints/pages for the P0 user journey.
+- Reviewer: Codex self-check before independent QA.
+- Result: READY FOR INDEPENDENT QA.
+- Date: 2026-07-01.
 
-## Commands observed by reviewer
+## Findings Resolution
 
-- `npm run e2e -- --project=chromium` -> exit 1, missing root `e2e` script.
-- `npm run e2e -- --project=mobile-chrome` -> exit 1, missing root `e2e` script.
-- `git diff --check` -> exit 0.
-- `python tools/agent/validate_docs.py` -> exit 127, local `python` executable missing.
-- `python3 tools/agent/validate_docs.py` -> exit 0.
-- `node --check tests/e2e/sr066-p0-e2e-check.mjs` -> exit 0.
-- `node --check tests/e2e/p0-flow.spec.mjs` -> exit 1.
+1. Static page replacement:
+   - New spec opens the local WordPress runtime page through Playwright.
+   - Browser actions call gated WordPress REST endpoints and verify server-side state.
+
+2. Root runner and dependency:
+   - Added `@playwright/test`.
+   - Added `npm run e2e`.
+   - Wired `bin/dev e2e` and `make e2e`.
+   - Added GitHub Actions P0 E2E job.
+
+3. Syntax/runtime compatibility:
+   - E2E spec/config use plain ESM imports supported by the local Node runtime.
+   - `node --check` passes for config and spec.
+
+4. Real artifacts:
+   - Playwright emits HTML/JSON report plus screenshot/video/trace on failure.
+   - CI uploads Playwright evidence directories.
+
+## Review Focus for Independent QA
+
+- Confirm `SR_E2E_ENABLED=1` and local/development gating prevents default production exposure.
+- Confirm P0 flow does not use `page.setContent()` or static fake HTML.
+- Confirm chromium and mobile-chrome both pass through `npm run e2e -- --project=...`.
+- Confirm EDD order creation/completion/refund is exercised in the local WordPress runtime.
+- Confirm generated Playwright failure artifacts are real and ignored from git.
+
+## Self-Review Decision
+
+SR-066 is no longer blocked by missing root runner/CI/runtime wiring. It should move to independent QA rather than VERIFIED directly.

@@ -43,3 +43,8 @@ foreach ([
         require_once $entry;
     }
 }
+
+$sr_e2e_runtime = $sr_root . '/tests/e2e/wp/e2e-runtime.php';
+if (getenv('SR_E2E_ENABLED') === '1' && is_readable($sr_e2e_runtime)) {
+    require_once $sr_e2e_runtime;
+}

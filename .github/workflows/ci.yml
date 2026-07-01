@@ -109,3 +109,40 @@ jobs:
 
       - name: Frontend lint
         run: npm run lint
+
+  e2e:
+    name: Playwright P0 E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Install Playwright browser dependencies
+        run: npx playwright install chromium --with-deps
+
+      - name: Run P0 E2E
+        env:
+          SR_E2E_ENABLED: '1'
+          SR_E2E_KEY: local-e2e-only
+        run: make e2e
+
+      - name: Upload Playwright evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sr-066-playwright-evidence
+          path: |
+            docs/evidence/SR-066/playwright-report
+            docs/evidence/SR-066/playwright-results
+          if-no-files-found: ignore

@@ -37,6 +37,8 @@ services:
         required: false
     environment:
       COMPOSER_CACHE_DIR: /tmp/composer-cache
+      SR_E2E_ENABLED: ${SR_E2E_ENABLED:-0}
+      SR_E2E_KEY: ${SR_E2E_KEY:-local-e2e-only}
     volumes:
       - ./:/var/www/html
       - composer-cache:/tmp/composer-cache
@@ -59,6 +61,8 @@ services:
         required: false
     environment:
       COMPOSER_CACHE_DIR: /tmp/composer-cache
+      SR_E2E_ENABLED: ${SR_E2E_ENABLED:-0}
+      SR_E2E_KEY: ${SR_E2E_KEY:-local-e2e-only}
     volumes:
       - ./:/var/www/html
       - composer-cache:/tmp/composer-cache
