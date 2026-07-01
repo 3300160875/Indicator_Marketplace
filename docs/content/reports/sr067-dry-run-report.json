@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "batch_id": "sr067-content-migration-v1",
+  "mode": "dry-run",
+  "would_create": 100,
+  "would_update": 0,
+  "would_delete": 0,
+  "rights_default": "pending",
+  "mutates_database": false,
+  "mutates_filesystem_outside_docs_content": false,
+  "validation_errors": 0,
+  "errors": []
+}

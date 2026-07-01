@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "batch_id": "sr067-content-migration-v1",
+  "expected_count": 100,
+  "actual_count": 100,
+  "unique_natural_keys": 100,
+  "unique_slugs": 100,
+  "rights_default_pending_count": 100,
+  "required_field_completeness_percent": 100,
+  "errors": [],
+  "warnings": []
+}

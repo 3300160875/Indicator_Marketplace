@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "batch_id": "sr067-content-migration-v1",
+  "mode": "rollback-simulation",
+  "rollback_strategy": "natural-key-delete",
+  "preserve_existing": true,
+  "would_remove_created": 100,
+  "would_update_existing": 0,
+  "verified": true,
+  "errors": []
+}

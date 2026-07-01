@@ -1,0 +1,63 @@
+SR-067 command log
+Generated: 2026-07-01T10:55:37+08:00
+Branch: feat/SR-067-content-import
+
+Context
+- Dependencies checked: SR-020 VERIFIED, SR-059 VERIFIED.
+- Contracts read: docs/tasks/SR-067.md, docs/evidence/SR-020/completion-report.md, docs/evidence/SR-059/completion-report.md.
+- Allowed implementation paths used: tools/content-import/**, docs/content/**.
+
+RED evidence
+1. node tools/content-import/sr067-content-import-check.mjs
+   Exit before implementation: 1
+   Result: MODULE_NOT_FOUND for tools/content-import/sr067-content-import-check.mjs.
+
+Commands
+1. node tools/content-import/sr067-content-import-check.mjs
+   Exit after implementation: 0
+   Output: SR-067 content import check passed; resources=100; completeness=100%; rights_status=pending; rollback=verified
+
+2. composer validate --strict
+   Exit: 0
+   Output: ./composer.json is valid
+
+3. make lint
+   Exit: 0
+   Output: lint: ok
+
+4. make test-unit MODULE=content
+   Exit: 0
+   Output: sr-core runtime tests: ok; test-unit: ok
+   Note: current bin/dev maps `content` to `packages/sr-core`.
+
+5. make test-integration
+   Exit: 0
+   Output: test-integration: ok
+
+6. git diff --check
+   Exit: 0
+
+7. python tools/agent/validate_docs.py
+   Exit: 127
+   Result: local shell has no `python` executable.
+   Replacement: python3 tools/agent/validate_docs.py
+
+8. python3 tools/agent/validate_docs.py
+   Exit: 0
+   Output while SR-067 lock active: OK: 76 tasks, 1 locks, no cycles.
+
+9. node --check tools/content-import/sr067-content-import-check.mjs
+   Exit: 0
+
+10. node -e "const r=require('./docs/content/generated/sr067-resources.json'); const v=require('./docs/content/reports/sr067-validation-report.json'); const rb=require('./docs/content/reports/sr067-rollback-report.json'); const ready=require('./docs/content/reports/sr067-release-readiness.json'); console.log(r.count, v.required_field_completeness_percent, rb.verified, ready.completeness_percent, ready.publication_ready, ready.publication_blocker)"
+   Exit: 0
+   Output: 100 100 true 100 false rights_status_pending
+
+Validation checks completed
+- Exactly 100 generated content candidates.
+- All natural keys and slugs are unique.
+- All records default to `rights_status=pending`.
+- Dry-run mutates no runtime database.
+- Apply simulation records the batch.
+- Rollback simulation can remove all batch-created natural keys while preserving existing records.
+- Pre-publication completeness report is 100%, while publication remains blocked until rights review.

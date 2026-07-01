@@ -1,0 +1,3208 @@
+{
+  "schema_version": 1,
+  "batch_id": "sr067-content-migration-v1",
+  "count": 100,
+  "generated_from": "docs/content/sr067-import-manifest.json",
+  "resources": [
+    {
+      "natural_key": "sr067-001",
+      "slug": "sr067-tongdaxin-risk-control-001",
+      "title": "SR-067 通达信 风控 指标 001",
+      "excerpt": "SR-067 迁移候选 001，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 1 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-001",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-002",
+      "slug": "sr067-tonghuashun-screening-002",
+      "title": "SR-067 同花顺 选股 指标 002",
+      "excerpt": "SR-067 迁移候选 002，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 2 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-002",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-003",
+      "slug": "sr067-eastmoney-education-003",
+      "title": "SR-067 东方财富 教学 指标 003",
+      "excerpt": "SR-067 迁移候选 003，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 3 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-003",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-004",
+      "slug": "sr067-wenhua-trend-004",
+      "title": "SR-067 文华财经 趋势 指标 004",
+      "excerpt": "SR-067 迁移候选 004，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 4 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-004",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-005",
+      "slug": "sr067-tradingview-volume-price-005",
+      "title": "SR-067 TradingView 量价 指标 005",
+      "excerpt": "SR-067 迁移候选 005，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 5 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-005",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-006",
+      "slug": "sr067-tongdaxin-risk-control-006",
+      "title": "SR-067 通达信 风控 指标 006",
+      "excerpt": "SR-067 迁移候选 006，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 6 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-006",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-007",
+      "slug": "sr067-tonghuashun-screening-007",
+      "title": "SR-067 同花顺 选股 指标 007",
+      "excerpt": "SR-067 迁移候选 007，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 7 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-007",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-008",
+      "slug": "sr067-eastmoney-education-008",
+      "title": "SR-067 东方财富 教学 指标 008",
+      "excerpt": "SR-067 迁移候选 008，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 8 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-008",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-009",
+      "slug": "sr067-wenhua-trend-009",
+      "title": "SR-067 文华财经 趋势 指标 009",
+      "excerpt": "SR-067 迁移候选 009，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 9 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-009",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-010",
+      "slug": "sr067-tradingview-volume-price-010",
+      "title": "SR-067 TradingView 量价 指标 010",
+      "excerpt": "SR-067 迁移候选 010，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 10 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-010",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-011",
+      "slug": "sr067-tongdaxin-risk-control-011",
+      "title": "SR-067 通达信 风控 指标 011",
+      "excerpt": "SR-067 迁移候选 011，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 11 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-011",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-012",
+      "slug": "sr067-tonghuashun-screening-012",
+      "title": "SR-067 同花顺 选股 指标 012",
+      "excerpt": "SR-067 迁移候选 012，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 12 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-012",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-013",
+      "slug": "sr067-eastmoney-education-013",
+      "title": "SR-067 东方财富 教学 指标 013",
+      "excerpt": "SR-067 迁移候选 013，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 13 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-013",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-014",
+      "slug": "sr067-wenhua-trend-014",
+      "title": "SR-067 文华财经 趋势 指标 014",
+      "excerpt": "SR-067 迁移候选 014，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 14 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-014",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-015",
+      "slug": "sr067-tradingview-volume-price-015",
+      "title": "SR-067 TradingView 量价 指标 015",
+      "excerpt": "SR-067 迁移候选 015，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 15 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-015",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-016",
+      "slug": "sr067-tongdaxin-risk-control-016",
+      "title": "SR-067 通达信 风控 指标 016",
+      "excerpt": "SR-067 迁移候选 016，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 16 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-016",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-017",
+      "slug": "sr067-tonghuashun-screening-017",
+      "title": "SR-067 同花顺 选股 指标 017",
+      "excerpt": "SR-067 迁移候选 017，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 17 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-017",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-018",
+      "slug": "sr067-eastmoney-education-018",
+      "title": "SR-067 东方财富 教学 指标 018",
+      "excerpt": "SR-067 迁移候选 018，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 18 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-018",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-019",
+      "slug": "sr067-wenhua-trend-019",
+      "title": "SR-067 文华财经 趋势 指标 019",
+      "excerpt": "SR-067 迁移候选 019，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 19 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-019",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-020",
+      "slug": "sr067-tradingview-volume-price-020",
+      "title": "SR-067 TradingView 量价 指标 020",
+      "excerpt": "SR-067 迁移候选 020，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 20 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-020",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-021",
+      "slug": "sr067-tongdaxin-risk-control-021",
+      "title": "SR-067 通达信 风控 指标 021",
+      "excerpt": "SR-067 迁移候选 021，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 21 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-021",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-022",
+      "slug": "sr067-tonghuashun-screening-022",
+      "title": "SR-067 同花顺 选股 指标 022",
+      "excerpt": "SR-067 迁移候选 022，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 22 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-022",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-023",
+      "slug": "sr067-eastmoney-education-023",
+      "title": "SR-067 东方财富 教学 指标 023",
+      "excerpt": "SR-067 迁移候选 023，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 23 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-023",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-024",
+      "slug": "sr067-wenhua-trend-024",
+      "title": "SR-067 文华财经 趋势 指标 024",
+      "excerpt": "SR-067 迁移候选 024，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 24 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-024",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-025",
+      "slug": "sr067-tradingview-volume-price-025",
+      "title": "SR-067 TradingView 量价 指标 025",
+      "excerpt": "SR-067 迁移候选 025，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 25 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-025",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-026",
+      "slug": "sr067-tongdaxin-risk-control-026",
+      "title": "SR-067 通达信 风控 指标 026",
+      "excerpt": "SR-067 迁移候选 026，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 26 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-026",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-027",
+      "slug": "sr067-tonghuashun-screening-027",
+      "title": "SR-067 同花顺 选股 指标 027",
+      "excerpt": "SR-067 迁移候选 027，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 27 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-027",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-028",
+      "slug": "sr067-eastmoney-education-028",
+      "title": "SR-067 东方财富 教学 指标 028",
+      "excerpt": "SR-067 迁移候选 028，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 28 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-028",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-029",
+      "slug": "sr067-wenhua-trend-029",
+      "title": "SR-067 文华财经 趋势 指标 029",
+      "excerpt": "SR-067 迁移候选 029，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 29 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-029",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-030",
+      "slug": "sr067-tradingview-volume-price-030",
+      "title": "SR-067 TradingView 量价 指标 030",
+      "excerpt": "SR-067 迁移候选 030，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 30 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-030",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-031",
+      "slug": "sr067-tongdaxin-risk-control-031",
+      "title": "SR-067 通达信 风控 指标 031",
+      "excerpt": "SR-067 迁移候选 031，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 31 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-031",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-032",
+      "slug": "sr067-tonghuashun-screening-032",
+      "title": "SR-067 同花顺 选股 指标 032",
+      "excerpt": "SR-067 迁移候选 032，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 32 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-032",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-033",
+      "slug": "sr067-eastmoney-education-033",
+      "title": "SR-067 东方财富 教学 指标 033",
+      "excerpt": "SR-067 迁移候选 033，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 33 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-033",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-034",
+      "slug": "sr067-wenhua-trend-034",
+      "title": "SR-067 文华财经 趋势 指标 034",
+      "excerpt": "SR-067 迁移候选 034，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 34 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-034",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-035",
+      "slug": "sr067-tradingview-volume-price-035",
+      "title": "SR-067 TradingView 量价 指标 035",
+      "excerpt": "SR-067 迁移候选 035，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 35 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-035",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-036",
+      "slug": "sr067-tongdaxin-risk-control-036",
+      "title": "SR-067 通达信 风控 指标 036",
+      "excerpt": "SR-067 迁移候选 036，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 36 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-036",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-037",
+      "slug": "sr067-tonghuashun-screening-037",
+      "title": "SR-067 同花顺 选股 指标 037",
+      "excerpt": "SR-067 迁移候选 037，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 37 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-037",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-038",
+      "slug": "sr067-eastmoney-education-038",
+      "title": "SR-067 东方财富 教学 指标 038",
+      "excerpt": "SR-067 迁移候选 038，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 38 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-038",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-039",
+      "slug": "sr067-wenhua-trend-039",
+      "title": "SR-067 文华财经 趋势 指标 039",
+      "excerpt": "SR-067 迁移候选 039，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 39 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-039",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-040",
+      "slug": "sr067-tradingview-volume-price-040",
+      "title": "SR-067 TradingView 量价 指标 040",
+      "excerpt": "SR-067 迁移候选 040，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 40 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-040",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-041",
+      "slug": "sr067-tongdaxin-risk-control-041",
+      "title": "SR-067 通达信 风控 指标 041",
+      "excerpt": "SR-067 迁移候选 041，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 41 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-041",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-042",
+      "slug": "sr067-tonghuashun-screening-042",
+      "title": "SR-067 同花顺 选股 指标 042",
+      "excerpt": "SR-067 迁移候选 042，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 42 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-042",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-043",
+      "slug": "sr067-eastmoney-education-043",
+      "title": "SR-067 东方财富 教学 指标 043",
+      "excerpt": "SR-067 迁移候选 043，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 43 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-043",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-044",
+      "slug": "sr067-wenhua-trend-044",
+      "title": "SR-067 文华财经 趋势 指标 044",
+      "excerpt": "SR-067 迁移候选 044，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 44 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-044",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-045",
+      "slug": "sr067-tradingview-volume-price-045",
+      "title": "SR-067 TradingView 量价 指标 045",
+      "excerpt": "SR-067 迁移候选 045，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 45 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-045",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-046",
+      "slug": "sr067-tongdaxin-risk-control-046",
+      "title": "SR-067 通达信 风控 指标 046",
+      "excerpt": "SR-067 迁移候选 046，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 46 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-046",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-047",
+      "slug": "sr067-tonghuashun-screening-047",
+      "title": "SR-067 同花顺 选股 指标 047",
+      "excerpt": "SR-067 迁移候选 047，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 47 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-047",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-048",
+      "slug": "sr067-eastmoney-education-048",
+      "title": "SR-067 东方财富 教学 指标 048",
+      "excerpt": "SR-067 迁移候选 048，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 48 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-048",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-049",
+      "slug": "sr067-wenhua-trend-049",
+      "title": "SR-067 文华财经 趋势 指标 049",
+      "excerpt": "SR-067 迁移候选 049，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 49 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-049",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-050",
+      "slug": "sr067-tradingview-volume-price-050",
+      "title": "SR-067 TradingView 量价 指标 050",
+      "excerpt": "SR-067 迁移候选 050，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 50 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-050",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-051",
+      "slug": "sr067-tongdaxin-risk-control-051",
+      "title": "SR-067 通达信 风控 指标 051",
+      "excerpt": "SR-067 迁移候选 051，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 51 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-051",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-052",
+      "slug": "sr067-tonghuashun-screening-052",
+      "title": "SR-067 同花顺 选股 指标 052",
+      "excerpt": "SR-067 迁移候选 052，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 52 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-052",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-053",
+      "slug": "sr067-eastmoney-education-053",
+      "title": "SR-067 东方财富 教学 指标 053",
+      "excerpt": "SR-067 迁移候选 053，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 53 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-053",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-054",
+      "slug": "sr067-wenhua-trend-054",
+      "title": "SR-067 文华财经 趋势 指标 054",
+      "excerpt": "SR-067 迁移候选 054，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 54 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-054",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-055",
+      "slug": "sr067-tradingview-volume-price-055",
+      "title": "SR-067 TradingView 量价 指标 055",
+      "excerpt": "SR-067 迁移候选 055，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 55 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-055",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-056",
+      "slug": "sr067-tongdaxin-risk-control-056",
+      "title": "SR-067 通达信 风控 指标 056",
+      "excerpt": "SR-067 迁移候选 056，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 56 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-056",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-057",
+      "slug": "sr067-tonghuashun-screening-057",
+      "title": "SR-067 同花顺 选股 指标 057",
+      "excerpt": "SR-067 迁移候选 057，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 57 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-057",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-058",
+      "slug": "sr067-eastmoney-education-058",
+      "title": "SR-067 东方财富 教学 指标 058",
+      "excerpt": "SR-067 迁移候选 058，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 58 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-058",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-059",
+      "slug": "sr067-wenhua-trend-059",
+      "title": "SR-067 文华财经 趋势 指标 059",
+      "excerpt": "SR-067 迁移候选 059，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 59 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-059",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-060",
+      "slug": "sr067-tradingview-volume-price-060",
+      "title": "SR-067 TradingView 量价 指标 060",
+      "excerpt": "SR-067 迁移候选 060，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 60 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-060",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-061",
+      "slug": "sr067-tongdaxin-risk-control-061",
+      "title": "SR-067 通达信 风控 指标 061",
+      "excerpt": "SR-067 迁移候选 061，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 61 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-061",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-062",
+      "slug": "sr067-tonghuashun-screening-062",
+      "title": "SR-067 同花顺 选股 指标 062",
+      "excerpt": "SR-067 迁移候选 062，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 62 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-062",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-063",
+      "slug": "sr067-eastmoney-education-063",
+      "title": "SR-067 东方财富 教学 指标 063",
+      "excerpt": "SR-067 迁移候选 063，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 63 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-063",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-064",
+      "slug": "sr067-wenhua-trend-064",
+      "title": "SR-067 文华财经 趋势 指标 064",
+      "excerpt": "SR-067 迁移候选 064，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 64 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-064",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-065",
+      "slug": "sr067-tradingview-volume-price-065",
+      "title": "SR-067 TradingView 量价 指标 065",
+      "excerpt": "SR-067 迁移候选 065，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 65 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-065",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-066",
+      "slug": "sr067-tongdaxin-risk-control-066",
+      "title": "SR-067 通达信 风控 指标 066",
+      "excerpt": "SR-067 迁移候选 066，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 66 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-066",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-067",
+      "slug": "sr067-tonghuashun-screening-067",
+      "title": "SR-067 同花顺 选股 指标 067",
+      "excerpt": "SR-067 迁移候选 067，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 67 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-067",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-068",
+      "slug": "sr067-eastmoney-education-068",
+      "title": "SR-067 东方财富 教学 指标 068",
+      "excerpt": "SR-067 迁移候选 068，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 68 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-068",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-069",
+      "slug": "sr067-wenhua-trend-069",
+      "title": "SR-067 文华财经 趋势 指标 069",
+      "excerpt": "SR-067 迁移候选 069，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 69 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-069",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-070",
+      "slug": "sr067-tradingview-volume-price-070",
+      "title": "SR-067 TradingView 量价 指标 070",
+      "excerpt": "SR-067 迁移候选 070，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 70 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-070",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-071",
+      "slug": "sr067-tongdaxin-risk-control-071",
+      "title": "SR-067 通达信 风控 指标 071",
+      "excerpt": "SR-067 迁移候选 071，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 71 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-071",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-072",
+      "slug": "sr067-tonghuashun-screening-072",
+      "title": "SR-067 同花顺 选股 指标 072",
+      "excerpt": "SR-067 迁移候选 072，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 72 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-072",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-073",
+      "slug": "sr067-eastmoney-education-073",
+      "title": "SR-067 东方财富 教学 指标 073",
+      "excerpt": "SR-067 迁移候选 073，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 73 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-073",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-074",
+      "slug": "sr067-wenhua-trend-074",
+      "title": "SR-067 文华财经 趋势 指标 074",
+      "excerpt": "SR-067 迁移候选 074，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 74 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-074",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-075",
+      "slug": "sr067-tradingview-volume-price-075",
+      "title": "SR-067 TradingView 量价 指标 075",
+      "excerpt": "SR-067 迁移候选 075，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 75 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-075",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-076",
+      "slug": "sr067-tongdaxin-risk-control-076",
+      "title": "SR-067 通达信 风控 指标 076",
+      "excerpt": "SR-067 迁移候选 076，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 76 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-076",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-077",
+      "slug": "sr067-tonghuashun-screening-077",
+      "title": "SR-067 同花顺 选股 指标 077",
+      "excerpt": "SR-067 迁移候选 077，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 77 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-077",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-078",
+      "slug": "sr067-eastmoney-education-078",
+      "title": "SR-067 东方财富 教学 指标 078",
+      "excerpt": "SR-067 迁移候选 078，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 78 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-078",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-079",
+      "slug": "sr067-wenhua-trend-079",
+      "title": "SR-067 文华财经 趋势 指标 079",
+      "excerpt": "SR-067 迁移候选 079，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 79 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-079",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-080",
+      "slug": "sr067-tradingview-volume-price-080",
+      "title": "SR-067 TradingView 量价 指标 080",
+      "excerpt": "SR-067 迁移候选 080，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 80 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-080",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-081",
+      "slug": "sr067-tongdaxin-risk-control-081",
+      "title": "SR-067 通达信 风控 指标 081",
+      "excerpt": "SR-067 迁移候选 081，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 81 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-081",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-082",
+      "slug": "sr067-tonghuashun-screening-082",
+      "title": "SR-067 同花顺 选股 指标 082",
+      "excerpt": "SR-067 迁移候选 082，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 82 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-082",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-083",
+      "slug": "sr067-eastmoney-education-083",
+      "title": "SR-067 东方财富 教学 指标 083",
+      "excerpt": "SR-067 迁移候选 083，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 83 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-083",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-084",
+      "slug": "sr067-wenhua-trend-084",
+      "title": "SR-067 文华财经 趋势 指标 084",
+      "excerpt": "SR-067 迁移候选 084，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 84 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-084",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-085",
+      "slug": "sr067-tradingview-volume-price-085",
+      "title": "SR-067 TradingView 量价 指标 085",
+      "excerpt": "SR-067 迁移候选 085，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 85 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-085",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-086",
+      "slug": "sr067-tongdaxin-risk-control-086",
+      "title": "SR-067 通达信 风控 指标 086",
+      "excerpt": "SR-067 迁移候选 086，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 86 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-086",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-087",
+      "slug": "sr067-tonghuashun-screening-087",
+      "title": "SR-067 同花顺 选股 指标 087",
+      "excerpt": "SR-067 迁移候选 087，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 87 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-087",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-088",
+      "slug": "sr067-eastmoney-education-088",
+      "title": "SR-067 东方财富 教学 指标 088",
+      "excerpt": "SR-067 迁移候选 088，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 88 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-088",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-089",
+      "slug": "sr067-wenhua-trend-089",
+      "title": "SR-067 文华财经 趋势 指标 089",
+      "excerpt": "SR-067 迁移候选 089，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 89 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-089",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-090",
+      "slug": "sr067-tradingview-volume-price-090",
+      "title": "SR-067 TradingView 量价 指标 090",
+      "excerpt": "SR-067 迁移候选 090，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 90 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-090",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-091",
+      "slug": "sr067-tongdaxin-risk-control-091",
+      "title": "SR-067 通达信 风控 指标 091",
+      "excerpt": "SR-067 迁移候选 091，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 91 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-091",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-092",
+      "slug": "sr067-tonghuashun-screening-092",
+      "title": "SR-067 同花顺 选股 指标 092",
+      "excerpt": "SR-067 迁移候选 092，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 92 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-092",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-093",
+      "slug": "sr067-eastmoney-education-093",
+      "title": "SR-067 东方财富 教学 指标 093",
+      "excerpt": "SR-067 迁移候选 093，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 93 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-093",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-094",
+      "slug": "sr067-wenhua-trend-094",
+      "title": "SR-067 文华财经 趋势 指标 094",
+      "excerpt": "SR-067 迁移候选 094，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 94 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-094",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-095",
+      "slug": "sr067-tradingview-volume-price-095",
+      "title": "SR-067 TradingView 量价 指标 095",
+      "excerpt": "SR-067 迁移候选 095，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 95 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-095",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-096",
+      "slug": "sr067-tongdaxin-risk-control-096",
+      "title": "SR-067 通达信 风控 指标 096",
+      "excerpt": "SR-067 迁移候选 096，用于 ETF 风控 场景。",
+      "content": "这是 SR-067 的第 96 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tongdaxin",
+        "market": "ETF",
+        "strategy": "risk-control"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "no",
+        "compatibility": "tongdaxin"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-096",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-097",
+      "slug": "sr067-tonghuashun-screening-097",
+      "title": "SR-067 同花顺 选股 指标 097",
+      "excerpt": "SR-067 迁移候选 097，用于 futures 选股 场景。",
+      "content": "这是 SR-067 的第 97 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase_or_vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tonghuashun",
+        "market": "futures",
+        "strategy": "screening"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "tonghuashun"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-097",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-098",
+      "slug": "sr067-eastmoney-education-098",
+      "title": "SR-067 东方财富 教学 指标 098",
+      "excerpt": "SR-067 迁移候选 098，用于 index 教学 场景。",
+      "content": "这是 SR-067 的第 98 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "free",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "eastmoney",
+        "market": "index",
+        "strategy": "education"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "eastmoney"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-098",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-099",
+      "slug": "sr067-wenhua-trend-099",
+      "title": "SR-067 文华财经 趋势 指标 099",
+      "excerpt": "SR-067 迁移候选 099，用于 sector 趋势 场景。",
+      "content": "这是 SR-067 的第 99 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "purchase",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "wenhua",
+        "market": "sector",
+        "strategy": "trend"
+      },
+      "meta": {
+        "file_format": "zip",
+        "charset": "gbk",
+        "source_included": "no",
+        "l2_required": "no",
+        "compatibility": "wenhua"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-099",
+        "action": "delete_if_created_by_batch"
+      }
+    },
+    {
+      "natural_key": "sr067-100",
+      "slug": "sr067-tradingview-volume-price-100",
+      "title": "SR-067 TradingView 量价 指标 100",
+      "excerpt": "SR-067 迁移候选 100，用于 A-share 量价 场景。",
+      "content": "这是 SR-067 的第 100 条受控迁移候选内容，用于验证 100 条内容迁移、校验和回滚流程。",
+      "publication_status": "draft",
+      "access_mode": "vip",
+      "rights_status": "pending",
+      "risk_level": "medium",
+      "disclaimer_version": "fixture-risk-v1",
+      "taxonomy": {
+        "platform": "tradingview",
+        "market": "A-share",
+        "strategy": "volume-price"
+      },
+      "meta": {
+        "file_format": "txt",
+        "charset": "utf8",
+        "source_included": "yes",
+        "l2_required": "yes",
+        "compatibility": "tradingview"
+      },
+      "rights": {
+        "default_status": "pending",
+        "evidence_required_before_publish": true
+      },
+      "rollback": {
+        "natural_key": "sr067-100",
+        "action": "delete_if_created_by_batch"
+      }
+    }
+  ]
+}

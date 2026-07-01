@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "batch_id": "sr067-content-migration-v1",
+  "expected_count": 100,
+  "defaults": {
+    "publication_status": "draft",
+    "rights_status": "pending",
+    "risk_level": "medium",
+    "disclaimer_version": "fixture-risk-v1"
+  },
+  "source": {
+    "type": "synthetic-controlled-import",
+    "owner": "SR-067",
+    "notes": "Deterministic content migration candidates. No production content, credentials, cookies, tokens or personal data."
+  },
+  "taxonomy_terms": {
+    "platforms": ["tongdaxin", "tonghuashun", "eastmoney", "wenhua", "tradingview"],
+    "markets": ["A-share", "ETF", "futures", "index", "sector"],
+    "strategies": ["trend", "volume-price", "risk-control", "screening", "education"]
+  },
+  "access_modes": ["free", "purchase", "vip", "purchase_or_vip"],
+  "rollback": {
+    "strategy": "natural-key-delete",
+    "preserve_existing": true,
+    "state_file": "docs/content/reports/sr067-apply-state.json"
+  }
+}
