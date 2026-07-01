@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T02:53:41.515901+00:00'
+updated_at: '2026-07-01T02:58:56.982442+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -875,13 +875,21 @@ tasks:
       acceptance within current allowed paths. Root package.json/lock/CI tooling and
       real application workflow endpoints are required, but SR-066 only permits tests/e2e/**.
   SR-067:
-    status: READY
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-07-01T02:45:02.785594+00:00'
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-067-content-import
+    claimed_at: '2026-07-01T02:55:37.604560+00:00'
+    updated_at: '2026-07-01T02:58:56.982432+00:00'
     pr: null
-    evidence: []
+    evidence:
+    - docs/evidence/SR-067/commands.log
+    - docs/evidence/SR-067/completion-report.md
+    - docs/content/reports/sr067-dry-run-report.json
+    - docs/content/reports/sr067-validation-report.json
+    - docs/content/reports/sr067-apply-state.json
+    - docs/content/reports/sr067-rollback-report.json
+    - docs/content/reports/sr067-release-readiness.json
+    - docs/evidence/SR-067/review-report.md
     blockers: []
   SR-068:
     status: READY
