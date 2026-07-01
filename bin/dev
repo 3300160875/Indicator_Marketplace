@@ -106,6 +106,10 @@ Development commands:
                    run deterministic concurrency checks when a TEST alias is available
   make test-smoke  verify running Docker services
   make e2e         run end-to-end tests when available
+  make perf-baseline
+                   record SR-068 performance baseline reports
+  make perf-compare
+                   compare SR-068 performance reports against budgets
   make status      show Docker service status
   make ci          run the minimum local CI gate
   make doctor      check local command prerequisites
@@ -208,6 +212,12 @@ EOF
     ;;
   e2e)
     printf 'e2e: no end-to-end suite is defined in W1\n'
+    ;;
+  perf-baseline)
+    node tests/performance/sr068-performance-check.mjs baseline
+    ;;
+  perf-compare)
+    node tests/performance/sr068-performance-check.mjs compare
     ;;
   status)
     docker compose ps

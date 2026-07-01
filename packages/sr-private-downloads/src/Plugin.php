@@ -3,6 +3,19 @@ declare(strict_types=1);
 
 namespace StockResource\PrivateDownloads;
 
+use StockResource\Entitlements\Application\EntitlementService;
+use StockResource\Entitlements\Application\InMemoryQuotaCounterStore;
+use StockResource\Entitlements\Application\QuotaService;
+use StockResource\Entitlements\Infrastructure\Repository\InMemoryEntitlementRepository;
+use StockResource\PrivateDownloads\Rest\CreateDownloadTokenController;
+use StockResource\PrivateDownloads\Rest\CreateDownloadTokenRouteRegistrar;
+use StockResource\PrivateDownloads\Rest\EntitlementServiceAccessDecisionGateway;
+use StockResource\PrivateDownloads\Rest\InMemoryCreateDownloadTokenIdempotencyStore;
+use StockResource\PrivateDownloads\Rest\QuotaServiceReservationGateway;
+use StockResource\PrivateDownloads\Rest\RecordingTransactionRunner;
+use StockResource\PrivateDownloads\Token\DownloadTokenService;
+use StockResource\PrivateDownloads\Token\InMemoryDownloadTokenRepository;
+
 final class Plugin
 {
     private const SLUG = 'sr-private-downloads';
@@ -63,6 +76,29 @@ final class Plugin
 
     public static function boot(): bool
     {
-        return self::missingRuntimeDependencies() === [];
+        if (self::missingRuntimeDependencies() !== []) {
+            return false;
+        }
+
+        if (function_exists('add_action')) {
+            add_action('rest_api_init', static function (): void {
+                require_once dirname(__DIR__, 2) . '/sr-contracts/src/Entitlement/AccessDecision.php';
+                require_once dirname(__DIR__, 2) . '/sr-contracts/src/Entitlement/AccessDecisionContext.php';
+                require_once dirname(__DIR__, 2) . '/sr-entitlements/src/Application/QuotaService.php';
+                require_once __DIR__ . '/Token/DownloadTokenService.php';
+                require_once __DIR__ . '/Rest/CreateDownloadTokenController.php';
+
+                $appKey = function_exists('wp_salt') ? wp_salt('auth') : 'local-runtime-download-token-key';
+                (new CreateDownloadTokenRouteRegistrar(new CreateDownloadTokenController(
+                    new EntitlementServiceAccessDecisionGateway(new EntitlementService(new InMemoryEntitlementRepository())),
+                    new QuotaServiceReservationGateway(new QuotaService(new InMemoryQuotaCounterStore())),
+                    new DownloadTokenService(new InMemoryDownloadTokenRepository(), $appKey),
+                    new InMemoryCreateDownloadTokenIdempotencyStore(),
+                    new RecordingTransactionRunner(),
+                )))->register();
+            });
+        }
+
+        return true;
     }
 }

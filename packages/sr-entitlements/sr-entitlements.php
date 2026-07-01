@@ -23,6 +23,19 @@ foreach ($autoloads as $autoload) {
     }
 }
 
+spl_autoload_register(static function (string $class): void {
+    $prefix = 'StockResource\\Entitlements\\';
+    if (! str_starts_with($class, $prefix)) {
+        return;
+    }
+
+    $relativeClass = substr($class, strlen($prefix));
+    $path = __DIR__ . '/src/' . str_replace('\\', '/', $relativeClass) . '.php';
+    if (is_readable($path)) {
+        require_once $path;
+    }
+});
+
 if (class_exists(Plugin::class)) {
     Plugin::boot();
 }

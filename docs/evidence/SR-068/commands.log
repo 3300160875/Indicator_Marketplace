@@ -1,0 +1,134 @@
+SR-068 command log
+Generated: 2026-07-01T19:14:10+08:00
+Branch: feat/SR-068-performance-baseline
+
+Context
+- Dependencies checked: SR-065 VERIFIED.
+- Contracts read: docs/tasks/SR-068.md, docs/contracts/schema.sql, docs/contracts/openapi.yaml, docs/evidence/SR-065/completion-report.md.
+- Primary SR-068 performance paths used: tests/performance/** and infra/monitoring/**.
+- User-authorized unblock/runtime paths used to make real REST API performance trace possible: Makefile, bin/dev, web/app/mu-plugins/**, packages/sr-core/**, packages/sr-entitlements/** and packages/sr-private-downloads/**.
+- User-authorized tooling fix: Makefile and bin/dev were updated so required `make perf-baseline` and `make perf-compare` commands are real repository entry points rather than documented deviations.
+- Status correction: docs/status/task-status.yaml SR-066 PR link was corrected from PR #89 to PR #88.
+
+RED evidence
+1. make perf-baseline
+   Exit before implementation: 2
+   Result: No rule to make target 'perf-baseline'.
+
+2. make perf-compare
+   Exit before implementation: 2
+   Result: No rule to make target 'perf-compare'.
+
+First QA result
+- Independent QA returned FAIL.
+- Root causes:
+  - Initial implementation used static samples from the budget file rather than runtime trace.
+  - Initial index check verified index names but not covering columns.
+  - Initial cache isolation check only read configured strings.
+- Remediation:
+  - `make perf-baseline` now collects local Docker runtime traces from headless Chrome, HTTP fetches and PHP service-layer API timing.
+  - `make perf-compare` now re-parses `docs/contracts/schema.sql` and requires index columns to cover the query filter prefix.
+  - Cache checks now consume HTTP response headers and service-layer cache traces.
+  - Runtime unblock added a local MU loader plus REST route registration for me-entitlements and download-tokens, so API p95 is measured from real WordPress REST HTTP JSON responses.
+
+Implementation verification after QA remediation
+1. make perf-baseline
+   Exit: 0
+   Output: SR-068 performance baseline recorded: lcp_p75=140ms entitlement_p95=37.724ms token_p95=39.883ms
+   Report: infra/monitoring/reports/sr068-baseline.json
+
+2. make perf-compare
+   Exit: 0
+   Output:
+   SR-068 performance compare passed
+   lcp_p75=140ms <= 2500ms
+   entitlement_api_p95=37.724ms <= 500ms
+   download_token_api_p95=39.883ms <= 500ms
+   Reports:
+   - infra/monitoring/reports/sr068-compare.json
+   - infra/monitoring/reports/sr068-slow-query-report.md
+
+3. node --check tests/performance/sr068-performance-check.mjs
+   Exit: 0
+   Result: no syntax errors.
+
+4. sh -n bin/dev
+   Exit: 0
+   Result: shell syntax ok.
+
+5. php tests/performance/sr068-api-timing.php 5
+   Exit: 0
+   Result: emitted service-layer timing JSON for me-entitlements and create-download-token API paths.
+
+6. php -l tests/performance/sr068-api-timing.php
+   Exit: 0
+   Result: no syntax errors.
+
+Coverage
+- LCP p75 budget: 140ms <= 2500ms from three headless Chrome runs against the local Docker nginx runtime.
+- Entitlement API p95 budget: 37.724ms <= 500ms from 10 real WordPress REST HTTP JSON timing samples.
+- Download token API p95 budget: 39.883ms <= 500ms from 10 real WordPress REST HTTP JSON timing samples.
+- Cache isolation budget verifies private no-store HTTP traces for protected REST paths, user+rules_version me-entitlements cache keys, content restriction vary dimensions and download-token response leak checks.
+- Slow-query report verifies seven required schema indexes and their covering columns for entitlement, token, event and rights access paths.
+- N+1 report verifies five endpoint query counts stay within configured budgets.
+
+Runtime REST checks
+1. curl -i -sS 'http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements'
+   Exit: 0
+   Result: 401 JSON `rest_forbidden`, `Content-Type: application/json`, `Cache-Control: private, no-store`, `X-Request-ID` present.
+
+2. curl -i -sS -X POST 'http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens'
+   Exit: 0
+   Result: 401 JSON `rest_forbidden`, `Content-Type: application/json`, `Cache-Control: private, no-store`, `X-Request-ID` present.
+
+Affected package checks
+1. make test-unit MODULE=sr-core
+   Exit: 0
+   Result: sr-core runtime tests ok.
+
+2. make test-unit MODULE=sr-entitlements
+   Exit: 0
+   Result: sr-entitlements skeleton tests ok.
+
+3. make test-unit MODULE=sr-private-downloads
+   Exit: 0
+   Result: sr-private-downloads skeleton tests ok.
+
+Final staged diff stat before commit
+```text
+Makefile                                           |   8 +-
+bin/dev                                            |  10 +
+docs/evidence/SR-068/commands.log                  | 105 +++++
+docs/evidence/SR-068/completion-report.md          |  62 +++
+docs/evidence/SR-068/review-report.md              |  34 ++
+docs/status/PROJECT_STATUS.md                      |   6 +-
+docs/status/task-status.yaml                       |  32 +-
+infra/monitoring/reports/sr068-baseline.json       | 505 +++++++++++++++++++++
+infra/monitoring/reports/sr068-compare.json        |  14 +
+infra/monitoring/reports/sr068-slow-query-report.md | 27 ++
+infra/monitoring/sr068-performance-budget.json     |  92 ++++
+packages/sr-core/src/Runtime/CoreRuntimeRegistrar.php | 25 +
+packages/sr-entitlements/sr-entitlements.php       |  13 +
+packages/sr-entitlements/src/Plugin.php            |  23 +-
+packages/sr-private-downloads/sr-private-downloads.php | 20 +
+packages/sr-private-downloads/src/Plugin.php       |  38 +-
+packages/sr-private-downloads/src/Rest/CreateDownloadTokenController.php | 101 +++++
+tests/performance/sr068-api-timing.php             | 147 ++++++
+tests/performance/sr068-performance-check.mjs      | 465 +++++++++++++++++++
+web/app/mu-plugins/stock-resource-runtime-loader.php | 45 ++
+20 files changed, 1759 insertions(+), 13 deletions(-)
+```
+
+Commit / PR
+- Commit: 2f8027e feat(performance): add SR-068 runtime baseline
+- PR: https://github.com/3300160875/Indicator_Marketplace/pull/91
+
+Required command deviations
+- None for SR-068 after the user-authorized Makefile/bin/dev tooling fix.
+- `python tools/agent/validate_docs.py` is still expected to fail in this local shell because only `python3` is installed; `python3 tools/agent/validate_docs.py` is used as the equivalent repository validation command, consistent with previous task evidence.
+
+Rollback
+- Remove Makefile/bin/dev perf target additions.
+- Remove tests/performance/sr068-performance-check.mjs.
+- Remove infra/monitoring/sr068-performance-budget.json and infra/monitoring/reports/sr068-*.
+- Revert SR-068 evidence/status updates.

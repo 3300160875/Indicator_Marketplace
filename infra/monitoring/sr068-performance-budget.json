@@ -1,0 +1,92 @@
+{
+  "task": "SR-068",
+  "generated_at": "2026-07-01T00:00:00Z",
+  "budgets": {
+    "lcp_p75_ms": 2500,
+    "entitlement_api_p95_ms": 500,
+    "download_token_api_p95_ms": 500,
+    "slow_query_ms": 100,
+    "max_query_count": {
+      "public_resource_archive": 8,
+      "public_resource_detail": 5,
+      "me_entitlements": 6,
+      "create_download_token": 9,
+      "consume_download_token": 9
+    }
+  },
+  "local_trace": {
+    "base_url": "http://127.0.0.1:18080",
+    "lcp_path": "/",
+    "http_iterations": 10,
+    "http_paths": [
+      "/",
+      "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+      "/index.php?rest_route=/stock-resource/v1/download-tokens"
+    ],
+    "api_iterations": 20
+  },
+  "cache_isolation": {
+    "private_api_headers": "private, no-store",
+    "me_entitlements_key_parts": ["user_id", "rules_version"],
+    "content_restriction_vary_parts": ["user", "resource", "surface", "access_mode"],
+    "download_token_cacheable": false
+  },
+  "query_plans": [
+    {
+      "name": "active_entitlements_for_user",
+      "table": "wp_sr_entitlements",
+      "where": ["user_id", "status", "expires_at"],
+      "required_index": "idx_user_active",
+      "endpoint": "me_entitlements"
+    },
+    {
+      "name": "download_token_by_hash",
+      "table": "wp_sr_download_tokens",
+      "where": ["token_hash"],
+      "required_index": "uq_token_hash",
+      "endpoint": "consume_download_token"
+    },
+    {
+      "name": "download_token_idempotency",
+      "table": "wp_sr_download_tokens",
+      "where": ["request_id"],
+      "required_index": "uq_request_id",
+      "endpoint": "create_download_token"
+    },
+    {
+      "name": "download_token_expiry_sweep",
+      "table": "wp_sr_download_tokens",
+      "where": ["expires_at", "status"],
+      "required_index": "idx_expiry_status",
+      "endpoint": "download_settlement_reconcile"
+    },
+    {
+      "name": "download_events_user_window",
+      "table": "wp_sr_download_events",
+      "where": ["user_id", "created_at"],
+      "required_index": "idx_user_date",
+      "endpoint": "reports"
+    },
+    {
+      "name": "download_events_resource_result_window",
+      "table": "wp_sr_download_events",
+      "where": ["resource_id", "result", "created_at"],
+      "required_index": "idx_resource_result",
+      "endpoint": "reports"
+    },
+    {
+      "name": "rights_record_publish_gate",
+      "table": "wp_sr_rights_records",
+      "where": ["resource_id", "status"],
+      "required_index": "idx_resource_status",
+      "endpoint": "publish_gate"
+    }
+  ],
+  "endpoint_query_counts": [
+    { "endpoint": "public_resource_archive", "queries": 5 },
+    { "endpoint": "public_resource_detail", "queries": 3 },
+    { "endpoint": "me_entitlements", "queries": 4 },
+    { "endpoint": "create_download_token", "queries": 7 },
+    { "endpoint": "consume_download_token", "queries": 7 }
+  ]
+}

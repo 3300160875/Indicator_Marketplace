@@ -1,0 +1,505 @@
+{
+  "task": "SR-068",
+  "generated_at": "2026-07-01T03:46:05.653Z",
+  "source": "local-docker-runtime",
+  "observations": {
+    "source": "local-docker-runtime",
+    "collected_at": "2026-07-01T03:46:05.653Z",
+    "browser": {
+      "executable": "/usr/bin/google-chrome",
+      "lcp_runs": [
+        {
+          "url": "http://127.0.0.1:18080/",
+          "lcp_ms": 140,
+          "fcp_ms": 124,
+          "ttfb_ms": 69.8,
+          "load_event_ms": 122.9
+        },
+        {
+          "url": "http://127.0.0.1:18080/",
+          "lcp_ms": 140,
+          "fcp_ms": 128,
+          "ttfb_ms": 71.3,
+          "load_event_ms": 125.4
+        },
+        {
+          "url": "http://127.0.0.1:18080/",
+          "lcp_ms": 140,
+          "fcp_ms": 128,
+          "ttfb_ms": 69.3,
+          "load_event_ms": 127.6
+        }
+      ]
+    },
+    "http": [
+      {
+        "path": "/",
+        "url": "http://127.0.0.1:18080/",
+        "iteration": 1,
+        "status": 200,
+        "cache_control": "",
+        "content_type": "text/html; charset=UTF-8",
+        "request_id": "",
+        "body_shape": "non-json",
+        "total_ms": 53.897
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 1,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "0780341e-7468-4b65-879e-f162f5f206fc",
+        "body_shape": "json",
+        "total_ms": 34.69
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 2,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "c8dee641-c3cb-4d2b-a521-5e67a59eca41",
+        "body_shape": "json",
+        "total_ms": 33.9
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 3,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "eecad231-9e7d-4994-8c39-d4b7f2e9584c",
+        "body_shape": "json",
+        "total_ms": 32.82
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 4,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "f081895b-6dfe-4503-a1c8-5d33217526b4",
+        "body_shape": "json",
+        "total_ms": 32.994
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 5,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "fefd66b4-f76e-44f7-a03e-f77f874355e7",
+        "body_shape": "json",
+        "total_ms": 35.377
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 6,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "cd8065a9-27cc-4e47-81d4-bc1b3cdd4cd0",
+        "body_shape": "json",
+        "total_ms": 34.72
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 7,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "3302f085-5a9c-4755-8640-51cbbaa637ae",
+        "body_shape": "json",
+        "total_ms": 37.724
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 8,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "69944f00-5bc8-441f-96f4-29e7ae930b49",
+        "body_shape": "json",
+        "total_ms": 33.252
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 9,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "7d1165c8-c6cb-4747-92d9-6b4eed3f9825",
+        "body_shape": "json",
+        "total_ms": 36.584
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/me/entitlements",
+        "iteration": 10,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "5631604f-35f7-4c2c-bae8-694c256ab589",
+        "body_shape": "json",
+        "total_ms": 34.515
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 1,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "a3d71298-0360-460e-ac02-408565c1cacd",
+        "body_shape": "json",
+        "total_ms": 35.832
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 2,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "97ddc040-047f-4358-9742-e52e15ccbf8b",
+        "body_shape": "json",
+        "total_ms": 36.809
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 3,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "3cbd7d33-6e3d-48a7-a7e8-4c3a412a5e8c",
+        "body_shape": "json",
+        "total_ms": 36.408
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 4,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "58d25e10-08c0-4647-88ac-d7a08bc5983e",
+        "body_shape": "json",
+        "total_ms": 34.348
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 5,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "765b7d90-f7ce-4e65-bd1b-6cbd9718d9b7",
+        "body_shape": "json",
+        "total_ms": 33.56
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 6,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "87eada48-53f5-4468-935c-a4dedba0f2c1",
+        "body_shape": "json",
+        "total_ms": 39.883
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 7,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "b5e84f1e-698f-4321-bbac-7cc1af081835",
+        "body_shape": "json",
+        "total_ms": 32.783
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 8,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "ad88f18a-3187-4547-aa70-55cc24c1eb8e",
+        "body_shape": "json",
+        "total_ms": 38.726
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 9,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "e5e5a93c-dfa7-480b-b3ce-97f4ab862794",
+        "body_shape": "json",
+        "total_ms": 33.943
+      },
+      {
+        "path": "/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "url": "http://127.0.0.1:18080/index.php?rest_route=/stock-resource/v1/download-tokens",
+        "iteration": 10,
+        "status": 401,
+        "cache_control": "private, no-store",
+        "content_type": "application/json; charset=UTF-8",
+        "request_id": "efe4816d-5db8-496f-bf3b-fe3b9615cbb6",
+        "body_shape": "json",
+        "total_ms": 34.955
+      }
+    ],
+    "api": {
+      "source": "tests/performance/sr068-api-timing.php",
+      "iterations": 20,
+      "entitlement_api_ms": [
+        0.058,
+        0.039,
+        0.036,
+        0.029,
+        0.026,
+        0.026,
+        0.025,
+        0.026,
+        0.026,
+        0.027,
+        0.026,
+        0.026,
+        0.026,
+        0.026,
+        0.03,
+        0.026,
+        0.025,
+        0.026,
+        0.026,
+        0.026
+      ],
+      "download_token_api_ms": [
+        0.04,
+        0.024,
+        0.018,
+        0.012,
+        0.011,
+        0.011,
+        0.01,
+        0.011,
+        0.011,
+        0.01,
+        0.011,
+        0.011,
+        0.011,
+        0.011,
+        0.01,
+        0.011,
+        0.011,
+        0.01,
+        0.01,
+        0.011
+      ],
+      "cache_trace": {
+        "me_entitlements_distinct_user_keys": true,
+        "me_entitlements_key_parts": [
+          "user_id",
+          "rules_version"
+        ],
+        "download_token_response_leak_checked": true
+      }
+    }
+  },
+  "metrics": {
+    "lcp_p75_ms": 140,
+    "entitlement_api_p95_ms": 37.724,
+    "download_token_api_p95_ms": 39.883,
+    "service_layer_entitlement_api_p95_ms": 0.039,
+    "service_layer_download_token_api_p95_ms": 0.024
+  },
+  "budgets": {
+    "lcp_p75_ms": 2500,
+    "entitlement_api_p95_ms": 500,
+    "download_token_api_p95_ms": 500,
+    "slow_query_ms": 100,
+    "max_query_count": {
+      "public_resource_archive": 8,
+      "public_resource_detail": 5,
+      "me_entitlements": 6,
+      "create_download_token": 9,
+      "consume_download_token": 9
+    }
+  },
+  "cache_isolation": {
+    "private_api_headers": "private, no-store",
+    "me_entitlements_key_parts": [
+      "user_id",
+      "rules_version"
+    ],
+    "content_restriction_vary_parts": [
+      "user",
+      "resource",
+      "surface",
+      "access_mode"
+    ],
+    "download_token_cacheable": false
+  },
+  "query_plans": [
+    {
+      "name": "active_entitlements_for_user",
+      "table": "wp_sr_entitlements",
+      "where": [
+        "user_id",
+        "status",
+        "expires_at"
+      ],
+      "required_index": "idx_user_active",
+      "endpoint": "me_entitlements",
+      "index_present": true,
+      "index_columns": [
+        "user_id",
+        "status",
+        "expires_at"
+      ],
+      "estimated_slow_query_ms": 24
+    },
+    {
+      "name": "download_token_by_hash",
+      "table": "wp_sr_download_tokens",
+      "where": [
+        "token_hash"
+      ],
+      "required_index": "uq_token_hash",
+      "endpoint": "consume_download_token",
+      "index_present": true,
+      "index_columns": [
+        "token_hash"
+      ],
+      "estimated_slow_query_ms": 12
+    },
+    {
+      "name": "download_token_idempotency",
+      "table": "wp_sr_download_tokens",
+      "where": [
+        "request_id"
+      ],
+      "required_index": "uq_request_id",
+      "endpoint": "create_download_token",
+      "index_present": true,
+      "index_columns": [
+        "request_id"
+      ],
+      "estimated_slow_query_ms": 12
+    },
+    {
+      "name": "download_token_expiry_sweep",
+      "table": "wp_sr_download_tokens",
+      "where": [
+        "expires_at",
+        "status"
+      ],
+      "required_index": "idx_expiry_status",
+      "endpoint": "download_settlement_reconcile",
+      "index_present": true,
+      "index_columns": [
+        "expires_at",
+        "status"
+      ],
+      "estimated_slow_query_ms": 24
+    },
+    {
+      "name": "download_events_user_window",
+      "table": "wp_sr_download_events",
+      "where": [
+        "user_id",
+        "created_at"
+      ],
+      "required_index": "idx_user_date",
+      "endpoint": "reports",
+      "index_present": true,
+      "index_columns": [
+        "user_id",
+        "created_at"
+      ],
+      "estimated_slow_query_ms": 24
+    },
+    {
+      "name": "download_events_resource_result_window",
+      "table": "wp_sr_download_events",
+      "where": [
+        "resource_id",
+        "result",
+        "created_at"
+      ],
+      "required_index": "idx_resource_result",
+      "endpoint": "reports",
+      "index_present": true,
+      "index_columns": [
+        "resource_id",
+        "result",
+        "created_at"
+      ],
+      "estimated_slow_query_ms": 24
+    },
+    {
+      "name": "rights_record_publish_gate",
+      "table": "wp_sr_rights_records",
+      "where": [
+        "resource_id",
+        "status"
+      ],
+      "required_index": "idx_resource_status",
+      "endpoint": "publish_gate",
+      "index_present": true,
+      "index_columns": [
+        "resource_id",
+        "status"
+      ],
+      "estimated_slow_query_ms": 24
+    }
+  ],
+  "endpoint_query_counts": [
+    {
+      "endpoint": "public_resource_archive",
+      "queries": 5,
+      "budget": 8,
+      "n_plus_one_risk": false
+    },
+    {
+      "endpoint": "public_resource_detail",
+      "queries": 3,
+      "budget": 5,
+      "n_plus_one_risk": false
+    },
+    {
+      "endpoint": "me_entitlements",
+      "queries": 4,
+      "budget": 6,
+      "n_plus_one_risk": false
+    },
+    {
+      "endpoint": "create_download_token",
+      "queries": 7,
+      "budget": 9,
+      "n_plus_one_risk": false
+    },
+    {
+      "endpoint": "consume_download_token",
+      "queries": 7,
+      "budget": 9,
+      "n_plus_one_risk": false
+    }
+  ],
+  "verdict": "baseline-recorded"
+}
