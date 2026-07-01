@@ -865,7 +865,7 @@ tasks:
     branch: feat/SR-066-playwright-p0
     claimed_at: '2026-07-01T02:45:02.918651+00:00'
     updated_at: '2026-07-01T02:53:41.515891+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/89
     evidence:
     - docs/evidence/SR-066/commands.log
     - docs/evidence/SR-066/completion-report.md
