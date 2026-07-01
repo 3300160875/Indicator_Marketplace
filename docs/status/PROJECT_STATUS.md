@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 安排 SR-068 独立复核；通过后再推进后续任务
+- Next safe task: 推进 SR-070
 - Gate 0: complete
 
 ## 本周完成
@@ -79,7 +79,7 @@
 - SR-065 已随 PR #86 合入 `main` 并标记 VERIFIED：跨插件契约测试与全链路 Fixture 已完成，覆盖 Docker Compose、PHP 容器内 WordPress/EDD、live EDD active、临时 MariaDB schema install/insert/drop、MinIO put/head/sign/delete、免费/单购/VIP/排除/额度耗尽/退款/下架场景、顺序独立、request_id、数据库行 trace 与日志脱敏；第一轮 QA 发现的模拟链路问题已修复并由第二轮 QA 复核 PASS。
 - SR-066 已进入 BLOCKED：独立 QA 判定在当前 allowed paths 仅 `tests/e2e/**` 的约束下，无法满足真实 Playwright P0 E2E、根级 `npm run e2e` 与 CI 可重复运行验收；需要后续允许修改 root `package.json`/lock、CI tooling 和真实应用工作流入口后重启。
 - SR-067 已随 PR #89 合入 `main` 并标记 VERIFIED：100 条内容迁移与校验流程已完成，覆盖 deterministic import manifest、100 条生成候选、dry-run/validation/apply-state/rollback/release-readiness 报告、版权默认 `pending`、发布前完整性 100%、publication_ready=false 与 rollback hash 可复核；独立 QA 复核 PASS。
-- SR-068 已通过独立 QA 复核并进入 REVIEW：`make perf-baseline`、`make perf-compare` 已接入仓库命令；当前报告使用本地 Docker runtime trace，显示 LCP p75 140ms、权益 REST API p95 37.724ms、下载令牌 REST API p95 39.883ms，慢查询/N+1 报告覆盖 7 个关键查询计划的索引列和 5 个端点 query count。同步修正 SR-066 状态中的 PR 链接漂移（#88）。
+- SR-068 已随 PR #91 合入 `main` 并标记 VERIFIED：`make perf-baseline`、`make perf-compare` 已接入仓库命令；当前报告使用本地 Docker runtime trace，显示 LCP p75 140ms、权益 REST API p95 37.724ms、下载令牌 REST API p95 39.883ms，慢查询/N+1 报告覆盖 7 个关键查询计划的索引列和 5 个端点 query count；真实 REST route、`private, no-store` 和 `X-Request-ID` 已完成 runtime 接线并通过独立 QA PASS。同步修正 SR-066 状态中的 PR 链接漂移（#88）。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -88,6 +88,6 @@
 
 ## 下一步
 
-1. 提交并合并 SR-068；合并后标记 VERIFIED。
+1. 推进不依赖 SR-066 的 READY 任务：SR-070。
 2. 规划 SR-066 unblock：允许根级 e2e tooling/依赖/CI wiring 后重启。
-3. SR-068 完成后，优先选择不依赖 SR-066 的 READY 任务继续推进；SR-069 仍依赖 SR-066。
+3. SR-069 仍依赖 SR-066，暂不作为下一安全任务。
