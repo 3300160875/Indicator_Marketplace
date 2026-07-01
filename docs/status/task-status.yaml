@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T02:35:31.709997+00:00'
+updated_at: '2026-07-01T02:53:41.515901+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -860,29 +860,35 @@ tasks:
     - docs/evidence/SR-065/review-report.md
     blockers: []
   SR-066:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    status: BLOCKED
+    owner: codex
+    branch: feat/SR-066-playwright-p0
+    claimed_at: '2026-07-01T02:45:02.918651+00:00'
+    updated_at: '2026-07-01T02:53:41.515891+00:00'
     pr: null
-    evidence: []
-    blockers: []
+    evidence:
+    - docs/evidence/SR-066/commands.log
+    - docs/evidence/SR-066/completion-report.md
+    - docs/evidence/SR-066/review-report.md
+    blockers:
+    - Independent QA found SR-066 cannot satisfy real Playwright P0 E2E and CI-repeatable
+      acceptance within current allowed paths. Root package.json/lock/CI tooling and
+      real application workflow endpoints are required, but SR-066 only permits tests/e2e/**.
   SR-067:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-07-01T02:45:02.785594+00:00'
     pr: null
     evidence: []
     blockers: []
   SR-068:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-07-01T02:45:02.785599+00:00'
     pr: null
     evidence: []
     blockers: []
@@ -896,20 +902,20 @@ tasks:
     evidence: []
     blockers: []
   SR-070:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-07-01T02:45:02.785604+00:00'
     pr: null
     evidence: []
     blockers: []
   SR-071:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-07-01T02:45:02.785607+00:00'
     pr: null
     evidence: []
     blockers: []
