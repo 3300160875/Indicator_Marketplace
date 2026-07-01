@@ -74,4 +74,4 @@ See `docs/evidence/SR-066/commands.log` for failed-first attempts and fixes.
 ## Commit / PR
 
 - Commit: local branch commit; final SHA is reported in handoff after amend.
-- PR: pending.
+- PR: https://github.com/3300160875/Indicator_Marketplace/pull/93
