@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-06-30T11:26:35.608746+00:00'
+updated_at: '2026-07-01T02:27:42.477077+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -846,13 +846,18 @@ tasks:
     - docs/evidence/SR-064/review-report.md
     blockers: []
   SR-065:
-    status: BACKLOG
-    owner: null
-    branch: null
-    claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
-    pr: null
-    evidence: []
+    status: REVIEW
+    owner: codex
+    branch: feat/SR-065-integration-fixtures
+    claimed_at: '2026-07-01T02:08:12.284442+00:00'
+    updated_at: '2026-07-01T02:27:42.477065+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/86
+    evidence:
+    - docs/evidence/SR-065/full-chain-fixture-check.php
+    - docs/evidence/SR-065/full-chain-trace.json
+    - docs/evidence/SR-065/commands.log
+    - docs/evidence/SR-065/completion-report.md
+    - docs/evidence/SR-065/review-report.md
     blockers: []
   SR-066:
     status: BACKLOG
