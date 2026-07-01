@@ -3,7 +3,7 @@
 ## Task / Status
 
 - Task: SR-066 实现 Playwright P0 E2E 套件
-- Status: REVIEW after unblock retry
+- Status: VERIFIED after unblock retry and independent QA
 - Branch: `feat/SR-066-e2e-unblock`
 
 ## Files Changed
@@ -69,8 +69,8 @@ See `docs/evidence/SR-066/commands.log` for failed-first attempts and fixes.
 
 ## Next Safe Task(s)
 
-1. Independent QA review for SR-066.
-2. After QA PASS, mark SR-066 VERIFIED and proceed to SR-069 security testing.
+1. Proceed to SR-069 security testing after PR #93 merge.
+2. Keep SR-070/SR-071/SR-072 as subsequent READY tasks.
 
 ## Commit / PR
 

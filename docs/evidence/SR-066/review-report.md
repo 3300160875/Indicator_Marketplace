@@ -79,3 +79,19 @@ SR-066 is no longer blocked by missing root runner/CI/runtime wiring. It should 
 - `sh -n bin/dev && docker compose config --quiet` -> exit 0.
 - `python3 tools/agent/validate_docs.py && git diff --check` -> exit 0.
 - `make e2e` -> exit 0, chromium and mobile-chrome both passed.
+
+## Independent QA Round 3
+
+- Reviewer: Herschel
+- Result: PASS
+- Date: 2026-07-01
+
+## Round 3 Decision
+
+The Round 2 Important findings were addressed:
+
+1. SR-066 documentation now accurately limits coverage to the local/CI WordPress/EDD runtime harness.
+2. `PROJECT_STATUS.md` and `task-status.yaml` agree on the SR-066 state.
+3. E2E key gating requires a non-empty `SR_E2E_KEY`; Docker Compose does not inject a default key, and `bin/dev e2e` supplies a disposable local fallback only for that command path.
+
+SR-066 can be marked VERIFIED after CI remains green.
