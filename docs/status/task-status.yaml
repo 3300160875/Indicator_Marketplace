@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T02:27:42.477077+00:00'
+updated_at: '2026-07-01T02:35:31.709997+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -846,11 +846,11 @@ tasks:
     - docs/evidence/SR-064/review-report.md
     blockers: []
   SR-065:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-065-integration-fixtures
     claimed_at: '2026-07-01T02:08:12.284442+00:00'
-    updated_at: '2026-07-01T02:27:42.477065+00:00'
+    updated_at: '2026-07-01T02:35:31.709997+00:00'
     pr: https://github.com/3300160875/Indicator_Marketplace/pull/86
     evidence:
     - docs/evidence/SR-065/full-chain-fixture-check.php
