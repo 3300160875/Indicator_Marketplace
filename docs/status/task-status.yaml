@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T02:58:56.982442+00:00'
+updated_at: '2026-07-01T03:05:43.604645+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -875,12 +875,12 @@ tasks:
       acceptance within current allowed paths. Root package.json/lock/CI tooling and
       real application workflow endpoints are required, but SR-066 only permits tests/e2e/**.
   SR-067:
-    status: REVIEW
+    status: VERIFIED
     owner: codex
     branch: feat/SR-067-content-import
     claimed_at: '2026-07-01T02:55:37.604560+00:00'
-    updated_at: '2026-07-01T02:58:56.982432+00:00'
-    pr: null
+    updated_at: '2026-07-01T03:05:43.604645+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/89
     evidence:
     - docs/evidence/SR-067/commands.log
     - docs/evidence/SR-067/completion-report.md
