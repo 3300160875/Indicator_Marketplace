@@ -119,6 +119,10 @@ web/app/mu-plugins/stock-resource-runtime-loader.php | 45 ++
 20 files changed, 1759 insertions(+), 13 deletions(-)
 ```
 
+Commit / PR
+- Commit: 2f8027e feat(performance): add SR-068 runtime baseline
+- PR: https://github.com/3300160875/Indicator_Marketplace/pull/91
+
 Required command deviations
 - None for SR-068 after the user-authorized Makefile/bin/dev tooling fix.
 - `python tools/agent/validate_docs.py` is still expected to fail in this local shell because only `python3` is installed; `python3 tools/agent/validate_docs.py` is used as the equivalent repository validation command, consistent with previous task evidence.

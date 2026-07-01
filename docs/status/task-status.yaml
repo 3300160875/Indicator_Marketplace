@@ -897,7 +897,7 @@ tasks:
     branch: feat/SR-068-performance-baseline
     claimed_at: '2026-07-01T03:14:10.878669+00:00'
     updated_at: '2026-07-01T03:28:22.958387+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/91
     evidence:
     - docs/evidence/SR-068/commands.log
     - docs/evidence/SR-068/completion-report.md

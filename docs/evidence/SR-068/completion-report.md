@@ -60,3 +60,8 @@
 
 1. SR-069 after SR-066 is unblocked and verified, or continue with independent ready tasks that do not depend on SR-066.
 2. SR-066 unblock remains separate: root Playwright dependencies, CI/e2e script and real application workflow endpoints still need their own scoped task.
+
+## Commit / PR
+
+- Commit: `2f8027e feat(performance): add SR-068 runtime baseline`
+- PR: https://github.com/3300160875/Indicator_Marketplace/pull/91
