@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 推进 SR-067
+- Next safe task: 推进 SR-068
 - Gate 0: complete
 
 ## 本周完成
@@ -78,6 +78,7 @@
 - SR-064 已随 PR #83 合入 `main` 并标记 VERIFIED：MVP 业务报表与健康检查支持层已完成，覆盖订单完成无权益、下载失败率、审核时长、时区/新鲜度口径、窗口过滤、前台查询保护、聚合 CSV 导出权限与脱敏、outbox/download settlement/audit freshness 健康检查；独立 QA 发现的窗口过滤与 legacy 权限问题已修复并复核 PASS。
 - SR-065 已随 PR #86 合入 `main` 并标记 VERIFIED：跨插件契约测试与全链路 Fixture 已完成，覆盖 Docker Compose、PHP 容器内 WordPress/EDD、live EDD active、临时 MariaDB schema install/insert/drop、MinIO put/head/sign/delete、免费/单购/VIP/排除/额度耗尽/退款/下架场景、顺序独立、request_id、数据库行 trace 与日志脱敏；第一轮 QA 发现的模拟链路问题已修复并由第二轮 QA 复核 PASS。
 - SR-066 已进入 BLOCKED：独立 QA 判定在当前 allowed paths 仅 `tests/e2e/**` 的约束下，无法满足真实 Playwright P0 E2E、根级 `npm run e2e` 与 CI 可重复运行验收；需要后续允许修改 root `package.json`/lock、CI tooling 和真实应用工作流入口后重启。
+- SR-067 已随 PR #89 合入 `main` 并标记 VERIFIED：100 条内容迁移与校验流程已完成，覆盖 deterministic import manifest、100 条生成候选、dry-run/validation/apply-state/rollback/release-readiness 报告、版权默认 `pending`、发布前完整性 100%、publication_ready=false 与 rollback hash 可复核；独立 QA 复核 PASS。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -86,5 +87,5 @@
 
 ## 下一步
 
-1. 推进 SR-067。
+1. 推进 SR-068。
 2. 规划 SR-066 unblock：允许根级 e2e tooling/依赖/CI wiring 后重启。
