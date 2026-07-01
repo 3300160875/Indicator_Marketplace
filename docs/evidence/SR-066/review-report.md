@@ -29,7 +29,7 @@
    - Added `@playwright/test`.
    - Added `npm run e2e`.
    - Wired `bin/dev e2e` and `make e2e`.
-   - Added GitHub Actions P0 E2E job.
+   - Added GitHub Actions local runtime P0 harness job.
 
 3. Syntax/runtime compatibility:
    - E2E spec/config use plain ESM imports supported by the local Node runtime.
@@ -42,7 +42,7 @@
 ## Review Focus for Independent QA
 
 - Confirm `SR_E2E_ENABLED=1` and local/development gating prevents default production exposure.
-- Confirm P0 flow does not use `page.setContent()` or static fake HTML.
+- Confirm local runtime P0 harness does not use `page.setContent()` or static fake HTML.
 - Confirm chromium and mobile-chrome both pass through `npm run e2e -- --project=...`.
 - Confirm EDD order creation/completion/refund is exercised in the local WordPress runtime.
 - Confirm generated Playwright failure artifacts are real and ignored from git.
@@ -50,3 +50,32 @@
 ## Self-Review Decision
 
 SR-066 is no longer blocked by missing root runner/CI/runtime wiring. It should move to independent QA rather than VERIFIED directly.
+
+## Independent QA Round 2
+
+- Reviewer: Herschel
+- Result: FAIL
+- Date: 2026-07-01
+
+## Round 2 Findings Addressed
+
+1. Documentation overclaimed product P0 coverage.
+   - Updated SR-066 task, completion report and project status to describe the suite as local/CI WordPress/EDD runtime harness coverage.
+   - Kept SR-066 in REVIEW rather than VERIFIED.
+
+2. `PROJECT_STATUS.md` still described SR-066 as BLOCKED.
+   - Updated project status to point at PR #93 and the current REVIEW state.
+   - Updated next-step guidance to finish PR #93 QA before unlocking SR-069.
+
+3. Default E2E key was too permissive if a development environment was accidentally exposed.
+   - Docker Compose no longer injects a default `SR_E2E_KEY`.
+   - Runtime refuses to load when `SR_E2E_KEY` is empty.
+   - `bin/dev e2e` supplies `local-e2e-only` only for disposable local runs when the caller has not provided a key.
+
+## Round 2 Follow-up Verification
+
+- `php -l tests/e2e/wp/e2e-runtime.php && php -l tests/e2e/bootstrap-runtime.php` -> exit 0.
+- `node --check tests/e2e/sr066-p0.spec.mjs && node --check tests/e2e/playwright.config.mjs` -> exit 0.
+- `sh -n bin/dev && docker compose config --quiet` -> exit 0.
+- `python3 tools/agent/validate_docs.py && git diff --check` -> exit 0.
+- `make e2e` -> exit 0, chromium and mobile-chrome both passed.

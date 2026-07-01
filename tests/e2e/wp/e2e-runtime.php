@@ -11,6 +11,10 @@ function sr_e2e_runtime_enabled(): bool
         return false;
     }
 
+    if (trim((string) getenv('SR_E2E_KEY')) === '') {
+        return false;
+    }
+
     $environment = function_exists('wp_get_environment_type') ? wp_get_environment_type() : 'production';
 
     return in_array($environment, ['local', 'development'], true);
@@ -22,9 +26,7 @@ if (! sr_e2e_runtime_enabled()) {
 
 function sr_e2e_secret(): string
 {
-    $key = trim((string) getenv('SR_E2E_KEY'));
-
-    return $key === '' ? 'local-e2e-only' : $key;
+    return trim((string) getenv('SR_E2E_KEY'));
 }
 
 function sr_e2e_authorized(?WP_REST_Request $request = null): bool

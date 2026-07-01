@@ -17,7 +17,7 @@
 
 - Adds a local-only E2E runtime surface under `stock-resource-e2e/v1`.
 - The runtime is loaded only when `SR_E2E_ENABLED=1` and WordPress reports `local` or `development`.
-- E2E endpoints require `x-sr-e2e-key`, defaulting to `local-e2e-only` for disposable local/CI runs.
+- E2E endpoints require `x-sr-e2e-key`; the runtime only loads when `SR_E2E_KEY` is non-empty. `bin/dev e2e` supplies `local-e2e-only` for disposable local runs when no key is provided by the caller.
 - No public product API, OpenAPI contract, pricing rule, payment rule or entitlement rule is changed.
 
 ## Migrations
@@ -27,7 +27,7 @@
 
 ## Commands and Results
 
-- `make e2e` -> exit 0, chromium and mobile-chrome P0 flows passed.
+- `make e2e` -> exit 0, chromium and mobile-chrome local runtime harness flows passed.
 - `npm run e2e -- --project=chromium` -> exit 0, 1 passed.
 - `npm run e2e -- --project=mobile-chrome` -> exit 0, 1 passed.
 - `git diff --check` -> exit 0.
@@ -40,20 +40,21 @@ See `docs/evidence/SR-066/commands.log` for failed-first attempts and fixes.
 
 - Runtime is off by default and cannot load without `SR_E2E_ENABLED=1`.
 - Runtime refuses non-local/non-development WordPress environments.
+- Runtime refuses to load when `SR_E2E_KEY` is empty.
 - REST calls require `x-sr-e2e-key`.
 - Playwright covers concurrent chromium/mobile execution by using per-run option keys.
 - Download step verifies token issue and 302 redirect without exposing private storage paths.
 
 ## Acceptance Coverage
 
-- 游客浏览: Playwright opens the local WordPress E2E page and verifies the public resource title/state.
+- 游客浏览: Playwright opens the local WordPress runtime harness page and verifies the public resource title/state.
 - 下单: E2E runtime creates a real EDD pending order and order item.
 - 提交凭证: browser action submits proof state through the WordPress REST runtime.
 - 审核: browser action approves review and completes the EDD order.
 - 下载: browser action issues a token, clicks the download link and observes the 302 redirect result.
 - 退款: browser action refunds the EDD order and verifies entitlement revocation state.
 - 失败截图/trace: Playwright config retains screenshot/video/trace on failures.
-- CI 可重复运行: `.github/workflows/ci.yml` adds a Playwright P0 E2E job using `make e2e`.
+- CI 可重复运行: `.github/workflows/ci.yml` adds a Playwright local runtime P0 harness job using `make e2e`.
 
 ## Known Limitations
 

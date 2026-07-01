@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 
 const e2eKey = process.env.SR_E2E_KEY || 'local-e2e-only';
 
-test.describe('SR-066 P0 marketplace flow', () => {
-  test('guest can buy, submit proof, receive approval, download, and refund revokes access', async ({ page, request }, testInfo) => {
+test.describe('SR-066 local runtime P0 harness', () => {
+  test('browser drives local WordPress and EDD runtime order, proof, approval, download, and refund states', async ({ page, request }, testInfo) => {
     const runId = `sr066-${testInfo.project.name}-${Date.now()}`;
     const pageUrl = `/?sr_e2e_p0=${encodeURIComponent(runId)}&sr_e2e_key=${encodeURIComponent(e2eKey)}`;
 

@@ -40,7 +40,7 @@ Final verification commands:
 
 4. npm run e2e -- --list
    Exit: 0
-   Output: chromium and mobile-chrome projects both discover SR-066 P0 marketplace flow.
+   Output: chromium and mobile-chrome projects both discover SR-066 local runtime P0 harness flow.
 
 5. make e2e
    Exit: 0
@@ -78,6 +78,6 @@ Generated artifacts:
 - docs/evidence/SR-066/playwright-results/ retained by Playwright on failures and ignored for git; CI uploads the report/results directories as artifact sr-066-playwright-evidence.
 
 Security notes:
-- E2E routes require SR_E2E_ENABLED=1 and local/development WP environment.
-- E2E REST calls require x-sr-e2e-key matching SR_E2E_KEY, default local-e2e-only.
+- E2E routes require SR_E2E_ENABLED=1, a non-empty SR_E2E_KEY and local/development WP environment.
+- E2E REST calls require x-sr-e2e-key matching SR_E2E_KEY; bin/dev e2e supplies local-e2e-only only for disposable local runs when the caller has not provided a key.
 - No production credentials, cookies, tokens or personal data are stored in evidence.
