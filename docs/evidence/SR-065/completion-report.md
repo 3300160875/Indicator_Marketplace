@@ -72,5 +72,5 @@
 
 ## Commit / PR
 
-- Commit: pending
-- PR: pending
+- Commit: `4396710`
+- PR: https://github.com/3300160875/Indicator_Marketplace/pull/86

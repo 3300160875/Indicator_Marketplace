@@ -851,7 +851,7 @@ tasks:
     branch: feat/SR-065-integration-fixtures
     claimed_at: '2026-07-01T02:08:12.284442+00:00'
     updated_at: '2026-07-01T02:27:42.477065+00:00'
-    pr: null
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/86
     evidence:
     - docs/evidence/SR-065/full-chain-fixture-check.php
     - docs/evidence/SR-065/full-chain-trace.json
