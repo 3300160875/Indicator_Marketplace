@@ -6,7 +6,7 @@
 
 - Milestone: W6
 - CI: configured and required on `main`
-- Next safe task: 推进 SR-069
+- Next safe task: 推进 SR-070
 - Gate 0: complete
 
 ## 本周完成
@@ -80,6 +80,7 @@
 - SR-066 已通过 PR #93 标记 VERIFIED：根级 `npm run e2e`、`make e2e`、Playwright chromium/mobile、CI E2E job 与本地 WordPress/EDD runtime harness 已补齐；口径限定为 local/CI harness coverage，第二轮独立 QA 复核 PASS。
 - SR-067 已随 PR #89 合入 `main` 并标记 VERIFIED：100 条内容迁移与校验流程已完成，覆盖 deterministic import manifest、100 条生成候选、dry-run/validation/apply-state/rollback/release-readiness 报告、版权默认 `pending`、发布前完整性 100%、publication_ready=false 与 rollback hash 可复核；独立 QA 复核 PASS。
 - SR-068 已随 PR #91 合入 `main` 并标记 VERIFIED：`make perf-baseline`、`make perf-compare` 已接入仓库命令；当前报告使用本地 Docker runtime trace，显示 LCP p75 140ms、权益 REST API p95 37.724ms、下载令牌 REST API p95 39.883ms，慢查询/N+1 报告覆盖 7 个关键查询计划的索引列和 5 个端点 query count；真实 REST route、`private, no-store` 和 `X-Request-ID` 已完成 runtime 接线并通过独立 QA PASS。同步修正 SR-066 状态中的 PR 链接漂移（#88）。
+- SR-069 已随 PR #94 合入 `main` 并标记 VERIFIED：安全测试与修复闭环验证层已完成，覆盖 IDOR、CSRF contract/route sentinel、XSS、SQLi static risk sentinel、SSRF/路径遍历、压缩炸弹策略、下载 token replay、限流与审计脱敏；`make test-security` 缺失已如实记录，独立 QA 二轮复核 PASS。
 - 工作区已整理：真实项目仓库位于 `Indicator_Marketplace/project/`，原始执行指南和产品资料位于父级 `docs/`。
 
 ## 阻塞
@@ -88,6 +89,6 @@
 
 ## 下一步
 
-1. 推进 SR-069：执行安全测试与修复闭环。
-2. 保持 SR-070/SR-071/SR-072 作为后续 READY 任务。
-3. 合并 PR #93 后在 `main` 上刷新状态，确保 SR-069 继续保持 READY。
+1. 推进 SR-070：执行权益与下载并发专项测试。
+2. 保持 SR-071/SR-072 作为后续 READY 任务。
+3. SR-070 完成后按依赖图继续升级回归与灾备演练。

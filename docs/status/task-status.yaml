@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T08:32:03.006062+00:00'
+updated_at: '2026-07-01T08:44:49.914989+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -919,12 +919,12 @@ tasks:
     - infra/monitoring/reports/sr068-slow-query-report.md
     blockers: []
   SR-069:
-    status: REVIEW
+    status: VERIFIED
     owner: Codex
     branch: feat/SR-069-security-closure
     claimed_at: '2026-07-01T08:25:43.478326+00:00'
-    updated_at: '2026-07-01T08:32:03.006044+00:00'
-    pr: null
+    updated_at: '2026-07-01T08:44:49.914980+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/94
     evidence:
     - docs/evidence/SR-069/commands.log
     - docs/evidence/SR-069/completion-report.md
