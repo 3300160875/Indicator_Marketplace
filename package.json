@@ -4,7 +4,11 @@
   "version": "0.0.0",
   "description": "Stock indicator resource marketplace development tooling.",
   "scripts": {
+    "e2e": "playwright test -c tests/e2e/playwright.config.mjs",
     "lint": "node -e \"console.log('frontend lint: no frontend assets defined in W1')\""
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
   },
   "engines": {
     "node": ">=20"

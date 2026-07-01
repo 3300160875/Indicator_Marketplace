@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-01T03:49:57.753353+00:00'
+updated_at: '2026-07-01T08:18:15.006287+00:00'
 tasks:
   SR-001:
     status: VERIFIED
@@ -860,20 +860,22 @@ tasks:
     - docs/evidence/SR-065/review-report.md
     blockers: []
   SR-066:
-    status: BLOCKED
+    status: VERIFIED
     owner: codex
-    branch: feat/SR-066-playwright-p0
+    branch: feat/SR-066-e2e-unblock
     claimed_at: '2026-07-01T02:45:02.918651+00:00'
-    updated_at: '2026-07-01T02:53:41.515891+00:00'
-    pr: https://github.com/3300160875/Indicator_Marketplace/pull/88
+    updated_at: '2026-07-01T08:18:05.309615+00:00'
+    pr: https://github.com/3300160875/Indicator_Marketplace/pull/93
     evidence:
     - docs/evidence/SR-066/commands.log
     - docs/evidence/SR-066/completion-report.md
     - docs/evidence/SR-066/review-report.md
-    blockers:
-    - Independent QA found SR-066 cannot satisfy real Playwright P0 E2E and CI-repeatable
-      acceptance within current allowed paths. Root package.json/lock/CI tooling and
-      real application workflow endpoints are required, but SR-066 only permits tests/e2e/**.
+    - tests/e2e/bootstrap-runtime.php
+    - tests/e2e/playwright.config.mjs
+    - tests/e2e/sr066-p0.spec.mjs
+    - tests/e2e/wp/e2e-runtime.php
+    - web/app/mu-plugins/stock-resource-runtime-loader.php
+    blockers: []
   SR-067:
     status: VERIFIED
     owner: codex
@@ -917,11 +919,11 @@ tasks:
     - infra/monitoring/reports/sr068-slow-query-report.md
     blockers: []
   SR-069:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-07-01T08:18:15.006260+00:00'
     pr: null
     evidence: []
     blockers: []
@@ -944,11 +946,11 @@ tasks:
     evidence: []
     blockers: []
   SR-072:
-    status: BACKLOG
+    status: READY
     owner: null
     branch: null
     claimed_at: null
-    updated_at: '2026-06-24T00:00:00Z'
+    updated_at: '2026-07-01T08:18:15.006281+00:00'
     pr: null
     evidence: []
     blockers: []

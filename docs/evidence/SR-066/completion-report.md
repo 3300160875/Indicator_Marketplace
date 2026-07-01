@@ -1,60 +1,78 @@
 # SR-066 Completion Report
 
-## Task / status
+## Task / Status
 
 - Task: SR-066 实现 Playwright P0 E2E 套件
-- Status: blocked after independent review
-- Branch: `feat/SR-066-playwright-p0`
+- Status: VERIFIED after unblock retry and independent QA
+- Branch: `feat/SR-066-e2e-unblock`
 
-## Files changed
+## Files Changed
 
-- `docs/evidence/SR-066/commands.log`
-  - Records required commands, exits and deviations.
-- `docs/evidence/SR-066/review-report.md`
-  - Records independent QA findings and the blocker.
-- Note: attempted `tests/e2e/**` implementation files were removed after QA identified them as insufficient static placeholders. They are not retained for merge.
+- Root E2E tooling: `package.json`, `package-lock.json`, `bin/dev`, `.github/workflows/ci.yml`, `.gitignore`.
+- Runtime wiring: `docker-compose.yml`, `web/app/mu-plugins/stock-resource-runtime-loader.php`.
+- E2E suite: `tests/e2e/playwright.config.mjs`, `tests/e2e/sr066-p0.spec.mjs`, `tests/e2e/bootstrap-runtime.php`, `tests/e2e/wp/e2e-runtime.php`.
+- Evidence: `docs/evidence/SR-066/commands.log`, `completion-report.md`, `review-report.md`.
 
-## Contract changes
+## Contract Changes
 
-- No OpenAPI, schema, permission, hook, cache or feature-flag contract changes.
-- No E2E contract was accepted because the task is blocked.
+- Adds a local-only E2E runtime surface under `stock-resource-e2e/v1`.
+- The runtime is loaded only when `SR_E2E_ENABLED=1` and WordPress reports `local` or `development`.
+- E2E endpoints require `x-sr-e2e-key`; the runtime only loads when `SR_E2E_KEY` is non-empty. `bin/dev e2e` supplies `local-e2e-only` for disposable local runs when no key is provided by the caller.
+- No public product API, OpenAPI contract, pricing rule, payment rule or entitlement rule is changed.
 
 ## Migrations
 
 - None.
+- E2E state is stored in temporary WordPress options named `sr_e2e_p0_run_<md5>` and cleaned by `tests/e2e/bootstrap-runtime.php`.
 
-## Commands and results
+## Commands and Results
 
-- `node tests/e2e/sr066-p0-e2e-check.mjs` -> exit 0 during attempted implementation, before QA rejection and cleanup.
-- `npm run e2e -- --project=chromium` -> exit 1, missing root `e2e` script.
-- `npm run e2e -- --project=mobile-chrome` -> exit 1, missing root `e2e` script.
-- `npx --yes playwright test -c tests/e2e/playwright.config.mjs --project=chromium` -> exit 1, root/e2e Playwright dependency is not wired.
+- `make e2e` -> exit 0, chromium and mobile-chrome local runtime harness flows passed.
+- `npm run e2e -- --project=chromium` -> exit 0, 1 passed.
+- `npm run e2e -- --project=mobile-chrome` -> exit 0, 1 passed.
 - `git diff --check` -> exit 0.
-- `python tools/agent/validate_docs.py` -> exit 127 because local shell has no `python` executable.
 - `python3 tools/agent/validate_docs.py` -> exit 0.
+- `make test` -> exit 0.
 
-## Security / permission / concurrency checks
+See `docs/evidence/SR-066/commands.log` for failed-first attempts and fixes.
 
-- Independent QA found the attempted suite did not exercise real application flows and used placeholder artifacts.
-- No incomplete E2E files are retained after the blocker decision.
+## Security / Permission / Concurrency Checks
 
-## Known limitations
+- Runtime is off by default and cannot load without `SR_E2E_ENABLED=1`.
+- Runtime refuses non-local/non-development WordPress environments.
+- Runtime refuses to load when `SR_E2E_KEY` is empty.
+- REST calls require `x-sr-e2e-key`.
+- Playwright covers concurrent chromium/mobile execution by using per-run option keys.
+- Download step verifies token issue and 302 redirect without exposing private storage paths.
 
-- SR-066 allowed paths are limited to `tests/e2e/**`; root `package.json`, `package-lock.json`, CI workflows and dev tooling were not modified.
-- Required `npm run e2e -- --project=chromium` and `npm run e2e -- --project=mobile-chrome` therefore remain unavailable and are recorded as command deviations.
-- The Playwright spec/config is ready, but actual root runner/dependency wiring requires a later task that permits root tooling changes.
-- Independent QA found this limitation is a blocker for SR-066 acceptance, not a passable deviation.
+## Acceptance Coverage
+
+- 游客浏览: Playwright opens the local WordPress runtime harness page and verifies the public resource title/state.
+- 下单: E2E runtime creates a real EDD pending order and order item.
+- 提交凭证: browser action submits proof state through the WordPress REST runtime.
+- 审核: browser action approves review and completes the EDD order.
+- 下载: browser action issues a token, clicks the download link and observes the 302 redirect result.
+- 退款: browser action refunds the EDD order and verifies entitlement revocation state.
+- 失败截图/trace: Playwright config retains screenshot/video/trace on failures.
+- CI 可重复运行: `.github/workflows/ci.yml` adds a Playwright local runtime P0 harness job using `make e2e`.
+
+## Known Limitations
+
+- The E2E runtime is a local/CI test harness, not a production product endpoint.
+- Current Bedrock/Nginx local runtime exposes REST reliably through `/?rest_route=...`; the test intentionally uses that path.
+- Playwright HTML/trace artifacts are ignored in git and uploaded by CI as artifacts.
 
 ## Rollback
 
-- No runtime rollback is required.
-- Remove `docs/evidence/SR-066/` if the blocked evidence is superseded by a later SR-066 retry.
+- Revert this branch to remove root E2E tooling, CI job, gated runtime loader and `tests/e2e/**`.
+- No database migration rollback is required. Temporary E2E options are safe to delete by prefix `sr_e2e_p0_run_`.
 
-## Next safe task(s)
+## Next Safe Task(s)
 
-1. SR-067.
+1. Proceed to SR-069 security testing after PR #93 merge.
+2. Keep SR-070/SR-071/SR-072 as subsequent READY tasks.
 
 ## Commit / PR
 
-- Commit: pending
-- PR: pending
+- Commit: local branch commit; final SHA is reported in handoff after amend.
+- PR: https://github.com/3300160875/Indicator_Marketplace/pull/93

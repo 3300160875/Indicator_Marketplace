@@ -26,6 +26,11 @@ web/.htaccess
 /vendor
 auth.json
 
+# Node / Playwright
+/node_modules
+/docs/evidence/SR-066/playwright-report
+/docs/evidence/SR-066/playwright-results
+
 # PHPUnit/Pest
 phpunit.xml
 .phpunit.result.cache

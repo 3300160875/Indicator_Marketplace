@@ -211,7 +211,23 @@ EOF
     exec infra/docker/smoke.sh
     ;;
   e2e)
-    printf 'e2e: no end-to-end suite is defined in W1\n'
+    shift || true
+    SR_E2E_KEY="${SR_E2E_KEY:-local-e2e-only}"
+    export SR_E2E_KEY
+    if [ ! -f .env ]; then
+      cp .env.example .env
+    fi
+    if [ ! -d node_modules/@playwright/test ]; then
+      npm ci
+    fi
+    npx playwright install chromium
+    if [ ! -f vendor/autoload.php ]; then
+      docker compose run --rm cli composer install --no-dev --no-interaction --prefer-dist --no-progress
+    fi
+    SR_E2E_ENABLED=1 docker compose up -d mariadb redis minio mailpit minio-init
+    SR_E2E_ENABLED=1 docker compose up -d --force-recreate php nginx
+    SR_E2E_ENABLED=1 docker compose exec -T php php tests/e2e/bootstrap-runtime.php
+    E2E_BASE_URL="${E2E_BASE_URL:-http://127.0.0.1:${APP_PORT:-18080}}" npm run e2e -- "$@"
     ;;
   perf-baseline)
     node tests/performance/sr068-performance-check.mjs baseline
